@@ -571,39 +571,144 @@
             <h2 style="font-size: 25px">{{ L.internalTitle }}</h2>
             <span class="tag tag-neutral" style="font-size: 12.5px">{{ L.internalHint }}</span>
           </div>
-          <div style="display: grid; gap: 10px; margin-top: 18px">
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">มคอ.2 หลักสูตร วท.บ. จุลชีววิทยา 2569</p>
-              <a href="uploads/curr_files-1788601825850-hlrt.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
+          <p style="margin-top: 10px; font-size: 14.5px; color: var(--color-neutral-800); max-width: 62ch">{{ L.codeScheme }}</p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px">
+            <sc-if value="{{ sheetIsOk }}" hint-placeholder-val="{{ false }}">
+              <span class="tag tag-accent-2" style="font-size: 13px">{{ sheetOkLabel }}</span>
+            </sc-if>
+            <sc-if value="{{ sheetIsLoading }}" hint-placeholder-val="{{ false }}">
+              <span class="tag tag-neutral" style="font-size: 13px">{{ L.sheetLoading }}</span>
+            </sc-if>
+            <sc-if value="{{ sheetIsError }}" hint-placeholder-val="{{ false }}">
+              <span class="tag tag-outline" style="font-size: 13px; color: var(--color-accent-700); border-color: var(--color-accent-700)">{{ L.sheetError }}</span>
+            </sc-if>
+            <sc-if value="{{ sheetIsOff }}" hint-placeholder-val="{{ true }}">
+              <span class="tag tag-neutral" style="font-size: 13px">{{ L.sheetOff }}</span>
+            </sc-if>
+            <button onClick="{{ reloadSheet }}" class="btn btn-ghost" style="font-size: 14px; padding: 8px 15px; min-height: 40px">{{ L.sheetReload }}</button>
+          </div>
+
+          <div class="field" style="max-width: 460px; margin-top: 18px">
+            <label for="doc-q" style="font-size: 14px">{{ L.docSearchLabel }}</label>
+            <input id="doc-q" class="input" type="search" value="{{ docQ }}" onInput="{{ onDocQuery }}" placeholder="{{ L.docSearchPlaceholder }}" style="font-size: 16px; min-height: 44px">
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px">
+            <sc-for list="{{ aunChips }}" as="a" hint-placeholder-count="10">
+              <button onClick="{{ a.go }}" class="{{ a.cls }}" style="font-size: 14px; padding: 8px 15px; min-height: 40px">{{ a.label }}</button>
+            </sc-for>
+          </div>
+
+          <p style="margin-top: 16px; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-700)">{{ docFound }}</p>
+
+          <div style="display: grid; gap: 10px; margin-top: 10px">
+            <sc-for list="{{ docRows }}" as="d" hint-placeholder-count="6">
+              <article style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 16px 18px; border-radius: var(--radius-lg); background: var(--color-bg)">
+                <span style="min-width: 0">
+                  <span style="display: flex; flex-wrap: wrap; gap: 7px; align-items: center">
+                    <span class="tag tag-outline" style="font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--color-accent-700); border-color: var(--color-accent-700)">{{ d.code }}</span>
+                    <sc-for list="{{ d.auns }}" as="a" hint-placeholder-count="1">
+                      <span class="tag tag-accent" style="font-size: 12.5px; min-width: 26px; justify-content: center">{{ a.label }}</span>
+                    </sc-for>
+                    <sc-if value="{{ d.noAun }}" hint-placeholder-val="{{ false }}">
+                      <span class="tag tag-neutral" style="font-size: 12.5px">{{ d.noAunLabel }}</span>
+                    </sc-if>
+                    <span class="tag tag-neutral" style="font-size: 12.5px">{{ d.meta }}</span>
+                    <span class="{{ d.statusCls }}" style="font-size: 12.5px">{{ d.statusLabel }}</span>
+                    <sc-if value="{{ d.isPending }}" hint-placeholder-val="{{ false }}">
+                      <span class="tag tag-outline" style="font-size: 12.5px; color: var(--color-accent-700); border-color: var(--color-accent-700)">{{ d.pendingLabel }}</span>
+                    </sc-if>
+                  </span>
+                  <span style="display: block; font-size: 16.5px; margin-top: 8px">{{ d.name }}</span>
+                </span>
+                <span style="display: flex; gap: 8px; align-items: center">
+                  <sc-if value="{{ d.isPending }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ d.removeIt }}" class="btn btn-ghost" style="font-size: 14px; padding: 9px 14px; min-height: 42px">{{ L.pendingRemove }}</button>
+                  </sc-if>
+                  <a href="{{ d.href }}" target="{{ d.target }}" class="{{ d.cls }}" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">{{ d.action }}</a>
+                </span>
+              </article>
+            </sc-for>
+            <sc-if value="{{ docNoResults }}" hint-placeholder-val="{{ false }}">
+              <p style="padding: 14px 2px; font-size: 15px; color: var(--color-neutral-800)">{{ L.docNoResults }}</p>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ docHasMore }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ toggleDocAll }}" class="btn btn-ghost" style="font-size: 15px; margin-top: 14px; min-height: 44px">{{ docMoreLabel }}</button>
+          </sc-if>
+          <sc-if value="{{ docCanCollapse }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ toggleDocAll }}" class="btn btn-ghost" style="font-size: 15px; margin-top: 14px; min-height: 44px">{{ L.docCollapse }}</button>
+          </sc-if>
+
+          <div style="margin-top: 30px; padding: 24px; border-radius: var(--radius-lg); background: var(--color-bg)">
+            <h3 style="font-size: 21px">{{ L.uploadTitle }}</h3>
+            <sc-if value="{{ hasFormUrl }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top: 14px; display: grid; gap: 8px; justify-items: start">
+                <a href="{{ formUrl }}" target="_blank" class="btn btn-primary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.formOpen }}</a>
+                <p style="font-size: 14px; color: var(--color-neutral-800); max-width: 62ch">{{ L.formHint }}</p>
+              </div>
+              <p style="margin-top: 20px; font-size: 15px; font-weight: 600">{{ L.manualTitle }}</p>
+            </sc-if>
+            <p style="margin-top: 6px; font-size: 14.5px; color: var(--color-neutral-800); max-width: 62ch">{{ L.uploadHint }}</p>
+
+            <div class="field" style="margin-top: 18px">
+              <label for="nd-name" style="font-size: 14px">{{ L.uploadName }}</label>
+              <input id="nd-name" class="input" type="text" value="{{ ndName }}" onInput="{{ onNdName }}" placeholder="{{ L.uploadNamePh }}" style="font-size: 16px; min-height: 44px">
             </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">มคอ.2 หลักสูตร 2564</p>
-              <a href="uploads/curr_files-1788601817113-mui0.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 14px; margin-top: 14px">
+              <div class="field">
+                <label for="nd-type" style="font-size: 14px">{{ L.uploadType }}</label>
+                <input id="nd-type" class="input" type="text" value="{{ ndType }}" onInput="{{ onNdType }}" placeholder="{{ L.uploadTypePh }}" style="font-size: 16px; min-height: 44px">
+              </div>
+              <div class="field">
+                <label for="nd-year" style="font-size: 14px">{{ L.uploadYear }}</label>
+                <input id="nd-year" class="input" type="text" value="{{ ndYear }}" onInput="{{ onNdYear }}" placeholder="{{ L.uploadYearPh }}" style="font-size: 16px; min-height: 44px">
+              </div>
             </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">Curriculum mapping 2569</p>
-              <a href="uploads/curr_files-1788601901957-bgbg.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
+
+            <p style="margin-top: 18px; font-size: 14px; font-weight: 600">{{ L.uploadAun }}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px">
+              <sc-for list="{{ ndAunBoxes }}" as="a" hint-placeholder-count="8">
+                <button onClick="{{ a.toggle }}" class="{{ a.cls }}" title="{{ a.title }}" style="font-size: 14px; padding: 9px 16px; min-height: 42px">{{ a.label }}</button>
+              </sc-for>
             </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">Curriculum mapping 2564</p>
-              <a href="uploads/curr_files-1788601886929-orhq.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
+            <p style="margin-top: 8px; font-size: 13.5px; color: var(--color-accent-700)">{{ ndSelectedNote }}</p>
+
+            <div class="field" style="margin-top: 16px">
+              <label for="nd-file" style="font-size: 14px">{{ L.uploadFile }}</label>
+              <input id="nd-file" class="input" type="file" onChange="{{ onNdFile }}" style="font-size: 15px; min-height: 44px; padding-top: 10px">
             </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">ผลลัพธ์การเรียนรู้หลักสูตร 2569</p>
-              <a href="uploads/curr_files-1788601913705-55nl.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 20px">
+              <span style="display: flex; flex-direction: column; gap: 2px">
+                <span style="font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-700)">{{ L.uploadCodePreview }}</span>
+                <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 22px; font-variant-numeric: tabular-nums">{{ ndCode }}</span>
+              </span>
+              <button onClick="{{ addDoc }}" class="{{ ndAddCls }}" style="{{ ndAddStyle }}">{{ L.uploadAdd }}</button>
+              <button onClick="{{ clearDoc }}" class="btn btn-ghost" style="font-size: 15px; padding: 11px 18px; min-height: 44px">{{ L.uploadClear }}</button>
             </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">ผลลัพธ์การเรียนรู้หลักสูตร 2564</p>
-              <a href="uploads/curr_files-1788601911081-p3qk.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
-            </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">SAR MICRO 2568</p>
-              <a href="uploads/curr_files-1788601861527-xc7w.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
-            </div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <p style="font-size: 16.5px">คู่มือ AUN-QA SAR 2569</p>
-              <a href="uploads/curr_files-1788601881247-7a55.pdf" target="_blank" class="btn btn-secondary" style="font-size: 14.5px; padding: 9px 18px; min-height: 42px">เปิด</a>
-            </div>
+            <sc-if value="{{ ndInvalid }}" hint-placeholder-val="{{ true }}">
+              <p style="margin-top: 10px; font-size: 14px; color: var(--color-accent-700)">{{ ndWarn }}</p>
+            </sc-if>
+
+            <sc-if value="{{ hasSnippet }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--color-divider)">
+                <p style="font-size: 15px; font-weight: 600">{{ L.rowTitle }}</p>
+                <p style="margin-top: 6px; font-size: 14px; color: var(--color-neutral-800); max-width: 62ch">{{ L.rowHint }}</p>
+                <pre style="margin: 12px 0 0; padding: 14px 16px; border-radius: var(--radius-lg); background: var(--color-surface); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; word-break: break-word">{{ snippet }}</pre>
+                <button onClick="{{ copySnippet }}" class="btn btn-secondary" style="font-size: 14.5px; margin-top: 12px; min-height: 44px">{{ copyLabel }}</button>
+                <p style="margin-top: 12px; font-size: 13.5px; color: var(--color-neutral-800); max-width: 62ch">{{ L.pendingNote }}</p>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--color-divider); display: grid; gap: 4px">
+            <sc-for list="{{ aunLegend }}" as="c" hint-placeholder-count="8">
+              <p style="font-size: 13.5px; color: var(--color-neutral-800)">{{ c.label }}</p>
+            </sc-for>
           </div>
         </div>
       </section>
@@ -795,6 +900,66 @@ class Component extends DCLogic {
                      materials: [{ name: {th,en}, href: '' }] } */
     courseDetails: {},
 
+    /* ─── เชื่อมต่อ Google Sheets + Google Drive ──────────────────────
+       ตั้งค่าครั้งเดียว หลังจากนั้นเพิ่มหลักฐานได้โดยไม่ต้องแก้โค้ดอีก
+       ขั้นตอนละเอียดอยู่ในไฟล์ 'เชื่อมต่อ Google Sheets.md'
+
+       csvUrl : ลิงก์ CSV ของชีต (File → Share → Publish to web → เลือกชีต → CSV)
+       formUrl: ลิงก์ Google Form ที่มีคำถามอัปโหลดไฟล์ (ไฟล์จะไปเก็บใน Drive เอง)
+       ถ้าเว้นว่างทั้งสองช่อง เว็บจะใช้รายการใน DATA.curriculumDocs ด้านล่างแทน */
+    sheet: {
+      csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgSl9vV9Y65txBn6TBF0T-BQp2qxeyRpUmL6h5NN3jW_ZptAZZQAjh6Az0-cXq8WvN2Sz_745K9C6-/pub?gid=0&single=true&output=csv',
+      formUrl: ''
+    },
+
+    /* ─── ทะเบียนเอกสารหลักสูตร (AUN-QA) ────────────────────────────
+       เพิ่มเอกสารใหม่ต่อท้าย DATA.curriculumDocs ได้เลย ค้นหาและกรองได้ในหน้าเว็บ
+
+       code  : รหัสเอกสาร รูปแบบ MB-C<AUN>-<ลำดับ 3 หลัก> เช่น 'MB-C1-002'
+       auns  : AUN-QA ที่หลักฐานนี้ใช้ เช่น [1] หรือ [2, 3, 7] · [] = ไม่ผูกกับ AUN
+               ลำดับในรหัสยึดตาม AUN ตัวแรกในรายการ
+       type  : ประเภทเอกสาร เช่น 'มคอ.2', 'SAR', 'Mapping', 'PLO', 'คู่มือ', 'รายงาน'
+       year  : ปีของเอกสาร (พ.ศ.) เช่น '2569'
+       status: 'done' = จัดเก็บแล้ว · 'collecting' = อยู่ระหว่างรวบรวม
+       href  : เส้นทางไฟล์ ('' = ยังไม่มีไฟล์) */
+    aunCriteria: [
+      { n: 1, name: { th: 'ผลการเรียนรู้ที่คาดหวัง (Expected Learning Outcomes)', en: 'Expected Learning Outcomes' } },
+      { n: 2, name: { th: 'โครงสร้างและเนื้อหาของหลักสูตร (Programme Structure and Content)', en: 'Programme Structure and Content' } },
+      { n: 3, name: { th: 'แนวทางการจัดการเรียนการสอน (Teaching and Learning Approach)', en: 'Teaching and Learning Approach' } },
+      { n: 4, name: { th: 'การประเมินผู้เรียน (Student Assessment)', en: 'Student Assessment' } },
+      { n: 5, name: { th: 'บุคลากรสายวิชาการ (Academic Staff)', en: 'Academic Staff' } },
+      { n: 6, name: { th: 'การบริการและการช่วยเหลือผู้เรียน (Student Support Services)', en: 'Student Support Services' } },
+      { n: 7, name: { th: 'สิ่งสนับสนุนการเรียนรู้ทางกายภาพ (Facilities and Infrastructure)', en: 'Facilities and Infrastructure' } },
+      { n: 8, name: { th: 'ผลผลิตและผลลัพธ์ (Output and Outcomes)', en: 'Output and Outcomes' } }
+    ],
+
+    curriculumDocs: [
+      { code: 'MB-C1-001', auns: [1], type: 'PLO', year: '2569', status: 'done',
+        name: { th: 'ผลลัพธ์การเรียนรู้หลักสูตร 2569', en: 'Programme learning outcomes 2026' },
+        href: 'uploads/curr_files-1788601913705-55nl.pdf' },
+      { code: 'MB-C1-002', auns: [1], type: 'PLO', year: '2564', status: 'done',
+        name: { th: 'ผลลัพธ์การเรียนรู้หลักสูตร 2564', en: 'Programme learning outcomes 2021' },
+        href: 'uploads/curr_files-1788601911081-p3qk.pdf' },
+      { code: 'MB-C2-001', auns: [2], type: 'มคอ.2', year: '2569', status: 'done',
+        name: { th: 'มคอ.2 หลักสูตร วท.บ. จุลชีววิทยา 2569', en: 'TQF2 — B.Sc. Microbiology 2026' },
+        href: 'uploads/curr_files-1788601825850-hlrt.pdf' },
+      { code: 'MB-C2-002', auns: [2], type: 'มคอ.2', year: '2564', status: 'done',
+        name: { th: 'มคอ.2 หลักสูตร 2564', en: 'TQF2 — curriculum 2021' },
+        href: 'uploads/curr_files-1788601817113-mui0.pdf' },
+      { code: 'MB-C2-003', auns: [2], type: 'Mapping', year: '2569', status: 'done',
+        name: { th: 'Curriculum mapping 2569', en: 'Curriculum mapping 2026' },
+        href: 'uploads/curr_files-1788601901957-bgbg.pdf' },
+      { code: 'MB-C2-004', auns: [2], type: 'Mapping', year: '2564', status: 'done',
+        name: { th: 'Curriculum mapping 2564', en: 'Curriculum mapping 2021' },
+        href: 'uploads/curr_files-1788601886929-orhq.pdf' },
+      { code: 'MB-C8-001', auns: [8], type: 'SAR', year: '2568', status: 'done',
+        name: { th: 'SAR MICRO 2568', en: 'SAR MICRO 2025' },
+        href: 'uploads/curr_files-1788601861527-xc7w.pdf' },
+      { code: 'MB-C0-001', auns: [], type: 'คู่มือ', year: '2569', status: 'done',
+        name: { th: 'คู่มือ AUN-QA SAR 2569', en: 'AUN-QA SAR guide 2026' },
+        href: 'uploads/curr_files-1788601881247-7a55.pdf' }
+    ],
+
     /* บันทึกการปรับปรุง/ทวนหลักสูตร — [{ date:'2026-05-01', title:{th,en}, note:{th,en} }] */
     revisions: [],
 
@@ -966,7 +1131,32 @@ class Component extends DCLogic {
       overview: 'ภาพรวมหลักสูตร', totalCredits: 'หน่วยกิตรวม', duration: 'ระยะเวลา', structureTitle: 'โครงสร้างหลักสูตรและหน่วยกิต',
       plosTitle: 'ผลลัพธ์การเรียนรู้ของหลักสูตร (PLO)', studyPlanTitle: 'แผนการเรียนรายชั้นปี',
       mappingTitle: 'Curriculum mapping', revisionsTitle: 'บันทึกการปรับปรุงและทวนหลักสูตร',
-      internalTitle: 'เอกสารภายในหลักสูตร', internalHint: 'สำหรับอาจารย์และคณะกรรมการหลักสูตร',
+      internalTitle: 'ทะเบียนเอกสารหลักสูตร', internalHint: 'สำหรับอาจารย์และคณะกรรมการหลักสูตร',
+      docSearchLabel: 'ค้นหารหัสเอกสาร ชื่อเอกสาร ประเภท หรือปี', docSearchPlaceholder: 'MB-C1 · มคอ.2 · 2569',
+      aunAll: 'ทุก AUN', aunNone: 'ไม่ผูกกับ AUN', aunPrefix: 'AUN',
+      docFound: 'พบ {n} รายการ', docShowMore: 'แสดงเพิ่ม ({n} รายการ)', docShowAll: 'แสดงทั้งหมด', docCollapse: 'ย่อรายการ',
+      docNoResults: 'ไม่พบเอกสารที่ค้นหา', statusCollecting: 'อยู่ระหว่างรวบรวม', statusDone: 'จัดเก็บแล้ว',
+      uploadTitle: 'เพิ่มหลักฐานใหม่', uploadHint: 'เลือก AUN ที่หลักฐานนี้ใช้ ระบบจะออกรหัสและลำดับให้เอง',
+      uploadName: 'ชื่อหลักฐาน', uploadNamePh: 'เช่น รายงานการทวนสอบผลสัมฤทธิ์ 2569',
+      uploadType: 'ประเภท', uploadTypePh: 'รายงาน', uploadYear: 'ปี (พ.ศ.)', uploadYearPh: '2569',
+      uploadAun: 'AUN ที่เกี่ยวข้อง (เลือกได้หลายข้อ)', uploadFile: 'ไฟล์หลักฐาน',
+      uploadCodePreview: 'รหัสที่จะได้รับ', uploadAdd: 'เพิ่มเข้าทะเบียน', uploadClear: 'ล้างฟอร์ม',
+      uploadNeedAun: 'เลือก AUN อย่างน้อยหนึ่งข้อ', uploadNeedName: 'ใส่ชื่อหลักฐาน',
+      uploadFirstAunNote: 'ลำดับในรหัสยึดตาม AUN ข้อแรกที่เลือก',
+      pendingTag: 'เพิ่มในเครื่องนี้', pendingRemove: 'ลบ',
+      snippetTitle: 'โค้ดสำหรับบันทึกถาวร', snippetHint: 'คัดลอกบรรทัดนี้ไปวางต่อท้าย DATA.curriculumDocs ในไฟล์ แล้วอัปโหลดไฟล์หลักฐานไว้ในโฟลเดอร์ uploads/ เพื่อให้ทุกคนเห็นข้อมูลเดียวกัน',
+      snippetCopy: 'คัดลอกโค้ด', snippetCopied: 'คัดลอกแล้ว',
+      pendingNote: 'รายการที่เพิ่มผ่านฟอร์มนี้เก็บอยู่ในเบราว์เซอร์ของคุณเท่านั้น ไฟล์จะเปิดได้จนกว่าจะปิดหน้าเว็บ',
+      sheetLoading: 'กำลังดึงข้อมูลจาก Google Sheets…',
+      sheetOk: 'ข้อมูลจาก Google Sheets · {n} รายการ',
+      sheetError: 'ดึงข้อมูลจาก Google Sheets ไม่สำเร็จ กำลังแสดงรายการที่บันทึกไว้ในไฟล์',
+      sheetOff: 'ยังไม่ได้เชื่อม Google Sheets — ตั้งค่าที่ DATA.sheet.csvUrl (ดูไฟล์ "เชื่อมต่อ Google Sheets.md")',
+      sheetReload: 'ดึงข้อมูลใหม่',
+      formOpen: 'อัปโหลดหลักฐานผ่าน Google Form',
+      formHint: 'ไฟล์จะไปเก็บใน Google Drive และแถวข้อมูลจะเข้าชีตเอง เว็บจะแสดงให้เห็นภายในไม่กี่นาที',
+      manualTitle: 'หรือเพิ่มแถวในชีตด้วยตนเอง',
+      rowTitle: 'แถวสำหรับวางในชีต', rowHint: 'คัดลอกแล้ววางในแถวว่างถัดไปของชีต (คัดลอกมาเป็นช่องแยกให้เรียบร้อยแล้ว)',
+      codeScheme: 'รหัสเอกสาร MB-C<AUN>-<ลำดับ> เช่น MB-C1-002 คือ AUN 1 ลำดับที่ 2',
       term1: 'ภาคต้น', term2: 'ภาคปลาย', creditsCol: 'หน่วยกิต', groupCol: 'หมวดวิชา',
       emptyFill: 'รอเติมข้อมูล — เพิ่มได้ในบล็อก DATA.{k} ที่ต้นไฟล์',
       courseDetail: 'รายละเอียดรายวิชา', descTitle: 'คำอธิบายรายวิชา', ownersTitle: 'อาจารย์ผู้รับผิดชอบรายวิชา',
@@ -1003,7 +1193,33 @@ class Component extends DCLogic {
       overview: 'Programme overview', totalCredits: 'Total credits', duration: 'Duration', structureTitle: 'Structure and credits',
       plosTitle: 'Programme learning outcomes (PLO)', studyPlanTitle: 'Study plan by year',
       mappingTitle: 'Curriculum mapping', revisionsTitle: 'Revision and verification log',
-      internalTitle: 'Internal curriculum documents', internalHint: 'For faculty and the curriculum committee',
+      internalTitle: 'Curriculum document register', internalHint: 'For faculty and the curriculum committee',
+      docSearchLabel: 'Search by code, title, type or year', docSearchPlaceholder: 'MB-C1 · TQF2 · 2026',
+      aunAll: 'All AUN', aunNone: 'Not linked to AUN', aunPrefix: 'AUN',
+      docFound: '{n} documents', docShowMore: 'Show more ({n})', docShowAll: 'Show all', docCollapse: 'Collapse',
+      docNoResults: 'No matching document.', statusCollecting: 'Being collected', statusDone: 'Filed',
+      uploadTitle: 'Add new evidence', uploadHint: 'Pick the AUN criteria this evidence supports; the code and serial are generated for you.',
+      uploadName: 'Evidence title', uploadNamePh: 'e.g. Learning outcome verification report 2026',
+      uploadType: 'Type', uploadTypePh: 'Report', uploadYear: 'Year (BE)', uploadYearPh: '2569',
+      uploadAun: 'Related AUN (choose any)', uploadFile: 'Evidence file',
+      uploadCodePreview: 'Assigned code', uploadAdd: 'Add to register', uploadClear: 'Clear form',
+      uploadNeedAun: 'Choose at least one AUN.', uploadNeedName: 'Enter a title.',
+      uploadFirstAunNote: 'The serial follows the first AUN selected.',
+      pendingTag: 'Added on this device', pendingRemove: 'Remove',
+      snippetTitle: 'Code for permanent storage',
+      snippetHint: 'Copy this line into DATA.curriculumDocs in the file and place the evidence file in uploads/ so everyone sees the same register.',
+      snippetCopy: 'Copy code', snippetCopied: 'Copied',
+      pendingNote: 'Entries added through this form live in your browser only; the file opens until this page is closed.',
+      sheetLoading: 'Loading from Google Sheets…',
+      sheetOk: 'From Google Sheets · {n} records',
+      sheetError: 'Could not load Google Sheets; showing the register stored in the file.',
+      sheetOff: 'Google Sheets not connected — set DATA.sheet.csvUrl (see "เชื่อมต่อ Google Sheets.md").',
+      sheetReload: 'Reload',
+      formOpen: 'Upload evidence via Google Form',
+      formHint: 'The file lands in Google Drive and the row lands in the sheet; the register picks it up within a few minutes.',
+      manualTitle: 'Or add a sheet row manually',
+      rowTitle: 'Row to paste into the sheet', rowHint: 'Copy and paste into the next empty row of the sheet.',
+      codeScheme: 'Codes follow MB-C<AUN>-<serial>, e.g. MB-C1-002 = AUN 1, item 2.',
       term1: 'Semester 1', term2: 'Semester 2', creditsCol: 'Credits', groupCol: 'Course group',
       emptyFill: 'Empty — fill in DATA.{k} at the top of the file.',
       courseDetail: 'Course detail', descTitle: 'Course description', ownersTitle: 'Course owners',
@@ -1035,12 +1251,87 @@ class Component extends DCLogic {
     }
   };
 
-  state = { page: 'home', lang: 'th', year: 'all', q: '', dismissed: false, course: '' };
+  state = { page: 'home', lang: 'th', year: 'all', q: '', dismissed: false, course: '', docQ: '', docAun: 'all', docAll: false,
+    ndName: '', ndType: '', ndYear: '', ndAuns: [], ndFile: null, pending: [], copied: false,
+    sheetRows: null, sheetState: 'off' };
+
+  /* แปลง CSV เป็นอาเรย์ รองรับเครื่องหมายคำพูดและคอมมาในเซลล์ */
+  parseCsv(text) {
+    const rows = [];
+    let row = [], cell = '', q = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (q) {
+        if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (ch !== '\r') cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows.filter(r => r.some(c => String(c).trim()));
+  }
+
+  /* จับคู่หัวคอลัมน์ในชีตกับช่องข้อมูล รับได้ทั้งไทยและอังกฤษ */
+  mapSheet(rows) {
+    if (!rows.length) return [];
+    const alias = {
+      code: ['รหัส', 'รหัสเอกสาร', 'code'],
+      name: ['ชื่อหลักฐาน', 'ชื่อเอกสาร', 'ชื่อ', 'name', 'title'],
+      auns: ['aun', 'auns', 'เกณฑ์', 'aun ที่เกี่ยวข้อง'],
+      type: ['ประเภท', 'type'],
+      year: ['ปี', 'ปีการศึกษา', 'year'],
+      status: ['สถานะ', 'status'],
+      href: ['ลิงก์', 'ลิงค์', 'ไฟล์', 'link', 'url', 'file']
+    };
+    const head = rows[0].map(h => String(h).trim().toLowerCase());
+    const idx = {};
+    Object.keys(alias).forEach(k => {
+      idx[k] = head.findIndex(h => alias[k].some(a => h === a || h.indexOf(a) > -1));
+    });
+    if (idx.name < 0) return [];
+    const driveView = (u) => {
+      const m = /\/d\/([-\w]{20,})|[?&]id=([-\w]{20,})/.exec(u || '');
+      const id = m && (m[1] || m[2]);
+      return id ? 'https://drive.google.com/file/d/' + id + '/view' : (u || '').trim();
+    };
+    return rows.slice(1).map(r => {
+      const get = (k) => idx[k] >= 0 ? String(r[idx[k]] || '').trim() : '';
+      const name = get('name');
+      if (!name) return null;
+      const st = get('status').toLowerCase();
+      return {
+        code: get('code'), name: { th: name, en: name },
+        auns: get('auns').split(/[^0-9]+/).filter(Boolean).map(Number),
+        type: get('type') || '—', year: get('year'),
+        status: (st.indexOf('รวบรวม') > -1 || st.indexOf('collect') > -1 || (!get('href') && st !== 'done')) ? 'collecting' : 'done',
+        href: driveView(get('href')), fromSheet: true
+      };
+    }).filter(Boolean);
+  }
+
+  loadSheet() {
+    const url = (this.DATA.sheet && this.DATA.sheet.csvUrl || '').trim();
+    if (!url) { this.setState({ sheetState: 'off' }); return; }
+    this.setState({ sheetState: 'loading' });
+    fetch(url + (url.indexOf('?') > -1 ? '&' : '?') + 'cacheBust=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.text(); })
+      .then(t => {
+        const rows = this.mapSheet(this.parseCsv(t));
+        if (!rows.length) throw new Error('empty');
+        this.setState({ sheetRows: rows, sheetState: 'ok' });
+      })
+      .catch(() => this.setState({ sheetRows: null, sheetState: 'error' }));
+  }
 
   componentDidMount() {
+    this.loadSheet();
     try {
       const saved = localStorage.getItem('mbio-lang');
       if (saved === 'th' || saved === 'en') this.setState({ lang: saved });
+      const raw = localStorage.getItem('mbio-pending-docs');
+      if (raw) this.setState({ pending: JSON.parse(raw) });
       const key = 'mbio-reminder-' + this.todayKey();
       if (localStorage.getItem(key) === '1') this.setState({ dismissed: true });
     } catch (e) { /* storage unavailable */ }
@@ -1176,6 +1467,51 @@ class Component extends DCLogic {
     const revisions = D.revisions.slice().sort((a, b) => a.date < b.date ? 1 : -1)
       .map(r => ({ dateLabel: this.fmtRange({ start: r.date }), title: this.tx(r.title), note: this.tx(r.note) }));
 
+    /* ทะเบียนหลักฐานหลักสูตร — ค้นหา กรองตาม AUN ย่อรายการ และเพิ่มหลักฐานใหม่ */
+    const baseDocs = S.sheetState === 'ok' && S.sheetRows ? S.sheetRows : D.curriculumDocs;
+    const allDocs = baseDocs.concat(S.pending.map(p => Object.assign({}, p, { pending: true })));
+    const serialOf = (code) => { const m = /-(\d+)$/.exec(code || ''); return m ? Number(m[1]) : 0; };
+    const nextCode = (first) => {
+      const pre = 'MB-C' + (first || 0) + '-';
+      let max = 0;
+      allDocs.forEach(d => { if ((d.code || '').indexOf(pre) === 0) max = Math.max(max, serialOf(d.code)); });
+      return pre + String(max + 1).padStart(3, '0');
+    };
+    const ndFirst = S.ndAuns.length ? S.ndAuns.slice().sort((a, b) => a - b)[0] : 0;
+    const ndCode = nextCode(ndFirst);
+    const ndValid = !!S.ndName.trim() && S.ndAuns.length > 0;
+
+    const dq = S.docQ.trim().toLowerCase();
+    const aunsOf = (d) => (d.auns && d.auns.length ? d.auns : []);
+    const docHits = allDocs.filter(d => {
+      const list = aunsOf(d);
+      if (S.docAun === '0' && list.length) return false;
+      if (S.docAun !== 'all' && S.docAun !== '0' && list.indexOf(Number(S.docAun)) < 0) return false;
+      if (!dq) return true;
+      return [d.code, this.tx(d.name), d.type, d.year, list.map(n => 'AUN ' + n).join(' ')]
+        .join(' ').toLowerCase().indexOf(dq) > -1;
+    }).map(d => {
+      const has = !!d.href;
+      const list = aunsOf(d);
+      return {
+        code: d.code, name: this.tx(d.name),
+        meta: [d.type, d.year].filter(Boolean).join(' '),
+        auns: list.map(n => ({ label: String(n) })),
+        noAun: list.length === 0, noAunLabel: L.aunNone,
+        statusLabel: d.status === 'collecting' ? L.statusCollecting : L.statusDone,
+        statusCls: d.status === 'collecting' ? 'tag tag-neutral' : 'tag tag-accent-2',
+        isPending: !!d.pending, pendingLabel: L.pendingTag,
+        removeIt: d.pending ? () => {
+          const next = S.pending.filter(p => p.code !== d.code);
+          try { localStorage.setItem('mbio-pending-docs', JSON.stringify(next.map(p => Object.assign({}, p, { href: '' })))); } catch (e) { /* ignore */ }
+          this.setState({ pending: next });
+        } : null,
+        href: has ? d.href : '#', target: has ? '_blank' : '',
+        cls: has ? 'btn btn-secondary' : 'btn btn-ghost', action: has ? L.open : L.pending
+      };
+    }).sort((a, b) => a.code < b.code ? -1 : 1);
+    const docShown = S.docAll ? docHits : docHits.slice(0, 6);
+
     const cd = D.courseDetails[S.course] || {};
     const detail = {
       code: S.course, name: nameOf(S.course),
@@ -1227,6 +1563,84 @@ class Component extends DCLogic {
       mappingRows, noMapping: mappingRows.length === 0, hasMapping: mappingRows.length > 0, mappingHint: fill('mapping'),
       revisions, noRevisions: revisions.length === 0, revisionsHint: fill('revisions'),
       detail,
+      docQ: S.docQ,
+      onDocQuery: (e) => this.setState({ docQ: e.target.value, docAll: false }),
+
+      ndName: S.ndName, ndType: S.ndType, ndYear: S.ndYear, ndCode,
+      onNdName: (e) => this.setState({ ndName: e.target.value, copied: false }),
+      onNdType: (e) => this.setState({ ndType: e.target.value, copied: false }),
+      onNdYear: (e) => this.setState({ ndYear: e.target.value, copied: false }),
+      onNdFile: (e) => {
+        const f = e.target.files && e.target.files[0];
+        this.setState({ ndFile: f ? { name: f.name, url: URL.createObjectURL(f) } : null, copied: false });
+      },
+      ndFileName: S.ndFile ? S.ndFile.name : '',
+      ndHasFile: !!S.ndFile,
+      ndAunBoxes: D.aunCriteria.map(c => {
+        const on = S.ndAuns.indexOf(c.n) > -1;
+        return {
+          label: 'AUN ' + c.n, title: this.tx(c.name),
+          cls: on ? 'btn btn-primary' : 'btn btn-secondary',
+          toggle: () => {
+            const next = on ? S.ndAuns.filter(x => x !== c.n) : S.ndAuns.concat([c.n]);
+            this.setState({ ndAuns: next.sort((a, b) => a - b), copied: false });
+          }
+        };
+      }),
+      ndSelectedNote: S.ndAuns.length > 1 ? L.uploadFirstAunNote : '',
+      sheetIsOff: S.sheetState === 'off',
+      sheetIsLoading: S.sheetState === 'loading',
+      sheetIsOk: S.sheetState === 'ok',
+      sheetIsError: S.sheetState === 'error',
+      sheetOkLabel: L.sheetOk.replace('{n}', String(S.sheetRows ? S.sheetRows.length : 0)),
+      reloadSheet: () => this.loadSheet(),
+      formUrl: (D.sheet && D.sheet.formUrl || '').trim(),
+      hasFormUrl: !!(D.sheet && D.sheet.formUrl || '').trim(),
+
+      ndValid, ndInvalid: !ndValid,
+      ndAddCls: ndValid ? 'btn btn-primary' : 'btn btn-secondary',
+      ndAddStyle: ndValid ? 'font-size: 15px; padding: 11px 22px; min-height: 44px; margin-left: auto'
+        : 'font-size: 15px; padding: 11px 22px; min-height: 44px; margin-left: auto; opacity: 0.45; cursor: not-allowed',
+      ndWarn: !S.ndName.trim() ? L.uploadNeedName : (S.ndAuns.length === 0 ? L.uploadNeedAun : ''),
+      addDoc: () => {
+        if (!ndValid) return;
+        const entry = {
+          code: ndCode, auns: S.ndAuns.slice(),
+          type: S.ndType.trim() || '—', year: S.ndYear.trim() || '',
+          status: S.ndFile ? 'done' : 'collecting',
+          name: { th: S.ndName.trim(), en: S.ndName.trim() },
+          href: S.ndFile ? S.ndFile.url : ''
+        };
+        const next = S.pending.concat([entry]);
+        try { localStorage.setItem('mbio-pending-docs', JSON.stringify(next.map(p => Object.assign({}, p, { href: '' })))); } catch (e) { /* ignore */ }
+        this.setState({ pending: next, ndName: '', ndType: '', ndYear: '', ndAuns: [], ndFile: null, copied: false });
+      },
+      clearDoc: () => this.setState({ ndName: '', ndType: '', ndYear: '', ndAuns: [], ndFile: null, copied: false }),
+      snippet: S.pending.length
+        ? S.pending.map(p => [p.code, p.name.th, p.auns.join(', '), p.type, p.year, p.href ? 'done' : 'collecting', ''].join('\t')).join('\n')
+        : '',
+      hasSnippet: S.pending.length > 0,
+      copyLabel: S.copied ? L.snippetCopied : L.snippetCopy,
+      copySnippet: () => {
+        const text = S.pending.map(p => [p.code, p.name.th, p.auns.join(', '), p.type, p.year, p.href ? 'done' : 'collecting', ''].join('\t')).join('\n');
+        try { navigator.clipboard.writeText(text); } catch (e) { /* ignore */ }
+        this.setState({ copied: true });
+      },
+      aunChips: [{ key: 'all', label: L.aunAll }]
+        .concat(D.aunCriteria.map(c => ({ key: String(c.n), label: L.aunPrefix + ' ' + c.n })))
+        .concat([{ key: '0', label: L.aunNone }])
+        .map(c => ({
+          label: c.label,
+          cls: S.docAun === c.key ? 'btn btn-primary' : 'btn btn-secondary',
+          go: () => this.setState({ docAun: c.key, docAll: false })
+        })),
+      aunLegend: D.aunCriteria.map(c => ({ label: L.aunPrefix + ' ' + c.n + ' · ' + this.tx(c.name) })),
+      docRows: docShown, docFound: L.docFound.replace('{n}', String(docHits.length)),
+      docNoResults: docHits.length === 0,
+      docHasMore: docHits.length > docShown.length,
+      docMoreLabel: L.docShowMore.replace('{n}', String(docHits.length - docShown.length)),
+      docCanCollapse: S.docAll && docHits.length > 6,
+      toggleDocAll: () => this.setState({ docAll: !S.docAll }),
       goHome: this.go('home'), goTeach: this.go('teach'), goExam: this.go('exam'), goCal: this.go('cal'),
       nav: navDefs.map(([key, label]) => ({
         label, go: this.go(key), cur: S.page === key ? 'page' : undefined,
