@@ -130,7 +130,7 @@
           <sc-for list="{{ yearChips }}" as="y" hint-placeholder-count="5">
             <button onClick="{{ y.go }}" class="{{ y.cls }}" style="font-size: 15px; padding: 9px 18px; min-height: 42px">{{ y.label }}</button>
           </sc-for>
-          <a href="{{ teachPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 15px; margin-left: auto">{{ L.openPdf }}</a>
+          <a href="{{ teachPdf }}" onClick="{{ openTeachPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 15px; margin-left: auto">{{ L.openPdf }}</a>
         </div>
 
         <div style="display: grid; gap: 26px; margin-top: 30px">
@@ -167,7 +167,7 @@
         <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ termLabel }}</span>
         <h1 style="font-size: clamp(30px, 4vw, 44px); margin: 16px 0 0">{{ L.navExam }}</h1>
         <p style="margin-top: 14px; font-size: 16.5px; max-width: 66ch; color: var(--color-neutral-800)">{{ L.examIntro }}</p>
-        <a href="{{ examPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 15px; margin-top: 10px; align-self: start">{{ L.openPdf }}</a>
+        <a href="{{ examPdf }}" onClick="{{ openExamPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 15px; margin-top: 10px; align-self: start">{{ L.openPdf }}</a>
 
         <sc-for list="{{ examTables }}" as="ex" hint-placeholder-count="2">
           <div style="margin-top: 40px">
@@ -389,7 +389,7 @@
       <section style="padding: 44px 0 40px">
         <h1 style="font-size: clamp(30px, 4vw, 44px)">{{ L.navCourses }}</h1>
         <p style="margin-top: 14px; font-size: 16.5px; max-width: 66ch; color: var(--color-neutral-800)">{{ L.coursesIntro }}</p>
-        <a href="{{ descPdf }}" target="_blank" class="btn btn-secondary" style="font-size: 15px; padding: 11px 22px; min-height: 44px; margin-top: 16px; align-self: start">{{ L.openDescPdf }}</a>
+        <a href="{{ descPdf }}" onClick="{{ openDescPdf }}" target="_blank" class="btn btn-secondary" style="font-size: 15px; padding: 11px 22px; min-height: 44px; margin-top: 16px; align-self: start">{{ L.openDescPdf }}</a>
         <div class="field" style="max-width: 420px; margin-top: 22px">
           <label for="course-q" style="font-size: 14px">{{ L.searchLabel }}</label>
           <input id="course-q" class="input" type="search" value="{{ q }}" onInput="{{ onQuery }}" placeholder="30510169" style="font-size: 16px; min-height: 44px">
@@ -447,7 +447,7 @@
         <p style="margin-top: 8px; font-size: 15px; color: var(--color-neutral-800); max-width: 62ch">{{ L.currLinksHint }}</p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin-top: 16px">
           <sc-for list="{{ currLinks }}" as="l" hint-placeholder-count="9">
-            <a href="{{ l.href }}" target="_blank" class="card elev-sm" style="padding: 18px 20px; text-decoration: none; color: inherit; gap: 4px; min-height: 44px">
+            <a href="{{ l.href }}" onClick="{{ l.open }}" target="_blank" class="card elev-sm" style="padding: 18px 20px; text-decoration: none; color: inherit; gap: 4px; min-height: 44px">
               <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 17px">{{ l.name }}</span>
               <span style="font-size: 13.5px; color: var(--color-neutral-700); word-break: break-all">{{ l.sub }}</span>
             </a>
@@ -507,7 +507,7 @@
 
         <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 44px">
           <h2 style="font-size: 25px">{{ L.studyPlanTitle }}</h2>
-          <a href="{{ planPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
+          <a href="{{ planPdf }}" onClick="{{ openPlanPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 14px">
           <sc-for list="{{ studyPlan }}" as="y" hint-placeholder-count="4">
@@ -534,7 +534,7 @@
 
         <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 44px">
           <h2 style="font-size: 25px">{{ L.mappingTitle }}</h2>
-          <a href="{{ mappingPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
+          <a href="{{ mappingPdf }}" onClick="{{ openMappingPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
         </div>
         <p style="margin-top: 8px; font-size: 14.5px; color: var(--color-neutral-800); max-width: 74ch">{{ L.mappingLegend }}</p>
         <div class="card elev-sm" style="padding: 8px 16px; margin-top: 14px; overflow-x: auto">
@@ -1904,6 +1904,12 @@ class Component extends DCLogic {
       })));
       return found;
     };
+    const openUrl = (url) => (e) => {
+      if (e) e.preventDefault();
+      if (!url) return;
+      const w = window.open(url, '_blank');
+      if (!w) { try { window.top.location.href = url; } catch (_) { window.location.href = url; } }
+    };
     const openCourse = (code) => (e) => { if (e) e.preventDefault(); this.setState({ page: 'course', course: code }); window.scrollTo(0, 0); };
     const catalog = [];
     const seen = {};
@@ -2030,7 +2036,9 @@ class Component extends DCLogic {
       termLabel: this.tx(D.term),
       teachPdf: D.teachPdf, examPdf: D.examPdf,
       planPdf: D.planPdf, mappingPdf: D.mappingPdf, descPdf: D.descPdf,
-      currLinks: (D.currLinks || []).map(l => ({ name: this.tx(l.name), sub: l.sub || '', href: l.href || '#' })),
+      openTeachPdf: openUrl(D.teachPdf), openExamPdf: openUrl(D.examPdf),
+      openPlanPdf: openUrl(D.planPdf), openMappingPdf: openUrl(D.mappingPdf), openDescPdf: openUrl(D.descPdf),
+      currLinks: (D.currLinks || []).map(l => ({ name: this.tx(l.name), sub: l.sub || '', href: l.href || '#', open: openUrl(l.href) })),
       isHome: S.page === 'home', isTeach: S.page === 'teach', isExam: S.page === 'exam',
       isCal: S.page === 'cal', isLinks: S.page === 'links', isDocs: S.page === 'docs',
       isCourses: S.page === 'courses', isContact: S.page === 'contact',
