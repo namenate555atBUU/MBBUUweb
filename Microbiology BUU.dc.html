@@ -444,6 +444,17 @@
           </div>
         </div>
 
+        <h2 style="font-size: 25px; margin-top: 44px">{{ L.currLinksTitle }}</h2>
+        <p style="margin-top: 8px; font-size: 15px; color: var(--color-neutral-800); max-width: 62ch">{{ L.currLinksHint }}</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin-top: 16px">
+          <sc-for list="{{ currLinks }}" as="l" hint-placeholder-count="9">
+            <a href="{{ l.href }}" target="_blank" class="card elev-sm" style="padding: 18px 20px; text-decoration: none; color: inherit; gap: 4px; min-height: 44px">
+              <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 17px">{{ l.name }}</span>
+              <span style="font-size: 13.5px; color: var(--color-neutral-700); word-break: break-all">{{ l.sub }}</span>
+            </a>
+          </sc-for>
+        </div>
+
         <h2 style="font-size: 25px; margin-top: 44px">{{ L.structureTitle }}</h2>
         <div class="card elev-sm" style="padding: 8px 16px; margin-top: 14px">
           <sc-if value="{{ noStructure }}" hint-placeholder-val="{{ true }}">
@@ -495,7 +506,10 @@
           </article>
         </div>
 
-        <h2 style="font-size: 25px; margin-top: 44px">{{ L.studyPlanTitle }}</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 44px">
+          <h2 style="font-size: 25px">{{ L.studyPlanTitle }}</h2>
+          <a href="{{ planPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
+        </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-top: 14px">
           <sc-for list="{{ studyPlan }}" as="y" hint-placeholder-count="4">
             <article class="card elev-sm" style="padding: 22px; gap: 14px">
@@ -504,11 +518,11 @@
                 <span style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--color-divider); padding-top: 12px">
                   <span class="tag tag-accent-2" style="font-size: 12.5px; align-self: flex-start">{{ t.label }}</span>
                   <sc-for list="{{ t.courses }}" as="c" hint-placeholder-count="0">
-                    <span style="display: flex; gap: 10px; font-size: 15px">
+                    <a href="#" onClick="{{ c.open }}" style="display: flex; gap: 10px; font-size: 15px; color: inherit; text-decoration: none; cursor: {{ c.cursor }}; border-radius: 8px; padding: 3px 6px; margin: 0 -6px" style-hover="background: var(--color-accent-100)">
                       <span style="font-variant-numeric: tabular-nums; color: var(--color-neutral-700)">{{ c.code }}</span>
                       <span style="min-width: 0">{{ c.name }}</span>
                       <span style="margin-left: auto; color: var(--color-neutral-700)">{{ c.credits }}</span>
-                    </span>
+                    </a>
                   </sc-for>
                   <sc-if value="{{ t.empty }}" hint-placeholder-val="{{ true }}">
                     <span style="font-size: 14.5px; color: var(--color-neutral-700)">{{ studyPlanHint }}</span>
@@ -519,7 +533,11 @@
           </sc-for>
         </div>
 
-        <h2 style="font-size: 25px; margin-top: 44px">{{ L.mappingTitle }}</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 44px">
+          <h2 style="font-size: 25px">{{ L.mappingTitle }}</h2>
+          <a href="{{ mappingPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
+        </div>
+        <p style="margin-top: 8px; font-size: 14.5px; color: var(--color-neutral-800); max-width: 74ch">{{ L.mappingLegend }}</p>
         <div class="card elev-sm" style="padding: 8px 16px; margin-top: 14px; overflow-x: auto">
           <sc-if value="{{ noMapping }}" hint-placeholder-val="{{ true }}">
             <p style="padding: 16px 4px; font-size: 15px; color: var(--color-neutral-700)">{{ mappingHint }}</p>
@@ -543,7 +561,7 @@
                   <tr>
                     <td><span style="font-variant-numeric: tabular-nums; color: var(--color-neutral-700)">{{ m.code }}</span> {{ m.name }}</td>
                     <sc-for list="{{ m.cells }}" as="c" hint-placeholder-count="7">
-                      <td style="text-align: center; color: var(--color-accent-700)">{{ c.mark }}</td>
+                      <td style="text-align: center; color: var(--color-accent-700); font-weight: 600">{{ c.mark }}</td>
                     </sc-for>
                   </tr>
                 </sc-for>
@@ -646,7 +664,12 @@
             <h3 style="font-size: 21px">{{ L.uploadTitle }}</h3>
             <sc-if value="{{ hasFormUrl }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top: 14px; display: grid; gap: 8px; justify-items: start">
-                <a href="{{ formUrl }}" target="_blank" class="btn btn-primary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.formOpen }}</a>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px">
+                  <a href="{{ formUrl }}" target="_blank" class="btn btn-primary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.formOpen }}</a>
+                  <sc-if value="{{ hasFolderUrl }}" hint-placeholder-val="{{ false }}">
+                    <a href="{{ folderUrl }}" target="_blank" class="btn btn-secondary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.folderOpen }}</a>
+                  </sc-if>
+                </div>
                 <p style="font-size: 14px; color: var(--color-neutral-800); max-width: 62ch">{{ L.formHint }}</p>
               </div>
               <p style="margin-top: 20px; font-size: 15px; font-weight: 600">{{ L.manualTitle }}</p>
@@ -727,7 +750,10 @@
           </sc-for>
         </div>
 
-        <h2 style="font-size: 23px; margin-top: 38px">{{ L.descTitle }}</h2>
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-top: 38px">
+          <h2 style="font-size: 23px">{{ L.descTitle }}</h2>
+          <a href="{{ descPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 14.5px; min-height: 44px">{{ L.openPdf }}</a>
+        </div>
         <p style="margin-top: 10px; font-size: 16.5px; color: var(--color-neutral-800)">{{ detail.description }}</p>
 
         <h2 style="font-size: 23px; margin-top: 38px">{{ L.ownersTitle }}</h2>
@@ -869,6 +895,32 @@ class Component extends DCLogic {
     reminderDays: 7,
     teachPdf: 'uploads/files-1788600157019-atmk.pdf',
     examPdf: 'uploads/files-1788600157031-p1a2.pdf',
+    planPdf: 'uploads/28_6_1774499283.pdf',
+    mappingPdf: 'uploads/plo69-1.pdf',
+    descPdf: 'uploads/course-desc-69.pdf',
+
+    /* ลิงก์ที่เกี่ยวข้องกับหลักสูตร — แสดงเป็นการ์ดคลิกได้ในหน้าหลักสูตร
+       { name: {th,en}, sub: 'ข้อความบรรทัดล่าง', href: 'ลิงก์หรือไฟล์ใน uploads/' } */
+    currLinks: [
+      { name: { th: 'มคอ.2 หลักสูตร 2569', en: 'TQF2 — curriculum 2026' }, sub: 'PDF',
+        href: 'uploads/curr_files-1788601825850-hlrt.pdf' },
+      { name: { th: 'คำอธิบายรายวิชา 2569', en: 'Course descriptions 2026' }, sub: 'PDF',
+        href: 'uploads/course-desc-69.pdf' },
+      { name: { th: 'แผนการเรียน 2569', en: 'Study plan 2026' }, sub: 'PDF',
+        href: 'uploads/28_6_1774499283.pdf' },
+      { name: { th: 'Curriculum mapping 2569', en: 'Curriculum mapping 2026' }, sub: 'PDF',
+        href: 'uploads/plo69-1.pdf' },
+      { name: { th: 'SAR MICRO 2568', en: 'SAR MICRO 2025' }, sub: 'PDF',
+        href: 'uploads/curr_files-1788601861527-xc7w.pdf' },
+      { name: { th: 'คู่มือ AUN-QA SAR 2569', en: 'AUN-QA SAR guide 2026' }, sub: 'PDF',
+        href: 'uploads/curr_files-1788601881247-7a55.pdf' },
+      { name: { th: 'ระบบทะเบียนและสถิตินิสิต', en: 'Registration system' }, sub: 'reg.buu.ac.th',
+        href: 'https://reg.buu.ac.th' },
+      { name: { th: 'คณะวิทยาศาสตร์', en: 'Faculty of Science' }, sub: 'science.buu.ac.th',
+        href: 'https://science.buu.ac.th' },
+      { name: { th: 'CWIE คณะวิทยาศาสตร์', en: 'CWIE, Faculty of Science' }, sub: 'science.buu.ac.th/academiccwie',
+        href: 'https://science.buu.ac.th/academiccwie' }
+    ],
 
     /* ─── หลักสูตร ─────────────────────────────────────────────────
        program.structure / studyPlan / mapping / courseDetails / revisions
@@ -878,27 +930,326 @@ class Component extends DCLogic {
       degree: { th: 'วท.บ. (จุลชีววิทยา)', en: 'B.Sc. (Microbiology)' },
       revisionYear: { th: 'หลักสูตรปรับปรุง พ.ศ. 2569', en: 'Revised curriculum, 2026' },
       duration: { th: '4 ปี', en: '4 years' },
-      totalCredits: '',            /* เช่น '130' */
+      totalCredits: '120',
       /* { group: {th,en}, credits: '' } — เพิ่มหมวดวิชาได้ตามโครงสร้างใน มคอ.2 */
-      structure: []
+      structure: [
+        { group: { th: 'หมวดวิชาศึกษาทั่วไป', en: 'General education' }, credits: '≥ 24' },
+        { group: { th: 'หมวดวิชาเฉพาะ', en: 'Specialised courses' }, credits: '≥ 90' },
+        { group: { th: 'หมวดวิชาเฉพาะ · วิชาแกน', en: 'Specialised · core courses' }, credits: '23' },
+        { group: { th: 'หมวดวิชาเลือกเสรี', en: 'Free electives' }, credits: '≥ 6' }
+      ]
     },
 
     /* แผนการเรียน — courses: [{ code, name: {th,en}, credits }] */
     studyPlan: [
-      { year: 1, terms: [ { term: 1, courses: [] }, { term: 2, courses: [] } ] },
-      { year: 2, terms: [ { term: 1, courses: [] }, { term: 2, courses: [] } ] },
-      { year: 3, terms: [ { term: 1, courses: [] }, { term: 2, courses: [] } ] },
-      { year: 4, terms: [ { term: 1, courses: [] }, { term: 2, courses: [] } ] }
+      { year: 1, terms: [
+        { term: 1, courses: [
+        { code: '89510169', name: { th: 'ภาษาอังกฤษเพื่อการสื่อสารในชีวิตประจำวัน', en: 'English for Everyday Communication' }, credits: '3 (2-2-5)' },
+        { code: '89510369', name: { th: 'ภาษาอังกฤษสำหรับนักวิทยาศาสตร์และนวัตกร', en: 'English for Scientists and Innovators' }, credits: '3 (2-2-5)' },
+        { code: '89530169', name: { th: 'สุขภาวะและบุคลิกภาพในยุคดิจิทัล', en: 'Wellness and Personality in Digital Age' }, credits: '2 (1-2-3)' },
+        { code: '89530269', name: { th: 'พลังแห่งความต่าง เสริมความสำเร็จให้ทีม', en: 'Diversity Drives Team Success' }, credits: '2 (1-2-3)' },
+        { code: '89530369', name: { th: 'ไลฟ์พลัส', en: 'Life Plus' }, credits: '2 (1-2-3)' },
+        { code: '30211369', name: { th: 'แคลคูลัส', en: 'Calculus' }, credits: '3 (3-0-6)' },
+        { code: '30510469', name: { th: 'จุลชีววิทยาเบื้องต้น', en: 'Introductory Microbiology' }, credits: '2 (2-0-4)' },
+        { code: '30510569', name: { th: 'ปฏิบัติการจุลชีววิทยาเบื้องต้น', en: 'Laboratory in Introductory Microbiology' }, credits: '1 (0-3-1)' }
+        ] },
+        { term: 2, courses: [
+        { code: '89520169', name: { th: 'การคิดแก้ปัญหาอย่างสร้างสรรค์', en: 'Creativity in Problem Solving' }, credits: '2 (1-2-3)' },
+        { code: '89520269', name: { th: 'ทักษะดิจิทัลและใช้ปัญญาประดิษฐ์อย่างฉลาด', en: 'Smart Digital and Artificial Intelligence Usage Skills' }, credits: '2 (1-2-3)' },
+        { code: '89520369', name: { th: 'การคิดเชิงระบบกับการแก้ปัญหา', en: 'System Thinking and Problem Solving' }, credits: '2 (1-2-3)' },
+        { code: '89540169', name: { th: 'การบริหารการเงินและความเป็นผู้ประกอบการสำหรับชีวิตยุคใหม่', en: 'Financial Management and Entrepreneurship for Modern Life' }, credits: '2 (1-2-3)' },
+        { code: '89540269', name: { th: 'พื้นฐานการลงทุนและการบริหารความเสี่ยง', en: 'Fundamentals of Investment and Risk Management' }, credits: '2 (1-2-3)' },
+        { code: '89540369', name: { th: 'ภาวะผู้นำและการจัดการทีมสำหรับผู้ประกอบการยุคใหม่', en: 'Leadership and Team Management for Modern Entrepreneurs' }, credits: '2 (1-2-3)' },
+        { code: '30310169', name: { th: 'เคมี', en: 'Chemistry' }, credits: '3 (3-0-6)' },
+        { code: '30310269', name: { th: 'ปฏิบัติการเคมี', en: 'Chemistry Laboratory' }, credits: '1 (0-3-1)' },
+        { code: '30510669', name: { th: 'การจัดจำแนกแบคทีเรีย', en: 'Determinative Bacteriology' }, credits: '3 (2-3-4)' },
+        { code: '30510769', name: { th: 'จริยธรรมนักวิทยาศาสตร์', en: 'Ethics for Scientists' }, credits: '1 (1-0-2)' }
+        ] }
+      ] },
+      { year: 2, terms: [
+        { term: 1, courses: [
+        { code: '30312069', name: { th: 'เคมีอินทรีย์', en: 'Organic Chemistry' }, credits: '2 (2-0-4)' },
+        { code: '30322169', name: { th: 'ปฏิบัติการเคมีอินทรีย์', en: 'Organic Chemistry Laboratory' }, credits: '1 (0-3-1)' },
+        { code: '32210069', name: { th: 'การวิเคราะห์ข้อมูลเชิงสำรวจและการสร้างภาพข้อมูล', en: 'Exploratory Data Analysis and Visualization' }, credits: '3 (2-2-5)' },
+        { code: '30520869', name: { th: 'ราวิทยา', en: 'Mycology' }, credits: '3 (2-3-4)' },
+        { code: '30521169', name: { th: 'พันธุศาสตร์จุลินทรีย์', en: 'Microbial Genetics' }, credits: '2 (2-0-4)' },
+        { code: '30523169', name: { th: 'จุลชีววิทยาทางอาหาร', en: 'Food Microbiology' }, credits: '3 (2-3-4)' },
+        { code: '', name: { th: 'วิชาเอกเลือก', en: 'Major elective' }, credits: '3' },
+        { code: '', name: { th: 'วิชาเลือกเสรี', en: 'Free elective' }, credits: '2' }
+        ] },
+        { term: 2, courses: [
+        { code: '31620169', name: { th: 'ชีวเคมีทั่วไป', en: 'General Biochemistry' }, credits: '2 (2-0-4)' },
+        { code: '31622169', name: { th: 'ปฏิบัติการชีวเคมีทั่วไป', en: 'General Biochemistry Laboratory' }, credits: '1 (0-3-1)' },
+        { code: '30520969', name: { th: 'สรีรวิทยาของจุลินทรีย์', en: 'Microbial Physiology' }, credits: '3 (2-3-4)' },
+        { code: '30521269', name: { th: 'เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล', en: 'Basic Techniques in Molecular Genetics' }, credits: '3 (2-3-4)' },
+        { code: '30522169', name: { th: 'ภูมิคุ้มกันวิทยา', en: 'Immunology' }, credits: '3 (2-3-4)' },
+        { code: '30524169', name: { th: 'จุลชีววิทยาผลิตภัณฑ์อาหารและอุตสาหกรรม', en: 'Microbiology of Food and Industrial Products' }, credits: '3 (2-3-4)' },
+        { code: '', name: { th: 'วิชาเอกเลือก', en: 'Major elective' }, credits: '3' }
+        ] }
+      ] },
+      { year: 3, terms: [
+        { term: 1, courses: [
+        { code: '30325069', name: { th: 'เคมีวิเคราะห์พื้นฐาน', en: 'Fundamentals of Analytical Chemistry' }, credits: '3 (3-0-6)' },
+        { code: '30325169', name: { th: 'ปฏิบัติการเคมีวิเคราะห์พื้นฐาน', en: 'Fundamentals of Analytical Chemistry Laboratory' }, credits: '1 (0-3-1)' },
+        { code: '31228169', name: { th: 'สถิติวิเคราะห์', en: 'Statistical Analysis' }, credits: '3 (2-2-5)' },
+        { code: '30532469', name: { th: 'ไวรัสวิทยา', en: 'Virology' }, credits: '3 (2-3-4)' },
+        { code: '30538169', name: { th: 'มาตรฐานห้องปฏิบัติการทดสอบทางจุลชีววิทยาและความปลอดภัยทางชีวภาพ', en: 'Microbiological Testing Laboratory Standard and Biosafety' }, credits: '2 (2-0-4)' },
+        { code: '', name: { th: 'วิชาเอกเลือก', en: 'Major elective' }, credits: '6' }
+        ] },
+        { term: 2, courses: [
+        { code: '30138164', name: { th: 'การเตรียมความพร้อมด้านวิชาชีพ', en: 'Preparation for Careers' }, credits: '2 (1-2-3)' },
+        { code: '30531469', name: { th: 'เทคนิคขั้นสูงในการวิเคราะห์จุลินทรีย์', en: 'Advanced Techniques in Microbial Analysis' }, credits: '3 (2-3-4)' },
+        { code: '30533469', name: { th: 'ความปลอดภัยและสุขลักษณะอาหาร', en: 'Food Safety and Hygiene' }, credits: '2 (2-0-4)' },
+        { code: '30539169', name: { th: 'ประเด็นร่วมสมัยทางจุลชีววิทยา', en: 'Contemporary in Microbiology' }, credits: '1 (0-3-2)' },
+        { code: '30539269', name: { th: 'ปฐมบทการวิจัยด้านจุลชีววิทยา', en: 'Project Genesis' }, credits: '1 (0-3-2)' },
+        { code: '', name: { th: 'วิชาเอกเลือก', en: 'Major elective' }, credits: '3' },
+        { code: '', name: { th: 'วิชาเลือกเสรี', en: 'Free elective' }, credits: '4' }
+        ] }
+      ] },
+      { year: 4, terms: [
+        { term: 1, courses: [
+        { code: '30549369', name: { th: 'โครงงานทางจุลชีววิทยา', en: 'Projects in Microbiology' }, credits: '2 (0-6-3)' },
+        { code: '', name: { th: 'วิชาเอกเลือก', en: 'Major elective' }, credits: '3' }
+        ] },
+        { term: 2, courses: [
+        { code: '30549469', name: { th: 'การเรียนรู้เชิงบูรณาการกับการทำงาน', en: 'Work Integrated Learning' }, credits: '6 (0-18-9)' }
+        ] }
+      ] }
     ],
 
-    /* Curriculum mapping — [{ code: '30510469', plos: [1, 3, 7] }] */
-    mapping: [],
+    /* Curriculum mapping — ระดับความรับผิดชอบต่อ PLO ของหมวดวิชาเฉพาะ
+       levels: { <หมายเลข PLO>: 'I' | 'R' | 'P' | 'M' }
+       I = Introduced · R = Reinforced · P = Practiced · M = Mastery
+       ข้อมูลชุดนี้เป็นวิชาแกนและวิชาเอกบังคับ · วิชาเอกเลือกดูได้ในไฟล์ PDF */
+    mapping: [
+      { code: '30211369', name: { th: 'แคลคูลัส', en: 'Calculus' }, levels: { 1: 'I', 5: 'I' } },
+      { code: '32210069', name: { th: 'การวิเคราะห์ข้อมูลเชิงสำรวจและการสร้างภาพข้อมูล', en: 'Exploratory Data Analysis and Visualization' }, levels: { 1: 'I', 4: 'I', 5: 'I' } },
+      { code: '30510469', name: { th: 'จุลชีววิทยาเบื้องต้น', en: 'Introductory Microbiology' }, levels: { 1: 'I', 3: 'I', 4: 'I', 5: 'I', 6: 'I' } },
+      { code: '30510569', name: { th: 'ปฏิบัติการจุลชีววิทยาเบื้องต้น', en: 'Laboratory in Introductory Microbiology' }, levels: { 1: 'I', 2: 'I', 3: 'I', 4: 'I', 5: 'I', 6: 'I', 7: 'I' } },
+      { code: '30310169', name: { th: 'เคมี', en: 'Chemistry' }, levels: { 1: 'I', 5: 'I' } },
+      { code: '30310269', name: { th: 'ปฏิบัติการเคมี', en: 'Chemistry Laboratory' }, levels: { 1: 'I', 4: 'I', 5: 'R', 6: 'R' } },
+      { code: '30510669', name: { th: 'การจัดจำแนกแบคทีเรีย', en: 'Determinative Bacteriology' }, levels: { 1: 'R', 2: 'I', 3: 'I', 4: 'I', 5: 'R', 6: 'R', 7: 'I' } },
+      { code: '30510769', name: { th: 'จริยธรรมนักวิทยาศาสตร์', en: 'Ethics for Scientists' }, levels: { 1: 'I', 4: 'I', 5: 'R', 6: 'R' } },
+      { code: '30312069', name: { th: 'เคมีอินทรีย์', en: 'Organic Chemistry' }, levels: { 1: 'R', 5: 'R' } },
+      { code: '30322169', name: { th: 'ปฏิบัติการเคมีอินทรีย์', en: 'Organic Chemistry Laboratory' }, levels: { 1: 'R', 4: 'R', 5: 'R', 6: 'R' } },
+      { code: '30520869', name: { th: 'ราวิทยา', en: 'Mycology' }, levels: { 1: 'R', 2: 'R', 4: 'R', 5: 'R', 6: 'R' } },
+      { code: '30521169', name: { th: 'พันธุศาสตร์จุลินทรีย์', en: 'Microbial Genetics' }, levels: { 1: 'R', 3: 'R', 4: 'R', 5: 'R', 6: 'R', 7: 'R' } },
+      { code: '30523169', name: { th: 'จุลชีววิทยาทางอาหาร', en: 'Food Microbiology' }, levels: { 1: 'R', 2: 'R', 4: 'R', 5: 'R', 6: 'P' } },
+      { code: '31620169', name: { th: 'ชีวเคมีทั่วไป', en: 'General Biochemistry' }, levels: { 1: 'R', 5: 'R' } },
+      { code: '31622169', name: { th: 'ปฏิบัติการชีวเคมีทั่วไป', en: 'General Biochemistry Laboratory' }, levels: { 1: 'R', 4: 'R', 5: 'R', 6: 'R' } },
+      { code: '30520969', name: { th: 'สรีรวิทยาของจุลินทรีย์', en: 'Microbial Physiology' }, levels: { 1: 'R', 3: 'R', 4: 'R', 5: 'R', 6: 'R', 7: 'R' } },
+      { code: '30521269', name: { th: 'เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล', en: 'Basic Techniques in Molecular Genetics' }, levels: { 1: 'R', 3: 'R', 4: 'R', 5: 'R' } },
+      { code: '30522169', name: { th: 'ภูมิคุ้มกันวิทยา', en: 'Immunology' }, levels: { 1: 'R', 3: 'R', 4: 'P', 5: 'P', 6: 'P', 7: 'R' } },
+      { code: '30524169', name: { th: 'จุลชีววิทยาผลิตภัณฑ์อาหารและอุตสาหกรรม', en: 'Microbiology of Food and Industrial Products' }, levels: { 1: 'R', 2: 'R', 4: 'R', 5: 'R', 6: 'P' } },
+      { code: '30325069', name: { th: 'เคมีวิเคราะห์พื้นฐาน', en: 'Fundamentals of Analytical Chemistry' }, levels: { 1: 'R', 5: 'P', 6: 'P' } },
+      { code: '30325169', name: { th: 'ปฏิบัติการเคมีวิเคราะห์พื้นฐาน', en: 'Fundamentals of Analytical Chemistry Laboratory' }, levels: { 1: 'R', 5: 'P', 6: 'P' } },
+      { code: '31228169', name: { th: 'สถิติวิเคราะห์', en: 'Statistical Analysis' }, levels: { 1: 'I', 4: 'R', 5: 'P', 6: 'P' } },
+      { code: '30532469', name: { th: 'ไวรัสวิทยา', en: 'Virology' }, levels: { 1: 'P', 4: 'P', 5: 'M', 6: 'P', 7: 'P' } },
+      { code: '30538169', name: { th: 'มาตรฐานห้องปฏิบัติการทดสอบทางจุลชีววิทยาและความปลอดภัยทางชีวภาพ', en: 'Microbiological Testing Laboratory Standard and Biosafety' }, levels: { 1: 'R', 3: 'P', 4: 'P', 5: 'P', 6: 'P' } },
+      { code: '30138169', name: { th: 'การเตรียมความพร้อมด้านวิชาชีพ', en: 'Preparation for Careers' }, levels: { 1: 'P', 2: 'P', 4: 'P', 5: 'P', 6: 'P' } },
+      { code: '30531469', name: { th: 'เทคนิคขั้นสูงในการวิเคราะห์จุลินทรีย์', en: 'Advanced Techniques in Microbial Analysis' }, levels: { 1: 'P', 2: 'P', 3: 'P', 4: 'P', 5: 'P', 7: 'P' } },
+      { code: '30533469', name: { th: 'ความปลอดภัยและสุขลักษณะอาหาร', en: 'Food Safety and Hygiene' }, levels: { 1: 'P', 3: 'P', 4: 'P', 5: 'P', 6: 'P', 7: 'P' } },
+      { code: '30539169', name: { th: 'ประเด็นร่วมสมัยทางจุลชีววิทยา', en: 'Contemporary in Microbiology' }, levels: { 1: 'P', 3: 'P', 4: 'P', 5: 'P', 7: 'P' } },
+      { code: '30539269', name: { th: 'ปฐมบทการวิจัยด้านจุลชีววิทยา', en: 'Project Genesis' }, levels: { 1: 'M', 2: 'M', 3: 'M', 4: 'M', 5: 'M', 6: 'M', 7: 'M' } },
+      { code: '30549369', name: { th: 'โครงงานทางจุลชีววิทยา', en: 'Projects in Microbiology' }, levels: { 1: 'M', 2: 'M', 3: 'M', 4: 'M', 5: 'M', 6: 'M', 7: 'M' } },
+      { code: '30549469', name: { th: 'การเรียนรู้เชิงบูรณาการกับการทำงาน', en: 'Work Integrated Learning' }, levels: { 1: 'M', 2: 'M', 3: 'M', 4: 'M', 5: 'M', 6: 'M', 7: 'M' } }
+    ],
 
     /* รายละเอียดรายวิชา — คีย์คือรหัสวิชา
        '30510469': { credits: '3(3-0-6)', description: {th,en},
                      owners: ['ชื่ออาจารย์'], plos: [1,2],
                      materials: [{ name: {th,en}, href: '' }] } */
-    courseDetails: {},
+    courseDetails: {
+      '30211369': { credits: '3 (3-0-6)',
+        description: { th: 'ฟังก์ชันและกราฟของฟังก์ชัน ลิมิตและความต่อเนื่องของฟังก์ชัน การหาอนุพันธ์ของฟังก์ชันพีชคณิตและฟังก์ชันอดิศัย หลักเกณฑ์ของโลปิตาล การประยุกต์ของอนุพันธ์ สมการเส้นสัมผัสและเส้นตั้งฉาก ปริพันธ์ไม่จำกัดเขต เทคนิคการหาปริพันธ์ ปริพันธ์โดยการเปลี่ยนเป็นตัวแปร ปริพันธ์ทีละส่วน ปริพันธ์จำกัดเขต การประยุกต์ของปริพันธ์จำกัดเขต การหาพื้นที่ ฟังก์ชันหลายตัวแปรและอนุพันธ์ย่อย',
+          en: 'Functions and graphs of functions; limits and continuity of functions; derivatives of algebraic and transcendental functions; L\'Hopital\'s rule; applications of derivatives, equations of tangent lines and normal lines; indefinite integrals, integration techniques, integration by substitution, integration by parts; definite integrals, applications of definite integrals, finding areas; multivariable functions and partial derivatives' } },
+      '32210069': { credits: '3 (2-2-5)',
+        description: { th: 'แนวคิดพื้นฐานของการวิเคราะห์ข้อมูล การทำความเข้าใจโครงสร้างและลักษณะของข้อมูล การระบุค่าที่หายไปและค่าผิดปกติ การใช้สถิติเชิงพรรณนาเพื่อสรุปข้อมูล การค้นหารูปแบบและแนวโน้ม การใช้เครื่องมือและเทคนิคการสร้างภาพข้อมูล การออกแบบการแสดงผลข้อมูลที่เหมาะสม',
+          en: 'Basic concepts of data analysis; understanding the structure and characteristics of data; identifying missing and anomalous values; utilizing descriptive statistics to summarize data; discovering patterns and trends; applying tools and techniques for data visualization; designing appropriate visual representations of data' } },
+      '30310169': { credits: '3 (3-0-6)',
+        description: { th: 'โครงสร้างอะตอมและตารางธาตุ พันธะเคมี ปริมาณสารสัมพันธ์ สมดุลเคมี กรด-เบส ก๊าซ ของเหลวและสารละลาย ของแข็ง',
+          en: 'Atomic structure and periodic table of element; chemical bonds; stoichiometry; chemical equilibrium; acid-base; gas; liquid and solution; solid' } },
+      '30310269': { credits: '1 (0-3-1)',
+        description: { th: 'ปฏิบัติการเคมีพื้นฐานที่จำเป็นสำหรับการพัฒนาทักษะปฏิบัติการทางวิทยาศาสตร์ ได้แก่ การใช้อุปกรณ์และเครื่องมือพื้นฐานในห้องปฏิบัติการ เทคนิคการทำปฏิบัติการ การวิเคราะห์เชิงกราฟ ความหนาแน่นของสารละลาย การสังเกตปฏิกิริยาเคมี กฎของก๊าซ การไทเทรตกรดเบส สมดุลเคมี สารละลายบัฟเฟอร์',
+          en: 'Fundamental chemistry laboratories which are necessary to improve the scientific skill in practice, such as, practice of using common laboratory equipment and instruments, laboratory techniques, graphical analysis, density of solutions, observing the chemical reactions, gas laws, acid-base titration, chemical equilibrium, buffer solutions' } },
+      '30312069': { credits: '2 (2-0-4)',
+        description: { th: 'พันธะเคมี โครงสร้าง สเตอรีโอเคมี การจำแนกประเภท การเรียกชื่อ สมบัติทางกายภาพและปฏิกิริยาเคมีพื้นฐานของสารอินทรีย์',
+          en: 'Chemical bonding; structures; stereochemistry; classification, nomenclature; physical properties and basic chemical reactions of organic compounds' } },
+      '30322169': { credits: '1 (0-3-1)',
+        description: { th: 'การตกผลึก การกลั่น การสกัดกรดเบส การสกัดและโครมาโทกราฟี สเตอรีโอเคมีของสารอินทรีย์ และปฏิกิริยาเคมีของหมู่ฟังก์ชันของสารอินทรีย์',
+          en: 'Crystallization, distillation, acid-base extraction, extraction and chromatography, stereochemistry of organic compounds, and chemical reaction of functional groups of organic compounds' } },
+      '30325069': { credits: '3 (3-0-6)',
+        description: { th: 'การเก็บตัวอย่าง การวิเคราะห์ข้อมูลทางสถิติ ความแม่นและความเที่ยง การวิเคราะห์เชิงปริมาณโดยการวิเคราะห์โดยน้ำหนักและการไทเทรตด้วยปฏิกิริยาสะเทิน ปฏิกิริยาการตกตะกอน ปฏิกิริยาการเกิดสารเชิงซ้อน และปฏิกิริยารีดอกซ์ หลักการและเทคนิคพื้นฐานของสเปกโตรโฟโตเมตรีและโครมาโทกราฟี',
+          en: 'Sampling; statistical data analysis; accuracy and precision; quantitative analysis by gravimetric analysis and titrations with neutralization reaction, precipitation reaction, complex formation reaction, and redox reaction; basic principle and technique of spectrophotometry and chromatography' } },
+      '30325169': { credits: '1 (0-3-1)',
+        description: { th: 'การไทเทรตกรด-เบส การไทเทรตการตกตะกอน การไทเทรตสารเชิงซ้อน การไทเทรตรีดอกซ์ สเปกโตรโฟโตเมทรี',
+          en: 'Acid-base titration; precipitation titration; complexometric titration; redox titration; spectrophotometry' } },
+      '31620169': { credits: '2 (2-0-4)',
+        description: { th: 'ชีวเคมีเบื้องต้น ลักษณะโครงสร้าง และหน้าที่ของสารชีวโมเลกุล เอนไซม์ เมแทบอลิซึมของชีวโมเลกุล เมแทบอลิซึมผสมผสานและการควบคุมกระบวนการสังเคราะห์กรดนิวคลีอิกและโปรตีน',
+          en: 'Basic knowledge of biochemistry; characteristics, structure and function of biomolecules; enzymes and metabolisms of biomolecules; integration metabolism and its regulation; nucleic acid and protein synthesis' } },
+      '31622169': { credits: '1 (0-3-1)',
+        description: { th: 'บทนำเกี่ยวกับปฏิบัติการทางด้านชีวเคมีทั่วไป สเปกโทรโฟโตมิเตอร์ คาร์โบไฮเดรต ลิพิด กรดอะมิโน โปรตีน เอนไซม์ จลนศาสตร์ของเอนไซม์ กรดนิวคลีอิก และเมแทบอลิซึมของคาร์โบไฮเดรต',
+          en: 'Introduction to general biochemistry laboratory, spectrophotometry, carbohydrate, lipid, amino acid, protein, enzyme, enzyme kinetics, nucleic acid, and carbohydrate metabolism' } },
+      '31228169': { credits: '3 (2-2-5)',
+        description: { th: 'ข้อมูล ประเภทของข้อมูล การนำเสนอข้อมูลด้วยกราฟ สถิติเชิงพรรณนา การแจกแจงความน่าจะเป็นแบบต่อเนื่อง การประมาณค่าพารามิเตอร์และการทดสอบสมมติฐานสำหรับประชากรหนึ่งกลุ่มและสองกลุ่ม การวิเคราะห์ความแปรปรวนทางเดียวและสองทาง การวิเคราะห์ด้วยโปรแกรมเชิงสถิติ',
+          en: 'Data, data types, graphical data presentation, descriptive statistics, continuous probability distributions, estimation and hypothesis testing for parameter of one and two populations, one-way and two-way analysis of variances, analysis using statistical software' } },
+      '30510569': { credits: '1 (0-3-1)',
+        description: { th: 'อุปกรณ์และเครื่องมือสำหรับการปฏิบัติงานจุลชีววิทยาเบื้องต้น แนวปฏิบัติเพื่อความปลอดภัยทางชีวภาพสำหรับห้องปฏิบัติการจุลชีววิทยา การเตรียมอาหารเลี้ยงเชื้อ เทคนิคปลอดเชื้อ เทคนิคการถ่ายเชื้อและการเพาะเลี้ยงจุลินทรีย์ การแยกเชื้อบริสุทธิ์ของแบคทีเรียและศึกษาลักษณะด้านสัณฐานวิทยา ลักษณะทั่วไปของจุลินทรีย์ การวิเคราะห์ปริมาณจุลินทรีย์ในตัวอย่างอาหารและสิ่งแวดล้อม การทดสอบความไวต่อยาปฏิชีวนะ',
+          en: 'Microbiological equipment and instrument; biosafety guidelines for microbiology laboratory; culture media preparation; aseptic techniques; culture transfer techniques and microbial cultivation; isolation of bacterial pure culture and morphological studies; general characteristics of microorganisms; enumeration of microorganisms in food and environmental samples; antibiotic susceptibility test' } },
+      '30510669': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ระบบการจำแนกประเภทแบคทีเรียทางอนุกรมวิธาน หลักการและวิธีการที่ใช้ในการระบุและจำแนกแบคทีเรียตามลักษณะทางสัณฐานวิทยา สรีรวิทยา ชีวเคมี และโมเลกุล ร่วมกับเทคโนโลยีใหม่ เพื่อการระบุที่รวดเร็วและแม่นยำ หลักการสายวิวัฒนาการของแบคทีเรีย บทบาทของแบคทีเรียในร่างกายสิ่งมีชีวิต สิ่งแวดล้อม และเทคโนโลยีทางชีวภาพ หลักการและวิธีการเก็บรักษาสายพันธุ์แบคทีเรีย',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Laboratory in Introductory Microbiology · Taxonomic classification systems; principle and methods for bacterial identification by using morphological, physiological, biochemical, and molecular characteristics including advanced technology for rapid and accurate identification; basic principle of bacterial phylogenetic analysis; roles of bacteria in living bodies, environment, and biotechnology; principles and methods for preservation of bacterial strains' } },
+      '30510769': { credits: '1 (1-0-2)',
+        description: { th: 'จริยธรรม ความสัมพันธ์ระหว่างวิทยาศาสตร์และเทคโนโลยีกับศีลธรรมและจริยธรรม จริยธรรมทางวิทยาศาสตร์ จรรยาบรรณการใช้สัตว์ทดลองและการวิจัยในมนุษย์ จริยธรรมปัญญาประดิษฐ์และดิจิทัล',
+          en: 'Ethics; relationship between science and technology to morality and ethics; characteristics of a good person; ethics of science, animal and human research; artificial intelligence and digital ethics' } },
+      '30520869': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ลักษณะทั่วไปของราและจุลินทรีย์คล้ายรา สายวิวัฒนาการและการจัดหมวดหมู่ ความหลากหลายของราแต่ละกลุ่ม ความสัมพันธ์ระหว่างรากับสิ่งมีชีวิตอื่น ราที่มีความสำคัญทางอุตสาหกรรมอาหาร ราที่ก่อให้เกิดโรคต่อมนุษย์',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · General characteristics of fungi and fungal-like microorganisms; fungal evolution and classification; diversity; interaction between fungi and other organisms; significant importance species of fungi in food industry; human pathogenic fungi' } },
+      '30523169': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · บทบาทของจุลินทรีย์ในอาหาร ปัจจัยที่มีผลต่อการรอดชีวิต และการเจริญของจุลินทรีย์ในอาหาร จุลินทรีย์ที่ปนเปื้อนและทำให้อาหารเน่าเสีย จุลินทรีย์ที่ก่อให้เกิดโรคผ่านทางอาหาร การถนอมอาหาร การควบคุมคุณภาพและความปลอดภัยด้านจุลชีววิทยาของอาหาร การตรวจวิเคราะห์จุลินทรีย์ในอาหารโดยวิธีมาตรฐานและวิธีที่รวดเร็ว',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Role of microorganisms in food; factors influencing microbial survival and growth in food; microbial contamination and spoil in food; foodborne pathogen; food preservation; food quality and safety control; microbiological analysis of food by standard methods and rapid methods' } },
+      '30521169': { credits: '2 (2-0-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น · องค์ประกอบและโครงสร้างของสารพันธุกรรม การจัดเรียงตัวของสารพันธุกรรมบนจีโนมของจุลินทรีย์ การเพิ่มจำนวนสารพันธุกรรมและการแสดงออกของสารพันธุกรรมในจุลินทรีย์ ระบบการควบคุมการแสดงออกของสารพันธุกรรมในจุลินทรีย์ การเคลื่อนย้ายสารพันธุกรรมระหว่างเซลล์และการรวมตัวกันของสารพันธุกรรม การกลายและการซ่อมแซมสารพันธุกรรม การวิเคราะห์ลักษณะทางพันธุกรรมของยีสต์รา ความก้าวหน้าปัจจุบันทางพันธุศาสตร์จุลินทรีย์และเทคโนโลยีระดับโมเลกุล',
+          en: 'Prerequisite: 30510469 Introductory Microbiology · Components and structure of genetic materials; organization of microbial genomes; replication of genetic materials; gene expression and control systems in microorganisms; Horizontal transfer of genetic materials and recombination; mutation and repair; genetic analysis of yeasts and molds; recent advanced in microbial genetics and molecular technologies' } },
+      '30510469': { credits: '2 (2-0-4)',
+        description: { th: 'โครงสร้างของเซลล์จุลินทรีย์ พันธุกรรมของจุลินทรีย์ ลักษณะทั่วไปของจุลินทรีย์ เทคนิคการศึกษาจุลินทรีย์ การเจริญและการควบคุมจุลินทรีย์ ระบบภูมิคุ้มกันของร่างกาย โรคจากการติดเชื้อ บทบาทและการประยุกต์จุลินทรีย์ทางด้านอาหาร อุตสาหกรรม เกษตรกรรม สิ่งแวดล้อม การแพทย์และสาธารณสุข หลักการจุลชีววิทยาสีเขียวในอุตสาหกรรมจุลินทรีย์',
+          en: 'Structures of microbial cells; microbial genetics; general characteristics of microorganisms; microbiological techniques; growth and control of microbes; host immune system; diseases and infections; microorganisms in perspective in food, industries, agriculture, environments, medicines and public health; principle of green microbiology in microbial industry' } },
+      '30524169': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · การแยกและการคัดเลือกจุลินทรีย์ที่มีบทบาทสำคัญในการผลิตผลิตภัณฑ์อาหารและอุตสาหกรรม การเก็บรักษาและการปรับปรุงสายพันธุ์ กระบวนการเพาะเลี้ยงจุลินทรีย์ในอุตสาหกรรม การเก็บเกี่ยวผลผลิตและการทำให้ผลิตภัณฑ์บริสุทธิ์ อุตสาหกรรมการผลิตผลิตภัณฑ์จากจุลินทรีย์',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Isolation and screening of significant microorganisms in food and industry production; strain preservation and improvement; industrially cultivation processes; product harvesting and purification; industrial production of microbial products' } },
+      '30521269': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521169 พันธุศาสตร์จุลินทรีย์ · การใช้อุปกรณ์และเครื่องมือพื้นฐานในห้องปฏิบัติการพันธุศาสตร์โมเลกุล การเตรียมสารเคมีและบัฟเฟอร์ การเตรียมจีโนมิกดีเอ็นเอและพลาสมิดดีเอ็นเอ การวิเคราะห์ปริมาณและคุณภาพของดีเอ็นเอ การตัดและเชื่อมต่อดีเอ็นเอ การเคลื่อนย้ายพลาสมิดดีเอ็นเอด้วยวิธีทรานส์ฟอร์เมชัน การค้นหาและการวิเคราะห์เปรียบเทียบข้อมูลลำดับนิวคลีโอไทด์ในรูปแบบสองข้อมูลและหลายข้อมูล การออกแบบไพรเมอร์และปฏิกิริยาลูกโซ่พอลิเมอเรส',
+          en: 'Prerequisite: 30521169 Microbial Genetics · Use of basic equipment and instruments, preparation of chemicals and buffers, preparation of genomic and plasmid DNA, quantitative and qualitative analysis of DNA, cutting and joining of DNA, plasmid transformation; searching of nucleotide sequences, pairwise and multiple sequence alignments; primer design and polymerase chain reaction' } },
+      '30520969': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · องค์ประกอบทางเคมีและหน้าที่ของโครงสร้างเซลล์จุลินทรีย์ สารอาหารและการขนส่ง การเจริญและปัจจัยที่มีผลต่อการแสดงออกทางสรีรวิทยา เมแทบอลิซึมและการสร้างพลังงาน เอนไซม์และการควบคุมเมแทบอลิซึม การประยุกต์ความรู้ทางสรีรวิทยาของจุลินทรีย์ในอุตสาหกรรมจุลินทรีย์และเทคโนโลยีชีวภาพ',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Chemical composition and functions of microbial cell structures; nutrition and transportation; growth and factors affecting physiological expression; metabolism and energy generation; enzyme and metabolism regulation; applications of microbial physiology in microbial industries and biotechnology' } },
+      '30532469': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30522169 ภูมิคุ้มกันวิทยา · คุณสมบัติทั่วไป และอนุกรมวิธานไวรัสของสัตว์ ไวรัสของพืช และไวรัสของแบคทีเรีย พันธุศาสตร์ของไวรัส การเพิ่มจำนวน กลไกการก่อโรค อาการโรค การแพร่ระบาดของไวรัสที่เป็นสาเหตุของโรคติดเชื้อที่สำคัญบางชนิดในมนุษย์ วิธีการตรวจวินิจฉัยทางห้องปฏิบัติการ',
+          en: 'Prerequisite: 30522169 Immunology · General properties and taxonomy of animal viruses, plant viruses and bacteriophages; viral genetic; multiplication; pathogenicity; clinical features and transmission of some medical important viruses; laboratory diagnosis' } },
+      '30531469': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521269 เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล · หลักการของวิธีขั้นสูงและเทคโนโลยีทันสมัยสำหรับการตรวจสอบและวิเคราะห์จุลินทรีย์และกลุ่มจุลินทรีย์ การวิเคราะห์ข้อมูลพันธุกรรมของจุลินทรีย์ด้วยเทคโนโลยีชีวสารสนเทศ การประยุกต์ใช้วิธีขั้นสูงและเทคโนโลยีสมัยใหม่ทางด้านอุตสาหกรรมจุลินทรีย์',
+          en: 'Prerequisite: 30521269 Basic Techniques in Molecular Genetics · Comprehensive description of principle of advanced methods and cutting-edge technologies that have evolved for approaching the detection and analysis of microorganisms as well as microbial community; bioinformatic analysis of microbial genetic sequences; potential applications of advanced and emerging technologies in various aspect related to microbial industries' } },
+      '30533469': { credits: '2 (2-0-4)',
+        description: { th: 'บุรพวิชา: 30523169 จุลชีววิทยาทางอาหาร · วัฒนธรรมความปลอดภัยทางอาหาร ระบบรับรองความปลอดภัยและสุขลักษณะอาหาร อันตรายทางอาหาร สารก่อภูมิแพ้ จุลินทรีย์อันตรายในระบบความปลอดภัยอาหาร การควบคุมจุลินทรีย์อันตราย สุขาภิบาลอาหาร การปกป้องการก่อการร้ายในอาหารและอาหารปลอม กฎหมายและมาตรฐานด้านความปลอดภัยอาหารทั้งในประเทศไทยและต่างประเทศ',
+          en: 'Prerequisite: 30523169 Food Microbiology · Food safety culture; food safety and hygiene assurance systems; food hazards, allergens, harmful microorganisms in food safety; control of harmful microorganisms; food sanitation; food defense and food fraud, food laws and standards in Thailand and internationally' } },
+      '30538169': { credits: '2 (2-0-4)',
+        description: { th: 'ข้อกำหนดของมาตรฐานห้องปฏิบัติการ ISO/IEC 17025 ฉบับปัจจุบัน และการนำไปใช้ในห้องปฏิบัติการทดสอบทางจุลชีววิทยา ความปลอดภัยทางชีวภาพ และการรักษาความปลอดภัยทางชีวภาพ พระราชบัญญัติเชื้อโรคและพิษจากสัตว์ฉบับปัจจุบัน',
+          en: 'Requirements of the latest version of ISO/IEC 17025 standard and implementation in microbiological testing laboratory; biosafety and biosecurity; Pathogens and Animal Toxins Act' } },
+      '30539269': { credits: '1 (0-3-2)',
+        description: { th: 'ความรู้เบื้องต้นเกี่ยวกับการบริหารจัดการทรัพย์สินทางปัญญา การกำหนดหัวข้อวิจัยทางจุลชีววิทยา การสืบค้นข้อมูลและทบทวนวรรณกรรม การออกแบบการทดลองและวางแผน การเขียนโครงร่างวิจัยโดยใช้ข้อมูลอย่างมีจรรยาบรรณและถูกต้องตามกฎหมาย การสอบป้องกันโครงร่างงานวิจัย',
+          en: 'Introduction to intellectual property management; formulation of a research topic in microbiology; literature survey and review; experimental design and planning; comprehensive writing a research project proposal by using information ethically and legally; proposal defense' } },
+      '30549369': { credits: '2 (0-6-3)',
+        description: { th: 'บุรพวิชา: 30539269 ปฐมบทการวิจัยด้านจุลชีววิทยา · การดำเนินการโครงงานวิจัยทางด้านจุลชีววิทยาบนพื้นฐานของจริยธรรมและจรรยาบรรณ การเก็บข้อมูล การวิเคราะห์และแปลผลการทดลอง การอภิปรายและสรุปผลการทดลอง การเขียนเอกสารโครงงานวิจัยอย่างละเอียดและการสอบป้องกันโครงงานวิจัย',
+          en: 'Prerequisite: 30539269 Project Genesis · Conducting a research project in microbiology with moral and ethical considerations; data collection, analysis of experimental results and interpretation, discussion, and conclusion; writing a comprehensive document of research project and defense' } },
+      '30531569': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521269 เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล · หลักการของระบบการจัดจำแนกจุลินทรีย์โดยวิธีระดับโมเลกุล โมเลกุลเครื่องหมายสำหรับจำแนกและศึกษาวิวัฒนาการของจุลินทรีย์ สารสนเทศชีวภาพสำหรับจัดการและวิเคราะห์ข้อมูลระดับโมเลกุล การวิเคราะห์สายสัมพันธ์เชิงวิวัฒนาการ การระบุตำแหน่งทางอนุกรมวิธานของจุลินทรีย์',
+          en: 'Prerequisite: 30521269 Basic Techniques in Molecular Genetics · Principles of molecular systematics of microorganisms; taxonomic and evolutionary chronometer; bioinformatics approaches to molecular data management and analysis; phylogenetic analysis of the genealogical relationships among microorganisms; taxonomic identification of microorganisms' } },
+      '30531669': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521269 เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล · ข้อจำกัดของการศึกษาจุลินทรีย์ด้วยวิธีดั้งเดิมที่อาศัยการเพาะเลี้ยงเชื้อ เทคโนโลยีเมตาจีโนมิกส์สำหรับการศึกษาจุลินทรีย์ วิธีการเตรียมเมตาจีโนม การศึกษานิเวศวิทยาของจุลินทรีย์ด้วยเทคโนโลยีที่ทันสมัย การวิเคราะห์และนำเสนอข้อมูลเมตาจีโนมและการค้นหาสารออกฤทธิ์ทางชีวภาพสำหรับประยุกต์เพื่อการพัฒนาอุตสาหกรรมจุลินทรีย์อย่างยั่งยืน',
+          en: 'Prerequisite: 30521269 Basic Techniques in Molecular Genetics · Limitations of studying microorganisms using culture-dependent approaches; metagenomics techniques for studying microorganisms; methods for preparation of metagenome; exploring microbial ecology using advanced technologies; preliminary analysis and visualization of microbial population data using bioinformatics technology, constructing metagenomic libraries and discovering bioactive compounds for various applications aimed at sustainable development of microbial industries' } },
+      '30531769': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521269 เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล · การโคลนระดับโมเลกุล การคัดเลือกรีคอมบิแนนท์โคลน เทคนิคสำหรับการยืนยันรีคอมบิแนนท์โคลน การนำการโคลนยีนไปประยุกต์ สิ่งมีชีวิตตัดแปลงพันธุกรรม (จีเอ็มโอ)',
+          en: 'Prerequisite: 30521269 Basic Techniques in Molecular Genetics · Molecular cloning strategies; screening of recombinant clone; techniques for the confirmation of recombinant clone; applications of gene cloning; genetically modified organisms (GMOs)' } },
+      '30531869': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30521269 เทคนิคพื้นฐานทางพันธุศาสตร์โมเลกุล · หลักการ วิธีการและเทคโนโลยีที่ใช้สำหรับตัดแปลงพันธุกรรมเพื่อปรับปรุงให้ได้จุลินทรีย์สายพันธุ์ที่มีคุณลักษณะตามความประสงค์ วิธีการทางด้านการสร้างดีเอ็นเอสายผสม การปรับแต่งจีโนม และเทคโนโลยีโอมิกส์สำหรับปรับปรุงสายพันธุ์จุลินทรีย์ การเก็บรักษาสายพันธุ์จุลินทรีย์ตัดแปลงพันธุกรรม กฎหมายเกี่ยวกับสิ่งมีชีวิตตัดแปลงพันธุกรรม การปรับปรุงสายพันธุ์จุลินทรีย์เพื่อใช้ประโยชน์ในอุตสาหกรรม',
+          en: 'Prerequisite: 30521269 Basic Techniques in Molecular Genetics · Principle, genetic manipulation methods and technology used to develop microbial strains of desired characteristics; recombinant DNA strategies, genome editing, and omics technologies for the improvement of microbial strains; laws on genetically-modified organisms; preservation and maintenance of genetically-modified microorganisms; microbial strain development for sustainable applications in industries' } },
+      '30522369': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น · แบคทีเรียที่ก่อให้เกิดโรคในมนุษย์ แหล่งอาศัยตามธรรมชาติ รังโรค การติดต่อ กลไกการก่อโรคของแบคทีเรียที่สำคัญทางการแพทย์ การป้องกันและควบคุมโรค เทคนิคทางจุลชีววิทยาสำหรับการจัดจำแนกชนิดของแบคทีเรียก่อโรคและความปลอดภัยในห้องปฏิบัติการ',
+          en: 'Prerequisite: 30510469 Introductory Microbiology · Human pathogenic bacteria; natural habitat, reservoirs, pathogenic mechanisms of medically important bacteria, virulence factors and pathogenesis; prevention and control of diseases; microbiological techniques for determination of pathogenic bacteria and laboratory safety' } },
+      '30532569': { credits: '2 (2-0-4)',
+        description: { th: 'บุรพวิชา: 30520869 ราวิทยา · ราที่มีความสำคัญทางการแพทย์ ชนิดของโรคติดเชื้อรา กลไกการก่อโรค อาการของโรค ยาต้านเชื้อรา และการตรวจวินิจฉัยทางห้องปฏิบัติการ',
+          en: 'Prerequisite: 30520869 Mycology · Medical important fungi; types of fungal diseases; pathogenesis, clinical manifestation, antifungal drugs and laboratory diagnosis' } },
+      '30521369': { credits: '2 (1-3-2)',
+        description: { th: 'ชีวสารสนเทศศาสตร์เพื่อการใช้เป็นเครื่องมือสำหรับวิเคราะห์และระบุจีโนมของจุลินทรีย์ การบ่งชี้ยีนและวิถีเมแทบอลิซึมที่ค้นพบใหม่ การทำนายพฤติกรรมจุลินทรีย์ และค้นหากระบวนการทางอุตสาหกรรมที่เหมาะสมเพื่อการใช้ประโยชน์ในอุตสาหกรรมจุลินทรีย์',
+          en: 'Bioinformatics as tools for the analysis and annotation of microbial genomes, identifying novel genes and metabolic pathways, prediction of microbial behavior, and optimization of industrial processes for applications in microbial industries' } },
+      '30522269': { credits: '3 (2-2-5)',
+        description: { th: 'โรคปรสิตที่พบบ่อยในประเทศไทย ความรู้แบบองค์รวมในด้านระบาดวิทยา สัณฐานวิทยา วัฏจักรชีวิต ความสัมพันธ์ระหว่างโฮสต์กับปรสิต พยาธิกำเนิดและพยาธิสภาพ วิทยาภูมิคุ้มกัน อาการและอาการแสดง ทักษะพื้นฐานการวินิจฉัยทางปฏิบัติการ การรักษา การควบคุมป้องกันโรคปรสิตทั้งส่วนบุคคลและชุมชน',
+          en: 'Common parasitic diseases in Thailand; holistic knowledge on epidemiology; morphology; life cycle; host-parasite relationship; pathogenesis and pathology; immunology; signs and symptoms; basic skill for parasitological techniques; drug treatment; parasitic control methods for individuals and communities' } },
+      '30532669': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · แหล่งที่มาและประเภทของสารต้านจุลชีพจากสิ่งมีชีวิตในธรรมชาติ สมบัติและกลไกการออกฤทธิ์ของสารต้านจุลชีพ วิธีสกัดสาร การทดสอบฤทธิ์และการใช้ประโยชน์ของสารต้านจุลชีพ',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Sources and types of antimicrobial agents derived from natural organisms; properties and mechanisms of action; extraction techniques; antimicrobial activity testing and utility of compounds' } },
+      '30532769': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · กายวิภาคศาสตร์ กลไกป้องกันตนเอง ปฏิสัมพันธ์ระหว่างโฮสต์กับปรสิต เชื้อประจำถิ่น เชื้อก่อโรคในระบบต่าง ๆ ของร่างกายมนุษย์ อาการโรค การเก็บตัวอย่าง การตรวจวินิจฉัยทางห้องปฏิบัติการและโรคติดเชื้อในโรงพยาบาล',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Anatomy; normal defense mechanisms; host-parasite relationships, normal flora, microorganisms encountered in various human organ systems; clinical manifestation; specimen collection, clinical finding including laboratory diagnosis and nosocomial infection' } },
+      '30532869': { credits: '2 (2-0-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ความรู้พื้นฐานเกี่ยวกับการเพาะเลี้ยงเซลล์ทั้งเซลล์ชนิดเกาะติดและเซลล์แขวนลอย เทคนิคในการเพาะเลี้ยงเซลล์ ปฏิสัมพันธ์ระหว่างเซลล์กับจุลินทรีย์ การทดสอบประสิทธิภาพของสารต้านจุลชีพและความเป็นพิษต่อเซลล์ ความรู้เบื้องต้นเกี่ยวกับสัตว์ทดลองที่ถูกนำมาใช้ในทางด้านจุลชีววิทยา จริยธรรมในการวิจัยสัตว์ ความสัมพันธ์ระหว่างสัตว์ทดลองกับจุลินทรีย์ การทดสอบและพัฒนายาและวัคซีนในสัตว์ทดลอง แบบจำลองอื่น ๆ ที่ใช้ทดแทนสัตว์ทดลอง นวัตกรรมในอนาคตด้านการเพาะเลี้ยงเซลล์และสัตว์ทดลอง',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Basic knowledge of cell culture, both adherent and suspension cells; cell culture techniques; cell-microbe interactions; antimicrobial efficacy and cytotoxicity testing; basic knowledge of laboratory animals model, ethics in animal research, interaction between laboratory animals and microorganisms; drug and vaccine testing and development in animal model, non-animal models; future innovations in cell culture and laboratory animals' } },
+      '30542969': { credits: '1 (1-0-2)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30522169 ภูมิคุ้มกันวิทยา · คำจำกัดความของไมโครไบโอม ความหลากหลายของไมโครไบโอมในมนุษย์ บทบาทของไมโครไบโอมต่อสุขภาพของมนุษย์ ปฏิสัมพันธ์ระหว่างไมโครไบโอมในมนุษย์กับระบบภูมิคุ้มกันและการเกิดโรค ผลของยาปฏิชีวนะและสารอาหารต่อการเปลี่ยนแปลงโครงสร้างและหน้าที่ไมโครไบโอมในมนุษย์',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30522169 Immunology · Definition of microbiome; diversity of human microbiome; roles of microbiome on human health; interaction between human microbiome and immune system and diseases; effect of antibiotics and diets on structure and functions of human microbiome' } },
+      '30523269': { credits: '3 (2-3-4)',
+        description: { th: 'การจำแนกประเภทเครื่องดื่ม ส่วนประกอบในเครื่องดื่ม คุณสมบัติทางกายภาพ เคมีและจุลชีววิทยาของผลิตภัณฑ์ การเสื่อมเสียของผลิตภัณฑ์ กระบวนการผลิตเครื่องดื่มปราศจากแอลกอฮอล์ ผลิตภัณฑ์เครื่องดื่มจากผักและผลไม้ ชา กาแฟ ผลิตภัณฑ์เครื่องดื่มโปรตีนสูง และผลิตภัณฑ์เครื่องดื่มเพื่อสุขภาพ การตรวจวิเคราะห์จุลินทรีย์',
+          en: 'Classification of beverages; composition of beverages; physical chemical and microbiological of finished products; deterioration of finished products; processing of non-alcoholic beverages; vegetable and fruit juices, tea, coffee, high protein beverages and functional beverages; microbial analysis of alcoholic beverages' } },
+      '30523369': { credits: '2 (2-0-4)',
+        description: { th: 'ความสำคัญและประเภทของอาหารเพื่อสุขภาพ ชนิดและสมบัติเชิงหน้าที่ของสารพฤกษเคมี วัตถุดิบที่ใช้ในอาหารและเครื่องดื่มเพื่อสุขภาพ นวัตกรรมอาหารเพื่อสุขภาพ การประเมินความปลอดภัย กฎหมายและระเบียบเกี่ยวกับอาหารผลิตอาหารเพื่อสุขภาพ',
+          en: 'Importance and types of health foods; types and functional properties of phytochemicals; ingredients used in health foods and beverages; innovations in health foods; safety assessment; laws and regulations on health food production' } },
+      '30533569': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30520969 สรีรวิทยาของจุลินทรีย์ · ชนิดและประเภทของเครื่องดื่มแอลกอฮอล์ กรรมวิธีการผลิตเครื่องดื่มแอลกอฮอล์ เครื่องมือและจุลินทรีย์ที่เกี่ยวข้อง ปฏิกิริยาการหมักและการเปลี่ยนแปลงทางชีวเคมีของเครื่องดื่มแอลกอฮอล์ การเสื่อมเสียและการเก็บรักษาผลิตภัณฑ์ ข้อบังคับและกฎหมายที่เกี่ยวข้องกับผลิตภัณฑ์เครื่องดื่มแอลกอฮอล์',
+          en: 'Prerequisite: 30520969 Microbial Physiology · Type of alcoholic beverages; processes involved alcoholic beverage production; related instruments and microorganisms; fermentation and biochemical change of alcoholic beverages; deterioration and storage of alcoholic beverages; regulation and law concerning alcoholic beverage products' } },
+      '30533669': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30523169 จุลชีววิทยาทางอาหาร · องค์ประกอบทางเคมีภาพของน้ำนมและผลิตภัณฑ์นม กระบวนการผลิตน้ำนมและผลิตภัณฑ์นม การเก็บรักษาน้ำนม ชนิดของจุลินทรีย์ที่สำคัญในนมและผลิตภัณฑ์นม จุลินทรีย์ก่อโรคและการเสื่อมเสียที่พบในผลิตภัณฑ์นม การควบคุมคุณภาพและมาตรฐานนมและผลิตภัณฑ์นม',
+          en: 'Prerequisite: 30523169 Food Microbiology · Physicochemical properties of milk and dairy products; processing of milk and dairy products, storage of milk; types of significant microorganisms in dairy products; pathogenic and spoilage microorganisms associated with dairy products; quality control and standard of milk and dairy products' } },
+      '30533769': { credits: '3 (2-3-4)',
+        description: { th: 'ความหมายและประเภทของการหมัก การเปลี่ยนแปลงทางชีวเคมีในระหว่างกระบวนการหมัก ปัจจัยและชนิดของจุลินทรีย์ที่สำคัญต่อกระบวนการหมัก ผลิตภัณฑ์อาหารหมัก การพัฒนาอาหารหมักจากวัตถุดิบที่มีในท้องถิ่น กระบวนการผลิต การควบคุมคุณภาพ บรรจุภัณฑ์ และการเก็บรักษา ประเด็นร่วมสมัยที่เกี่ยวกับการผลิตอาหารหมักทั้งในประเทศและต่างประเทศ',
+          en: 'Definition and types of fermentation, biochemical changes during the fermentation process, factors and types of microorganisms essential for fermentation, fermented food products, development of fermented foods from locally materials, production process, quality control, packaging, and storage, as well as contemporary issues related to the production of fermented foods both domestically and internationally' } },
+      '30524269': { credits: '1 (1-0-2)',
+        description: { th: 'ชนิดและการใช้ประโยชน์ผลิตภัณฑ์จากจุลินทรีย์ การปรับปรุงสายพันธุ์จุลินทรีย์เพื่อพัฒนาผลิตภัณฑ์ การพัฒนากระบวนการผลิตผลิตภัณฑ์ การควบคุมคุณภาพผลิตภัณฑ์ ผลิตภัณฑ์ใหม่จากจุลินทรีย์ นวัตกรรมผลิตภัณฑ์จุลินทรีย์',
+          en: 'Types and use of microbial products; microbial strain improvement for product development; production process development; quality control of products; novel microbial products; microbial products innovation' } },
+      '30524369': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30520869 ราวิทยา · ชีววิทยาของยีสต์ การจัดหมวดหมู่ การเจริญและเมแทบอลิซึม การเก็บรักษายีสต์ ชีววิทยาโมเลกุลและการปรับปรุงพันธุ์ยีสต์ จลนศาสตร์เบื้องต้นของการหมัก เทคโนโลยีการผลิตเซลล์และผลิตภัณฑ์จากยีสต์ทางอุตสาหกรรม กรณีศึกษาการใช้ประโยชน์จากยีสต์ในอุตสาหกรรมต่าง ๆ',
+          en: 'Prerequisite: 30520869 Mycology · Yeast biology, taxonomy, growth and metabolism; culture maintenance; yeast molecular biology and strain improvement; fermentation kinetics, technology for the industrial production of yeast cells and yeast products; Case study of yeast utilization in industries' } },
+      '30534469': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · สถานการณ์การผลิตและการใช้พลังงาน พลังงานทางเลือกประเภทต่าง ๆ ในปัจจุบัน จุลินทรีย์ที่มีบทบาทในการสร้างพลังงานทางเลือก เชื้อเพลิงชีวภาพจากจุลินทรีย์ ผลของพลังงานทางเลือกที่มีต่อสิ่งแวดล้อม',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Situations of the energy production and usage; types of current alternative energy; roles of microorganisms for alternative energy production; biofuel production by microorganisms; impacts of alternative energy on the environments' } },
+      '30534569': { credits: '2 (2-0-3)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · นิยามของจุลินทรีย์โพรไบโอติกและเทคโนโลยีของโพรไบโอติก กลไกของโพรไบโอติกและประโยชน์ต่อสุขภาพ บทบาทของจุลินทรีย์โพรไบโอติกในระบบทางเดินอาหาร ระบบภูมิคุ้มกัน และการจัดการกับโรคเรื้อรัง ลักษณะและมาตรฐานการกำกับดูแลและควบคุมคุณภาพในโพรไบโอติก การคัดเลือกสายพันธุ์โพรไบโอติก เทคโนโลยีการหมักเพื่อผลิตโพรไบโอติก การเก็บรักษาเซลล์และเทคโนโลยีที่เกี่ยวข้องกับการรักษาเซลล์ โพรไบโอติกในอาหารเพื่อสุขภาพและอาหารเสริม เทคโนโลยีนำส่งโพรไบโอติกเข้าสู่ร่างกาย การประยุกต์ใช้โพรไบโอติกนอกเหนือจากสุขภาพของมนุษย์ ความท้าทายและทิศทางของงานวิจัยในทางด้านโพรไบโอติก โพรไบโอติกในเชิงพาณิชย์',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Definition of probiotic microorganism and probiotic technology; mechanism of action and health benefits, roles of probiotic microorganisms in the gastrointestinal tracts; probiotics in immunity and chronic disease management; characterization and selection of probiotic strains; regulatory standards and quality control in probiotics; fermentation technology for probiotic production; preservation and preservation technology; probiotics in functional food and nutraceuticals; probiotic delivery systems; applications of probiotics beyond human health; challenges and directions in probiotic research; commercialization of probiotics' } },
+      '30534669': { credits: '3 (2-3-4)',
+        description: { th: 'ส่วนประกอบและชนิดของผลิตภัณฑ์ยาและเครื่องสำอาง ชนิดของจุลินทรีย์ที่ปนเปื้อนในยาและเครื่องสำอาง พระราชบัญญัติยาและเครื่องสำอาง กระบวนการที่ดีในการผลิตยาและเครื่องสำอาง การตรวจวิเคราะห์คุณภาพทางจุลชีววิทยา การทดสอบความปราศจากเชื้อ ประสิทธิภาพต้านจุลินทรีย์ของสารกันเสีย กลไกต้านจุลินทรีย์ของสารกันเสียบางชนิดและการตอบสนองของจุลินทรีย์',
+          en: 'Composition and type of pharmaceutical and cosmetic products; types of microorganisms contaminated in pharmaceutical and cosmetic products; act of legislation on pharmaceutical and cosmetic products; pharmaceuticals and cosmetics good manufacturing practice; analysis of microbiological quality; sterility test; antimicrobial preservative efficacy; antimicrobial mechanisms of some preservatives and the microbial responses' } },
+      '30534769': { credits: '3 (2-3-4)',
+        description: { th: 'จุลินทรีย์แหล่งของเอนไซม์ที่น่าสนใจ ชนิดของเอนไซม์ ชีวเคมีพื้นฐานของเอนไซม์ การคัดเลือกจุลินทรีย์ที่มีศักยภาพในการผลิตเอนไซม์ การวิเคราะห์ข้อมูลพันธุกรรมที่นำรหัสการสร้างเอนไซม์ด้วยเทคโนโลยีชีวสารสนเทศเพื่อการทำนายโครงสร้างและคุณสมบัติของเอนไซม์ เทคโนโลยีและนวัตกรรมการผลิตเอนไซม์จากจุลินทรีย์ การแยกสกัดและการทำบริสุทธิ์เอนไซม์จากจุลินทรีย์ในระดับอุตสาหกรรม การตรึงเอนไซม์และเซลล์จุลินทรีย์ที่ผลิตเอนไซม์ การเก็บรักษาคุณภาพ การใช้ประโยชน์เอนไซม์จากจุลินทรีย์ในระบบเศรษฐกิจสีเขียว',
+          en: 'Microorganisms as a source of valuable enzymes; types of enzymes; fundamental biochemistry of enzymes; selection of microorganisms with potential for enzyme production; bioinformatic analysis of enzymatic encoding genes for structure prediction and properties of enzymes; technologies and innovations for microbial enzyme production, industrial scale extraction and purification of microbial enzymes; immobilization of enzymes and enzyme-producing microbial cells; quality preservation; applications of microbial enzymes in green economy framework' } },
+      '30539169': { credits: '1 (0-3-2)',
+        description: { th: 'การสืบค้นข้อมูลซึ่งเป็นผลงานวิจัยที่ทันสมัยระดับนานาชาติทางด้านจุลชีววิทยา การอ่านเชิงวิเคราะห์และแลกเปลี่ยนความรู้ผ่านการนำเสนอและการร่วมอภิปรายในชั้นเรียน',
+          en: 'Searching state of the art international research article in microbiology; critical reading and knowledge sharing through presentation and class discussions' } },
+      '30534869': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30520969 สรีรวิทยาของจุลินทรีย์ · กระบวนการหมัก จลนศาสตร์การเจริญ การใช้สารอาหาร ปัจจัยที่มีผลต่อการเจริญและการผลิตสารจากจุลินทรีย์ ถังหมักและการใช้งานอุปกรณ์เครื่องมือเพื่อควบคุมถังหมัก การออกแบบถังหมัก การเก็บเกี่ยวผลิตภัณฑ์ การจัดการของเสียจากกระบวนการทางชีวภาพ',
+          en: 'Prerequisite: 30520969 Microbial Physiology · Fermentation processes; growth kinetics, nutrient utilization, factors affecting microbial growth and metabolite production; reactors and equipment for fermentation control, reactor design, product harvesting; waste management from bioprocesses' } },
+      '30544969': { credits: '1 (1-0-2)',
+        description: { th: 'กรอบแนวคิดและการปฏิบัติได้อย่างยั่งยืนในอุตสาหกรรมผ่านการใช้จุลินทรีย์ การจัดการทรัพยากรจุลินทรีย์เพื่อใช้ประโยชน์อย่างคุ้มค่า การใช้ทรัพยากรหมุนเวียน การย่อยสลายทางชีวภาพ ความหลากหลายของกิจกรรมจุลินทรีย์ การประยุกต์ใช้จุลินทรีย์และเทคโนโลยีจุลินทรีย์ในอุตสาหกรรมอย่างยั่งยืนและเป็นมิตรต่อสิ่งแวดล้อม',
+          en: 'Conceptual framework, and implementation of sustainable practices in industries with benefit of microorganisms; management and efficient utilization of microbial resources; renewability; biodegradability, microbial multifunctionality; application of microorganisms and microbial technologies for sustainable and environmentally friendly practices in various industries' } },
+      '30525169': { credits: '3 (2-3-4)',
+        description: { th: 'อนุกรมวิธานของเห็ด ความหลากหลายทางชีวภาพ การเจริญและปัจจัยที่มีผลต่อการเจริญ เทคโนโลยีการเพาะเห็ด การเก็บรักษาสายพันธุ์ ผลิตภัณฑ์และประโยชน์ของเห็ด การเป็นผู้ประกอบการ',
+          en: 'Taxonomy of mushroom; biodiversity; growth and factors affecting growth; technology of mushroom cultivation, preservation; products and uses of mushroom; entrepreneurship' } },
+      '30525269': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ประเภทของจุลินทรีย์ก่อโรคในพืช กลไกและพัฒนาการการเกิดโรค การแพร่กระจายของเชื้อก่อโรค วิธีการควบคุมโรคพืชโดยไม่ใช้สารเคมี การใช้ผลิตภัณฑ์จากธรรมชาติแทนสารเคมีสังเคราะห์ การจัดการโรคพืชแบบผสมผสานเพื่อระบบการเกษตรอย่างยั่งยืนปลอดภัยต่อมนุษย์และสิ่งแวดล้อม',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Types of plant pathogens; mechanisms and disease development; distribution of plant pathogens; methods in plant disease control for sustainable agricultural system, sustainable plant disease control by non-chemical methods and natural products for substitution of synthetic chemical for safe sustainable agricultural system and human life and environment' } },
+      '30535369': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · หลักการในการจัดการโรคพืชด้วยจุลินทรีย์ปฏิปักษ์ ความสัมพันธ์ระหว่างปัจจัยทางสิ่งแวดล้อมและจุลินทรีย์สาเหตุโรคพืชในการจัดการโรคพืช การจัดการจุลินทรีย์ในระบบเพาะปลูกพืชเพื่อหลักเลี่ยงการเกิดและการระบาดของโรคพืช',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Principles of plant disease management using antagonistic microorganisms; relationships between environmental factors and plant pathogens in plant disease management; management of microbes in plant cultivation systems for plant disease prevention and epidemics' } },
+      '30535469': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · การคัดเลือก การเพาะเลี้ยง การผลิต การพัฒนาสูตรและรูปแบบชีวภัณฑ์จุลินทรีย์ที่มีบทบาทในการควบคุมศัตรูพืชและแมลงพาหะของโรคระบาดทางสาธารณสุข การตรวจสอบคุณภาพชีวภัณฑ์จุลินทรีย์',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Screening, cultivation, mass production, formulation development of microbial products for controlling plant pests and insect vectors of infectious diseases of public health; quality control of microbial products' } },
+      '30526169': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ความหลากหลายและบทบาทของจุลินทรีย์ในสิ่งแวดล้อมตามธรรมชาติ เทคโนโลยีสมัยใหม่สำหรับวิเคราะห์ความหลากหลายและกิจกรรมของจุลินทรีย์ในสิ่งแวดล้อม เทคโนโลยีจุลินทรีย์เพื่อการประยุกต์ด้านวัฏจักรทางชีวธรณีเคมี การผุกร่อนทางชีวภาพและการฟื้นฟูทางชีวภาพ ฐานข้อมูลความหลากหลายของทรัพยากรจุลินทรีย์เพื่อการใช้ประโยชน์อย่างยั่งยืน',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Diversity and roles of microorganisms in natural environment; modern technologies for the analysis of microbial diversity and activities in environments; microbial technologies for the applications in biogeochemical cycling, biocorrosion, and bioremediation; microbial diversity database for sustainable applications' } },
+      '30536269': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ประเภทและคุณลักษณะของน้ำเสีย แหล่งกำเนิดและแนวทางการควบคุมการเกิดน้ำเสีย หลักการและวิธีการในการบำบัดน้ำเสียโดยกระบวนการทางชีวภาพ บทบาทของจุลินทรีย์ในการบำบัดน้ำเสีย เทคโนโลยีจุลินทรีย์เพื่อการบำบัดน้ำเสีย มาตรฐานน้ำระบายทิ้งหลังการบำบัดน้ำเสีย',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Types and characteristics of wastewater; sources and controlling strategies of wastewater production; principles and methods for wastewater treatment by biological means; roles of microorganisms in wastewater treatment; microbial technologies for wastewater treatment; effluent standards' } },
+      '30536369': { credits: '3 (2-3-4)',
+        description: { th: 'บุรพวิชา: 30510469 จุลชีววิทยาเบื้องต้น และ 30510569 ปฏิบัติการจุลชีววิทยาเบื้องต้น · ประเภทและคุณลักษณะของของเสีย กรอบแนวคิดด้านการจัดการของเสียแบบยั่งยืนโดยอาศัยกิจกรรมของจุลินทรีย์ เทคโนโลยีจุลินทรีย์เพื่อการใช้ประโยชน์จากของเสีย',
+          en: 'Prerequisite: 30510469 Introductory Microbiology and 30510569 Introductory Microbiology Laboratory · Types of waste; concept of sustainable waste using microbial processes; technologies of waste utilization' } },
+      '30138169': { credits: '2 (1-2-3)',
+        description: { th: 'การเตรียมความพร้อมก่อนการฝึกงานและสหกิจศึกษา การเขียนประวัติส่วนตัว การสมัครงานและสัมภาษณ์งาน บุคลิกภาพ การปรับตัวและการบริหารความเครียด ทักษะความสัมพันธ์ระหว่างบุคคล การสื่อสาร การบริหารจัดการอารมณ์ การคิดอย่างมีวิจารณญาณ ทักษะการเป็นผู้ประกอบการ ทักษะด้านดิจิทัล',
+          en: 'Preparation for pre-internship and cooperative education; writing a personal resume; applying for a job and interviewing techniques; personality; self-adjustment and stress managements; interpersonal skills; communication; self management; critical thinking; entrepreneurial skills; digital skill' } },
+      '30549469': { credits: '6 (0-18-9)',
+        description: { th: 'บุรพวิชา: 30138169 การเตรียมความพร้อมด้านวิชาชีพ · การเรียนรู้โดยปฏิบัติงานจริงเต็มเวลา เป็นเวลาไม่น้อยกว่า 4 เดือน ในสถานประกอบการที่เกี่ยวข้องกับงานด้านจุลชีววิทยา ภายใต้การดูแลและประเมินผลของอาจารย์ที่ปรึกษาจากสถาบันและผู้ควบคุมการปฏิบัติงานจากสถานประกอบการ การพัฒนาสมรรถนะในอาชีพ ทักษะการวางแผนงานและความสามารถในการตัดสินใจและแก้ไขปัญหา เสริมสร้างทักษะด้านความสัมพันธ์ระหว่างบุคคล จริยธรรมและจรรยาบรรณในการประกอบอาชีพ การเตรียมผู้เรียนให้พร้อมทำงานได้ทันทีหลังจากสำเร็จการศึกษา',
+          en: 'Prerequisite: 30138169 Preparation for Career · Work-based learning by performing real work full-time for at least 4 months at workplaces in microbiology field with academic and enterprise supervision and assessment; development of professional competence, systematic work planning skills as well as abilities to make decision and problem solving; enhancement of human relations, moral and ethics in career, preparation of graduates for work right after graduation' } },
+      '30522169': { credits: '3 (2-3-4)',
+        description: { th: 'กลไกการตอบสนองทางภูมิต้านทานของร่างกาย ทั้งแบบจำเพาะและไม่จำเพาะต่อสิ่งแปลกปลอม ความผิดปกติของระบบภูมิคุ้มกันและพยาธิสภาพที่เกิดขึ้น ปฏิกิริยาระหว่างแอนติเจนและแอนติบอดี การนำหลักการดังกล่าวมาใช้ประโยชน์ในการสร้างเสริมภูมิคุ้มกัน การรักษาโรค และการตรวจวินิจฉัยโรคทางห้องปฏิบัติการ',
+          en: 'Specific and non-specific immune response; immunological disorders and immunopathological findings; antigen-antibody reactions including their applications in immunization, treatment and laboratory diagnosis' } }
+    },
 
     /* ─── เชื่อมต่อ Google Sheets + Google Drive ──────────────────────
        ตั้งค่าครั้งเดียว หลังจากนั้นเพิ่มหลักฐานได้โดยไม่ต้องแก้โค้ดอีก
@@ -906,10 +1257,12 @@ class Component extends DCLogic {
 
        csvUrl : ลิงก์ CSV ของชีต (File → Share → Publish to web → เลือกชีต → CSV)
        formUrl: ลิงก์ Google Form ที่มีคำถามอัปโหลดไฟล์ (ไฟล์จะไปเก็บใน Drive เอง)
+       folderUrl: ลิงก์โฟลเดอร์ Google Drive ที่เก็บไฟล์หลักฐาน (แชร์แบบ "ใครก็ดูได้")
        ถ้าเว้นว่างทั้งสองช่อง เว็บจะใช้รายการใน DATA.curriculumDocs ด้านล่างแทน */
     sheet: {
       csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgSl9vV9Y65txBn6TBF0T-BQp2qxeyRpUmL6h5NN3jW_ZptAZZQAjh6Az0-cXq8WvN2Sz_745K9C6-/pub?gid=0&single=true&output=csv',
-      formUrl: 'https://forms.gle/q8pae6dA2ruL3c4X8'
+      formUrl: 'https://forms.gle/q8pae6dA2ruL3c4X8',
+      folderUrl: ''
     },
 
     /* ─── ทะเบียนเอกสารหลักสูตร (AUN-QA) ────────────────────────────
@@ -1130,6 +1483,9 @@ class Component extends DCLogic {
       currIntro: 'คลังข้อมูลหลักสูตร วท.บ. จุลชีววิทยา สำหรับใช้อ้างอิงในการสอน การทวนสอบ และงานประกันคุณภาพ',
       overview: 'ภาพรวมหลักสูตร', totalCredits: 'หน่วยกิตรวม', duration: 'ระยะเวลา', structureTitle: 'โครงสร้างหลักสูตรและหน่วยกิต',
       plosTitle: 'ผลลัพธ์การเรียนรู้ของหลักสูตร (PLO)', studyPlanTitle: 'แผนการเรียนรายชั้นปี',
+      currLinksTitle: 'ลิงก์และเอกสารที่ใช้บ่อย',
+      currLinksHint: 'เอกสารหลักสูตรฉบับเต็มและระบบที่ใช้งานร่วมกัน เปิดได้ในแท็บใหม่',
+      mappingLegend: 'ระดับความรับผิดชอบ 4 ระดับ · I = ความรู้เบื้องต้นและการประเมินเบื้องต้น · R = ความรู้ที่ลึกขึ้นและการประเมินความรู้ · P = ประเมินความสามารถในการนำความรู้ไปใช้หรือปฏิบัติ · M = ประเมินระดับความชำนาญในด้านความรู้หรือการปฏิบัติ · PLO ในตารางนี้ยึดตามผลลัพธ์การเรียนรู้ของหมวดวิชาเฉพาะใน มคอ.2 · ตารางนี้แสดงวิชาแกนและวิชาเอกบังคับ สำหรับวิชาเอกเลือกดูในไฟล์ PDF',
       mappingTitle: 'Curriculum mapping', revisionsTitle: 'บันทึกการปรับปรุงและทวนหลักสูตร',
       internalTitle: 'ทะเบียนเอกสารหลักสูตร', internalHint: 'สำหรับอาจารย์และคณะกรรมการหลักสูตร',
       docSearchLabel: 'ค้นหารหัสเอกสาร ชื่อเอกสาร ประเภท หรือปี', docSearchPlaceholder: 'MB-C1 · มคอ.2 · 2569',
@@ -1153,6 +1509,7 @@ class Component extends DCLogic {
       sheetOff: 'ยังไม่ได้เชื่อม Google Sheets — ตั้งค่าที่ DATA.sheet.csvUrl (ดูไฟล์ "เชื่อมต่อ Google Sheets.md")',
       sheetReload: 'ดึงข้อมูลใหม่',
       formOpen: 'อัปโหลดหลักฐานผ่าน Google Form',
+      folderOpen: 'เปิดโฟลเดอร์หลักฐานใน Drive',
       formHint: 'ไฟล์จะไปเก็บใน Google Drive และแถวข้อมูลจะเข้าชีตเอง เว็บจะแสดงให้เห็นภายในไม่กี่นาที',
       manualTitle: 'หรือเพิ่มแถวในชีตด้วยตนเอง',
       rowTitle: 'แถวสำหรับวางในชีต', rowHint: 'คัดลอกแล้ววางในแถวว่างถัดไปของชีต (คัดลอกมาเป็นช่องแยกให้เรียบร้อยแล้ว)',
@@ -1192,6 +1549,9 @@ class Component extends DCLogic {
       currIntro: 'A reference store for the B.Sc. Microbiology curriculum — teaching, verification and quality assurance.',
       overview: 'Programme overview', totalCredits: 'Total credits', duration: 'Duration', structureTitle: 'Structure and credits',
       plosTitle: 'Programme learning outcomes (PLO)', studyPlanTitle: 'Study plan by year',
+      currLinksTitle: 'Frequently used links and documents',
+      currLinksHint: 'Full curriculum documents and the systems used alongside them; each opens in a new tab.',
+      mappingLegend: 'Four levels of responsibility · I = Introduced · R = Reinforced · P = Practiced · M = Mastery · PLO numbering follows the specialised-course learning outcomes in the TQF2 · The table covers core and required major courses; electives are in the PDF.',
       mappingTitle: 'Curriculum mapping', revisionsTitle: 'Revision and verification log',
       internalTitle: 'Curriculum document register', internalHint: 'For faculty and the curriculum committee',
       docSearchLabel: 'Search by code, title, type or year', docSearchPlaceholder: 'MB-C1 · TQF2 · 2026',
@@ -1216,6 +1576,7 @@ class Component extends DCLogic {
       sheetOff: 'Google Sheets not connected — set DATA.sheet.csvUrl (see "เชื่อมต่อ Google Sheets.md").',
       sheetReload: 'Reload',
       formOpen: 'Upload evidence via Google Form',
+      folderOpen: 'Open evidence folder in Drive',
       formHint: 'The file lands in Google Drive and the row lands in the sheet; the register picks it up within a few minutes.',
       manualTitle: 'Or add a sheet row manually',
       rowTitle: 'Row to paste into the sheet', rowHint: 'Copy and paste into the next empty row of the sheet.',
@@ -1292,9 +1653,12 @@ class Component extends DCLogic {
     });
     if (idx.name < 0) return [];
     const driveView = (u) => {
-      const m = /\/d\/([-\w]{20,})|[?&]id=([-\w]{20,})/.exec(u || '');
+      const s = (u || '').trim();
+      const f = /\/folders\/([-\w]{15,})/.exec(s);
+      if (f) return 'https://drive.google.com/drive/folders/' + f[1];
+      const m = /\/d\/([-\w]{20,})|[?&]id=([-\w]{20,})/.exec(s);
       const id = m && (m[1] || m[2]);
-      return id ? 'https://drive.google.com/file/d/' + id + '/view' : (u || '').trim();
+      return id ? 'https://drive.google.com/file/d/' + id + '/view' : s;
     };
     return rows.slice(1).map(r => {
       const get = (k) => idx[k] >= 0 ? String(r[idx[k]] || '').trim() : '';
@@ -1455,14 +1819,26 @@ class Component extends DCLogic {
       label: S.lang === 'th' ? 'ปี ' + y.year : 'Year ' + y.year,
       terms: y.terms.map(t => ({
         label: t.term === 1 ? L.term1 : L.term2,
-        courses: t.courses.map(c => ({ code: c.code, name: this.tx(c.name), credits: c.credits || '—' })),
+        courses: t.courses.map(c => ({ code: c.code, name: this.tx(c.name), credits: c.credits || '—',
+          open: c.code ? openCourse(c.code) : ((e) => { if (e) e.preventDefault(); }),
+          cursor: c.code ? 'pointer' : 'default' })),
         empty: t.courses.length === 0
       }))
     }));
-    const nameOf = (code) => { const hit = courses.filter(c => c.code === code)[0]; return hit ? hit.name : code; };
+    const nameOf = (code) => {
+      const hit = courses.filter(c => c.code === code)[0];
+      if (hit) return hit.name;
+      const mp = (D.mapping || []).filter(m => m.code === code && m.name)[0];
+      if (mp) return this.tx(mp.name);
+      let found = code;
+      (D.studyPlan || []).forEach(y => y.terms.forEach(t => (t.courses || []).forEach(c => {
+        if (c.code === code && c.name) found = this.tx(c.name);
+      })));
+      return found;
+    };
     const mappingRows = D.mapping.map(m => ({
-      code: m.code, name: nameOf(m.code),
-      cells: [1, 2, 3, 4, 5, 6, 7].map(n => ({ mark: m.plos.indexOf(n) > -1 ? '●' : '' }))
+      code: m.code, name: m.name ? this.tx(m.name) : nameOf(m.code),
+      cells: [1, 2, 3, 4, 5, 6, 7].map(n => ({ mark: (m.levels || {})[n] || '' }))
     }));
     const revisions = D.revisions.slice().sort((a, b) => a.date < b.date ? 1 : -1)
       .map(r => ({ dateLabel: this.fmtRange({ start: r.date }), title: this.tx(r.title), note: this.tx(r.note) }));
@@ -1524,8 +1900,9 @@ class Component extends DCLogic {
       materials: (cd.materials || []).map(m => ({ name: this.tx(m.name), href: m.href || '#', target: m.href ? '_blank' : '', cls: m.href ? 'btn btn-secondary' : 'btn btn-ghost', action: m.href ? L.open : L.pending })),
       noMaterials: !(cd.materials && cd.materials.length),
       materialsHint: fill("courseDetails['" + S.course + "'].materials"),
-      plos: (cd.plos || []).map(n => ({ code: 'PLO ' + n })),
-      noPlos: !(cd.plos && cd.plos.length),
+      plos: (cd.plos && cd.plos.length ? cd.plos.map(n => ({ code: 'PLO ' + n }))
+        : (function (mp) { return mp ? Object.keys(mp.levels || {}).map(n => ({ code: 'PLO ' + n + ' · ' + mp.levels[n] })) : []; })((D.mapping || []).filter(m => m.code === S.course)[0])),
+      noPlos: !((cd.plos && cd.plos.length) || ((D.mapping || []).filter(m => m.code === S.course)[0] || {}).levels),
       plosHint: fill("courseDetails['" + S.course + "'].plos"),
       variants: courses.filter(c => c.code === S.course).map(c => ({ label: c.kindLabel + ' · ' + (c.room && c.room !== '—' ? c.room : L.noRoom), name: c.name }))
     };
@@ -1550,6 +1927,8 @@ class Component extends DCLogic {
       L, isTh: S.lang === 'th',
       termLabel: this.tx(D.term),
       teachPdf: D.teachPdf, examPdf: D.examPdf,
+      planPdf: D.planPdf, mappingPdf: D.mappingPdf, descPdf: D.descPdf,
+      currLinks: (D.currLinks || []).map(l => ({ name: this.tx(l.name), sub: l.sub || '', href: l.href || '#' })),
       isHome: S.page === 'home', isTeach: S.page === 'teach', isExam: S.page === 'exam',
       isCal: S.page === 'cal', isLinks: S.page === 'links', isDocs: S.page === 'docs',
       isCourses: S.page === 'courses', isContact: S.page === 'contact',
@@ -1595,6 +1974,8 @@ class Component extends DCLogic {
       sheetOkLabel: L.sheetOk.replace('{n}', String(S.sheetRows ? S.sheetRows.length : 0)),
       reloadSheet: () => this.loadSheet(),
       formUrl: (D.sheet && D.sheet.formUrl || '').trim(),
+      folderUrl: (D.sheet && D.sheet.folderUrl || '').trim(),
+      hasFolderUrl: !!(D.sheet && D.sheet.folderUrl || '').trim(),
       hasFormUrl: !!(D.sheet && D.sheet.formUrl || '').trim(),
 
       ndValid, ndInvalid: !ndValid,
