@@ -22,7 +22,7 @@
   @keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  :root {
+  :root, :root[data-theme="dark"] {
     --color-bg: #0a0e16;
     --color-surface: rgba(234, 240, 255, 0.055);
     --color-text: #eaf0ff;
@@ -65,6 +65,51 @@
     --shadow-lg: 0 0 40px rgba(91, 140, 255, 0.18), 0 16px 36px rgba(0, 0, 0, 0.6);
   }
 
+  :root[data-theme="light"] {
+    --color-bg: #f5ead8;
+    --color-surface: #ebddc5;
+    --color-text: #201e1d;
+    --color-accent: #c67139;
+    --color-accent-2: #7a8a5e;
+    --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+
+    --color-neutral-100: #f9f4ed;
+    --color-neutral-200: #eee7db;
+    --color-neutral-300: #dcd3c4;
+    --color-neutral-400: #c0b6a5;
+    --color-neutral-500: #a19786;
+    --color-neutral-600: #82796a;
+    --color-neutral-700: #645c50;
+    --color-neutral-800: #474238;
+    --color-neutral-900: #2e2b25;
+
+    --color-accent-100: #fff2eb;
+    --color-accent-200: #ffe1d0;
+    --color-accent-300: #ffc6a5;
+    --color-accent-400: #f6a06b;
+    --color-accent-500: #d67f48;
+    --color-accent-600: #b2622d;
+    --color-accent-700: #8c491a;
+    --color-accent-800: #643312;
+    --color-accent-900: #402310;
+
+    --color-accent-2-100: #f0fae1;
+    --color-accent-2-200: #e1eecc;
+    --color-accent-2-300: #ccdbb2;
+    --color-accent-2-400: #aebf92;
+    --color-accent-2-500: #8fa073;
+    --color-accent-2-600: #728157;
+    --color-accent-2-700: #56633f;
+    --color-accent-2-800: #3d472b;
+    --color-accent-2-900: #272e1b;
+
+    --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
+    --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
+    --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+  }
+  :root[data-theme="light"] body { background-image: none; }
+  :root[data-theme="light"] .card, :root[data-theme="light"] .dialog { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--color-surface); }
+
   body {
     background-image:
       linear-gradient(rgba(234, 240, 255, 0.045) 1px, transparent 1px),
@@ -103,6 +148,7 @@
         </sc-for>
       </nav>
       <button onClick="{{ toggleLang }}" class="btn btn-ghost" style="font-size: 13.5px; padding: 7px 14px; min-height: 36px; border-radius: 999px; border: 1px solid var(--color-divider)" aria-label="Switch language">{{ L.langSwitch }}</button>
+      <button onClick="{{ toggleTheme }}" style="font-size: 13.5px; padding: 7px 14px; min-height: 36px; border-radius: 999px; border: 1px solid var(--color-divider); background: transparent; color: var(--color-text); cursor: pointer">{{ themeLabel }}</button>
     </div>
   </header>
 
@@ -237,9 +283,13 @@
         <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ teachTermLabel }}</span>
         <h1 style="font-size: clamp(30px, 4vw, 44px); margin: 16px 0 0">{{ L.navTeach }}</h1>
         <p style="margin-top: 14px; font-size: 16.5px; max-width: 66ch; color: var(--color-neutral-800)">{{ L.teachIntro }}</p>
-        <div style="display: flex; gap: 8px; margin-top: 22px">
+        <div style="display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap">
           <sc-for list="{{ termTabs }}" as="tt" hint-placeholder-count="2">
             <button onClick="{{ tt.go }}" class="{{ tt.cls }}" style="font-size: 14.5px; padding: 8px 18px; min-height: 40px; border-radius: 999px">{{ tt.label }}</button>
+          </sc-for>
+          <span style="width: 1px; background: var(--color-divider); align-self: stretch; margin: 4px 2px"></span>
+          <sc-for list="{{ viewTabs }}" as="vt" hint-placeholder-count="2">
+            <button onClick="{{ vt.go }}" class="{{ vt.cls }}" style="font-size: 14.5px; padding: 8px 18px; min-height: 40px; border-radius: 999px">{{ vt.label }}</button>
           </sc-for>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; align-items: center">
@@ -249,6 +299,7 @@
           <a href="{{ teachPdf }}" onClick="{{ openTeachPdf }}" target="_blank" class="btn btn-ghost" style="font-size: 15px; margin-left: auto">{{ L.openPdf }}</a>
         </div>
 
+        <sc-if value="{{ isListView }}" hint-placeholder-val="{{ true }}">
         <div style="display: grid; gap: 26px; margin-top: 30px">
           <sc-for list="{{ teachGroups }}" as="g" hint-placeholder-count="4">
             <div>
@@ -274,6 +325,35 @@
             </div>
           </sc-for>
         </div>
+        </sc-if>
+
+        <sc-if value="{{ isGridView }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px; margin-top: 30px; align-items: start">
+          <sc-for list="{{ weekGrid }}" as="d" hint-placeholder-count="5">
+            <div class="card elev-sm" style="padding: 16px; gap: 12px">
+              <div style="display: flex; align-items: baseline; gap: 8px">
+                <h2 style="font-size: 18px">{{ d.label }}</h2>
+                <span style="font-size: 12px; color: var(--color-neutral-700); margin-left: auto">{{ d.count }}</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <sc-for list="{{ d.items }}" as="c" hint-placeholder-count="3">
+                  <div style="padding: 10px; border-radius: var(--radius-md); background: var(--color-neutral-100); display: flex; flex-direction: column; gap: 4px">
+                    <span style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap">
+                      <span class="{{ c.kindCls }}" style="font-size: 11px">{{ c.kind }}</span>
+                      <span style="font-size: 11px; color: var(--color-neutral-700); margin-left: auto">{{ c.yearsLabel }}</span>
+                    </span>
+                    <span style="font-size: 14px; font-weight: 600">{{ c.name }}</span>
+                    <span style="font-size: 12.5px; color: var(--color-neutral-700)">{{ c.detail }}</span>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ d.noItems }}" hint-placeholder-val="{{ false }}">
+                  <p style="font-size: 13px; color: var(--color-neutral-700)">—</p>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
       </section>
     </sc-if>
 
@@ -1772,6 +1852,7 @@ class Component extends DCLogic {
       heroBody: 'ตารางสอนและตารางสอบของภาคต้น ปีการศึกษา 2569 ปฏิทินกำหนดการที่ใกล้ถึง และลิงก์ระบบต่าง ๆ ที่ใช้งานประจำ',
       upcoming: 'กำหนดการที่ใกล้ถึง', noUpcoming: 'ยังไม่มีกำหนดการในสองสัปดาห์ข้างหน้า',
       news: 'ประกาศและข่าวสาร', shortcuts: 'ทางลัด', serviceCourses: 'วิชาบริการหน่วยงานอื่น',
+      viewList: 'รายการ', viewGrid: 'ตารางรายสัปดาห์',
       teachIntro: 'รายวิชาทั้งหมดในตารางเรียนรวม แยกตามชั้นปี วันในตารางแสดงเฉพาะรายวิชาที่ระบุวันไว้ชัดเจนในไฟล์ต้นฉบับ',
       examIntro: 'ตารางสอบกลางภาค ปลายภาค และสอบนอกตาราง พร้อมห้องสอบและผู้คุมสอบ',
       calIntro: 'กำหนดการของภาคเรียน เรียงตามวันที่ ระบบจะแจ้งเตือนเมื่อเหลือไม่เกิน 7 วัน',
@@ -1846,6 +1927,7 @@ class Component extends DCLogic {
       heroBody: 'Teaching and examination schedules for Semester 1/2026, upcoming deadlines, and the systems used day to day.',
       upcoming: 'Coming up', noUpcoming: 'Nothing scheduled in the next two weeks.',
       news: 'Announcements', shortcuts: 'Shortcuts', serviceCourses: 'Service courses (other departments)',
+      viewList: 'List', viewGrid: 'Weekly grid',
       teachIntro: 'Every course in the combined class schedule, grouped by cohort. A weekday is shown only where the source file states one.',
       examIntro: 'Midterm, final and off-schedule examinations with rooms and proctors.',
       calIntro: 'Semester dates in order. A reminder appears when a date is 7 days away or less.',
@@ -1869,7 +1951,7 @@ class Component extends DCLogic {
     }
   };
 
-  state = { page: 'home', lang: 'th', year: 'all', term: 1, q: '', dismissed: false, course: '', docQ: '', docAun: 'all', docAll: false,
+  state = { page: 'home', lang: 'th', year: 'all', term: 1, theme: 'dark', teachView: 'list', q: '', dismissed: false, course: '', docQ: '', docAun: 'all', docAll: false,
     ndName: '', ndType: '', ndYear: '', ndAuns: [], ndFile: null, pending: [], copied: false,
     sheetRows: null, sheetState: 'off' };
 
@@ -1948,6 +2030,12 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.loadSheet();
+    try {
+      const savedTheme = localStorage.getItem('mbio-theme');
+      const theme = (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark';
+      this.setState({ theme });
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) { /* ignore */ }
     try {
       const saved = localStorage.getItem('mbio-lang');
       if (saved === 'th' || saved === 'en') this.setState({ lang: saved });
@@ -2332,6 +2420,13 @@ class Component extends DCLogic {
         try { localStorage.setItem('mbio-lang', next); } catch (e) { /* ignore */ }
         this.setState({ lang: next });
       },
+      themeLabel: S.theme === 'dark' ? (S.lang === 'th' ? 'สว่าง' : 'Light') : (S.lang === 'th' ? 'มืด' : 'Dark'),
+      toggleTheme: () => {
+        const next = S.theme === 'dark' ? 'light' : 'dark';
+        try { localStorage.setItem('mbio-theme', next); } catch (e) { /* ignore */ }
+        try { document.documentElement.setAttribute('data-theme', next); } catch (e) { /* ignore */ }
+        this.setState({ theme: next });
+      },
 
       upcoming, upcomingCount: String(upcoming.length), noUpcoming: upcoming.length === 0,
       goLinks: this.go('links'), goDocs: this.go('docs'), goCurr: this.go('curr'),
@@ -2352,6 +2447,26 @@ class Component extends DCLogic {
       })),
       teachTermLabel: this.tx(S.term === 2 ? D.term2 : D.term),
       teachGroups: groups,
+      viewTabs: [['list', L.viewList], ['grid', L.viewGrid]].map(([v, label]) => ({
+        label, cls: S.teachView === v ? 'btn btn-primary' : 'btn btn-secondary',
+        go: () => this.setState({ teachView: v })
+      })),
+      isListView: S.teachView !== 'grid',
+      isGridView: S.teachView === 'grid',
+      weekGrid: ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์'].map((dk, i) => {
+        const dayLabelsEn = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        const items = yearFilter.filter(c => c.day && c.day.indexOf(dk) > -1);
+        return {
+          label: S.lang === 'th' ? dk : dayLabelsEn[i],
+          count: L.items.replace('{n}', String(items.length)),
+          noItems: items.length === 0,
+          items: items.map(c => ({
+            code: c.code, name: c.name, kind: c.kindLabel, yearsLabel: c.yearsLabel,
+            kindCls: c.kind === 'lab' ? 'tag tag-accent-2' : 'tag tag-accent',
+            detail: c.room && c.room !== '—' ? L.room + ' ' + c.room : L.noRoom
+          }))
+        };
+      }),
 
       examTables,
 
