@@ -321,12 +321,12 @@
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">cwie.buu.ac.th</span>
           </a>
           <a href="https://classroom.google.com" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Google Classroom</span>
-            <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">classroom.google.com</span>
+            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">ระบบวิชาสัมมนาภาควิชาจุลชีววิทยา</span>
+            <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">https://script.google.com/macros/s/AKfycbxD65vRCgQRcNj3_MhiS5nYszMfajfluTG6AbPb1wHGUDemvFdTgD5n-Q3M7HSMme4J/exec</span>
           </a>
           <a href="https://teams.microsoft.com" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Microsoft Teams</span>
-            <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">teams.microsoft.com</span>
+            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">ระบบวิชาเค้าโครงและโครงงานภาควิชาจุลชีววิทยา</span>
+            <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">https://script.google.com/macros/s/AKfycby9CEeOfJ8naxrblWCSXqJNrT8koIMCLErLxP3uLsdPvtvspXgsHOZsqLxNjaeAymg6-Q/exec</span>
           </a>
         </div>
       </section>
@@ -1596,8 +1596,8 @@ class Component extends DCLogic {
       examIntro: 'ตารางสอบกลางภาค ปลายภาค และสอบนอกตาราง พร้อมห้องสอบและผู้คุมสอบ',
       calIntro: 'กำหนดการของภาคเรียน เรียงตามวันที่ ระบบจะแจ้งเตือนเมื่อเหลือไม่เกิน 7 วัน',
       calEditHint: 'เพิ่มกำหนดส่งข้อมูลหรือกำหนดการอื่นได้ในบล็อกข้อมูล calendar ที่ต้นไฟล์ โดยระบุวันที่แบบ YYYY-MM-DD',
-      linksIntro: 'ลิงก์ที่ใช้งานประจำ แยกตามรหัสชั้นปีและระบบของมหาวิทยาลัย',
-      byCohort: 'ลิงก์แยกตามรหัสชั้นปี', systems: 'ระบบของมหาวิทยาลัย',
+      linksIntro: 'ลิงก์ที่ใช้งานประจำ แยกตามรหัสชั้นปีและระบบของภาควิชาจุลชีววิทยา',
+      byCohort: 'ลิงก์แยกตามรหัสชั้นปี', systems: 'ระบบของภาควิชาจุลชีววิทยา',
       docsIntro: 'เอกสารและแบบฟอร์มสำหรับดาวน์โหลด',
       coursesIntro: 'รายวิชาทั้งหมดในหลักสูตร ค้นหาจากรหัสวิชาหรือชื่อวิชา แล้วคลิกเพื่อดูคำอธิบายรายวิชา',
       openDescPdf: 'เปิดคำอธิบายรายวิชาฉบับเต็ม (PDF)',
@@ -2140,7 +2140,7 @@ class Component extends DCLogic {
         { label: L.navTeach, hint: this.tx(D.term), go: this.go('teach') },
         { label: L.navExam, hint: S.lang === 'th' ? 'กลางภาค · ปลายภาค · นอกตาราง' : 'Midterm · final · off-schedule', go: this.go('exam') },
         { label: L.navCal, hint: L.items.replace('{n}', String(cal.length)).replace('รายวิชา', 'รายการ').replace('courses', 'entries'), go: this.go('cal') },
-        { label: L.navLinks, hint: S.lang === 'th' ? 'รหัส 66–69 และระบบมหาวิทยาลัย' : 'Cohorts 66–69 and systems', go: this.go('links') },
+        { label: L.navLinks, hint: S.lang === 'th' ? 'รหัส 66–69 และระบบที่เกี่ยวข้องกับภาควิชาจุลชีววิทยา' : 'Cohorts 66–69 and systems', go: this.go('links') },
         { label: L.navDocs, hint: S.lang === 'th' ? 'แบบฟอร์มและไฟล์ตาราง' : 'Forms and schedule files', go: this.go('docs') },
         { label: L.navCourses, hint: L.items.replace('{n}', String(courses.length)), go: this.go('courses') },
         { label: L.navCurr, hint: S.lang === 'th' ? 'PLO · แผนการเรียน · มคอ.2' : 'PLOs · study plan · TQF2', go: this.go('curr') }
