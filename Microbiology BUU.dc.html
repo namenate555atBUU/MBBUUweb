@@ -11,16 +11,78 @@
 <link rel="stylesheet" href="_ds/organic-1b896b7d-7152-4759-8c2e-c90a060843a8/styles.css">
 <script src="_ds/organic-1b896b7d-7152-4759-8c2e-c90a060843a8/_ds_bundle.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&amp;family=Figtree:wght@400;500;600;700&amp;family=Chonburi&amp;family=Sarabun:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Prompt:wght@300;400;500;600;700&amp;display=swap">
 <style>
-  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: "Figtree", "Sarabun", system-ui, sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, h4 { font-family: "Caprasimo", "Chonburi", system-ui, sans-serif; font-weight: 400; line-height: 1.25; margin: 0; text-wrap: pretty; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: "Prompt", "Inter", system-ui, sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: "Space Grotesk", "Prompt", system-ui, sans-serif; font-weight: 600; line-height: 1.25; margin: 0; text-wrap: pretty; }
   p { margin: 0; }
   a { color: var(--color-accent-700); text-decoration: none; }
   a:hover { color: var(--color-accent-600); text-decoration: underline; }
   *:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
   @keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  :root {
+    --color-bg: #0a0e16;
+    --color-surface: rgba(234, 240, 255, 0.055);
+    --color-text: #eaf0ff;
+    --color-accent: #5b8cff;
+    --color-accent-2: #884cf0;
+    --color-divider: rgba(234, 240, 255, 0.14);
+
+    --color-neutral-100: #14171f;
+    --color-neutral-200: #1c212c;
+    --color-neutral-300: #262c3b;
+    --color-neutral-400: #323a4e;
+    --color-neutral-500: #424d67;
+    --color-neutral-600: #566486;
+    --color-neutral-700: #9ba6bf;
+    --color-neutral-800: #cdd3df;
+    --color-neutral-900: #eaf0ff;
+
+    --color-accent-100: #001547;
+    --color-accent-200: #001e66;
+    --color-accent-300: #002b8f;
+    --color-accent-400: #003ac2;
+    --color-accent-500: #004cff;
+    --color-accent-600: #3d77ff;
+    --color-accent-700: #5b8cff;
+    --color-accent-800: #99b7ff;
+    --color-accent-900: #ccdbff;
+
+    --color-accent-2-100: #1c0542;
+    --color-accent-2-200: #27085e;
+    --color-accent-2-300: #370b84;
+    --color-accent-2-400: #4b0fb3;
+    --color-accent-2-500: #6313ec;
+    --color-accent-2-600: #884cf0;
+    --color-accent-2-700: #a171f4;
+    --color-accent-2-800: #c0a1f7;
+    --color-accent-2-900: #e0d0fb;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 0 24px rgba(91, 140, 255, 0.14), 0 6px 18px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 0 40px rgba(91, 140, 255, 0.18), 0 16px 36px rgba(0, 0, 0, 0.6);
+  }
+
+  body {
+    background-image:
+      linear-gradient(rgba(234, 240, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234, 240, 255, 0.045) 1px, transparent 1px),
+      radial-gradient(ellipse 900px 600px at 85% -10%, rgba(91, 140, 255, 0.16), transparent),
+      radial-gradient(ellipse 700px 500px at -10% 40%, rgba(136, 76, 240, 0.12), transparent);
+    background-size: 56px 56px, 56px 56px, 100% 100%, 100% 100%;
+    background-attachment: fixed;
+  }
+  .card, .dialog { backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 1px solid var(--color-divider); }
+  .input { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  ::selection { background: rgba(91, 140, 255, 0.35); }
+
+  @media print {
+    * { background: #ffffff !important; color: #000000 !important; box-shadow: none !important; backdrop-filter: none !important; text-shadow: none !important; }
+    body { background-image: none !important; }
+    a { color: #000000 !important; text-decoration: underline !important; }
+  }
 </style>
 </helmet>
 
@@ -29,18 +91,18 @@
   <header style="position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--color-divider)">
     <div style="max-width: 1140px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap">
       <a href="#" onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; margin-right: auto">
-        <span style="width: 42px; height: 42px; border-radius: 999px; background: var(--color-accent); color: var(--color-bg); display: grid; place-items: center; font-family: 'Caprasimo', serif; font-size: 19px; flex: none">M</span>
+        <span style="width: 42px; height: 42px; border-radius: 999px; background: var(--color-accent); color: var(--color-bg); display: grid; place-items: center; font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 19px; flex: none">M</span>
         <span style="display: flex; flex-direction: column; line-height: 1.25">
-          <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 19px">{{ L.brand }}</span>
+          <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 19px">{{ L.brand }}</span>
           <span style="font-size: 12.5px; color: var(--color-neutral-700)">{{ L.brandSub }}</span>
         </span>
       </a>
-      <nav style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center">
+      <nav style="display: flex; flex-wrap: wrap; gap: 18px; align-items: center">
         <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8">
-          <a href="#" onClick="{{ n.go }}" aria-current="{{ n.cur }}" class="{{ n.cls }}" style="font-size: 15px; padding: 8px 15px; text-decoration: none">{{ n.label }}</a>
+          <a href="#" onClick="{{ n.go }}" aria-current="{{ n.cur }}" style="{{ n.style }} font-size: 14.5px; text-decoration: none; padding-bottom: 5px">{{ n.label }}</a>
         </sc-for>
       </nav>
-      <button onClick="{{ toggleLang }}" class="btn btn-secondary" style="font-size: 14px; padding: 8px 16px; min-height: 40px" aria-label="Switch language">{{ L.langSwitch }}</button>
+      <button onClick="{{ toggleLang }}" class="btn btn-ghost" style="font-size: 13.5px; padding: 7px 14px; min-height: 36px; border-radius: 999px; border: 1px solid var(--color-divider)" aria-label="Switch language">{{ L.langSwitch }}</button>
     </div>
   </header>
 
@@ -48,74 +110,123 @@
 
     <!-- ── หน้าแรก ── -->
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-      <section style="padding: 56px 0 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 44px; align-items: start">
-        <div>
-          <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ L.heroKicker }}</span>
-          <h1 style="font-size: clamp(34px, 5vw, 54px); margin: 18px 0 0; max-width: 20ch">{{ L.heroTitle }}</h1>
-          <p style="margin-top: 18px; font-size: 18px; max-width: 52ch; color: var(--color-neutral-800)">{{ L.heroBody }}</p>
-          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px">
-            <a href="#" onClick="{{ goTeach }}" class="btn btn-primary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.navTeach }}</a>
-            <a href="#" onClick="{{ goExam }}" class="btn btn-secondary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.navExam }}</a>
-            <a href="#" onClick="{{ goCal }}" class="btn btn-secondary" style="font-size: 15px; padding: 11px 22px; min-height: 44px">{{ L.navCal }}</a>
+      <section style="position: relative; padding: 54px 0 40px">
+        <span style="position: absolute; top: -60px; right: -120px; width: 420px; height: 420px; border-radius: 999px; background: var(--color-accent-2-200); opacity: 0.55; filter: blur(2px); z-index: 0; pointer-events: none"></span>
+        <span style="position: absolute; top: 160px; right: 180px; width: 120px; height: 120px; border-radius: 999px; background: var(--color-accent-300); opacity: 0.5; z-index: 0; pointer-events: none"></span>
+        <div style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 44px; align-items: start; z-index: 1">
+          <div>
+            <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ L.heroKicker }}</span>
+            <h1 style="font-size: clamp(38px, 6vw, 64px); margin: 18px 0 0; max-width: 15ch; line-height: 1.08">{{ L.heroTitle }}</h1>
+            <p style="margin-top: 20px; font-size: 18px; max-width: 50ch; color: var(--color-neutral-800)">{{ L.heroBody }}</p>
+            <form onSubmit="{{ goCourses }}" style="display: flex; gap: 10px; margin-top: 30px; max-width: 460px">
+              <input type="search" value="{{ q }}" onInput="{{ onQuery }}" placeholder="{{ L.heroSearchPlaceholder }}" aria-label="{{ L.searchLabel }}" class="input" style="font-size: 16px; min-height: 48px; flex: 1; min-width: 0">
+              <button type="submit" class="btn btn-primary" style="font-size: 15px; padding: 0 22px; min-height: 48px; flex: none">{{ L.heroSearchBtn }}</button>
+            </form>
+            <div style="display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px">
+              <a href="#" onClick="{{ goTeach }}" style="font-size: 14.5px; color: var(--color-accent-800); font-weight: 600; text-decoration: underline; text-underline-offset: 3px">{{ L.navTeach }}</a>
+              <a href="#" onClick="{{ goExam }}" style="font-size: 14.5px; color: var(--color-accent-800); font-weight: 600; text-decoration: underline; text-underline-offset: 3px">{{ L.navExam }}</a>
+              <a href="#" onClick="{{ goCal }}" style="font-size: 14.5px; color: var(--color-accent-800); font-weight: 600; text-decoration: underline; text-underline-offset: 3px">{{ L.navCal }}</a>
+            </div>
+          </div>
+          <div class="card elev-md" style="padding: 24px; gap: 14px">
+            <div style="display: flex; align-items: baseline; gap: 10px">
+              <h2 style="font-size: 20px">{{ L.upcoming }}</h2>
+              <span class="tag tag-accent" style="margin-left: auto; font-size: 12.5px">{{ upcomingCount }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <sc-for list="{{ upcoming }}" as="u" hint-placeholder-count="3">
+                <div style="display: flex; gap: 14px; align-items: flex-start; position: relative; padding: 10px 0 10px 2px">
+                  <span style="flex: none; width: 50px; text-align: center; border-radius: 999px; background: var(--color-accent-200); color: var(--color-accent-800); padding: 8px 0; line-height: 1.1">
+                    <span style="display: block; font-size: 17px; font-weight: 700">{{ u.dayNum }}</span>
+                    <span style="display: block; font-size: 11px">{{ u.monthShort }}</span>
+                  </span>
+                  <span style="min-width: 0; padding-top: 2px">
+                    <span style="display: block; font-size: 15.5px; font-weight: 600">{{ u.title }}</span>
+                    <span style="display: block; font-size: 13px; color: var(--color-neutral-700)">{{ u.rangeLabel }} · {{ u.countdown }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ noUpcoming }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size: 15px; color: var(--color-neutral-700)">{{ L.noUpcoming }}</p>
+            </sc-if>
           </div>
         </div>
-        <div class="card elev-md" style="padding: 26px; gap: 16px">
-          <div style="display: flex; align-items: baseline; gap: 10px">
-            <h2 style="font-size: 21px">{{ L.upcoming }}</h2>
-            <span class="tag tag-accent" style="margin-left: auto">{{ upcomingCount }}</span>
-          </div>
-          <sc-for list="{{ upcoming }}" as="u" hint-placeholder-count="3">
-            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--color-divider)">
-              <span style="flex: none; width: 62px; text-align: center; border-radius: 14px; background: var(--color-accent-200); color: var(--color-accent-800); padding: 6px 0; line-height: 1.15">
-                <span style="display: block; font-size: 19px; font-weight: 700">{{ u.dayNum }}</span>
-                <span style="display: block; font-size: 12px">{{ u.monthShort }}</span>
-              </span>
+      </section>
+
+      <section style="padding: 16px 0 8px">
+        <h2 style="font-size: 26px; margin-bottom: 18px">{{ L.shortcuts }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; margin-bottom: 14px">
+          <a href="#" onClick="{{ goTeach }}" style="padding: 26px; border-radius: var(--radius-lg); text-decoration: none; color: var(--color-bg); background: var(--color-accent-700); display: flex; flex-direction: column; gap: 10px; min-height: 150px">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c3.2-1.8 6-1.8 8 0v12.5c-2-1.8-4.8-1.8-8 0z"/><path d="M20 6c-3.2-1.8-6-1.8-8 0v12.5c2-1.8 4.8-1.8 8 0z"/></svg>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 22px; margin-top: auto">{{ L.navTeach }}</span>
+            <span style="font-size: 14px; opacity: 0.85">{{ hintTeach }}</span>
+          </a>
+          <a href="#" onClick="{{ goExam }}" style="padding: 26px; border-radius: var(--radius-lg); text-decoration: none; color: var(--color-text); background: var(--color-accent-2-200); display: flex; flex-direction: column; gap: 10px; min-height: 150px">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2.3" width="6" height="3.4" rx="1"/><path d="M9 13.2l2 2 4-4.4"/></svg>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 22px; margin-top: auto">{{ L.navExam }}</span>
+            <span style="font-size: 14px; color: var(--color-neutral-700)">{{ hintExam }}</span>
+          </a>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px">
+          <a href="#" onClick="{{ goCal }}" style="display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 999px; text-decoration: none; color: inherit; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+            <span style="width: 32px; height: 32px; border-radius: 999px; background: var(--color-accent-200); display: grid; place-items: center; color: var(--color-accent-800); flex: none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.3" y="5" width="17.4" height="15.5" rx="2.2"/><path d="M3.3 10h17.4"/><path d="M8 3v4"/><path d="M16 3v4"/></svg>
+            </span>
+            <span style="font-size: 15px; font-weight: 600">{{ L.navCal }}</span>
+          </a>
+          <a href="#" onClick="{{ goLinks }}" style="display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 999px; text-decoration: none; color: inherit; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+            <span style="width: 32px; height: 32px; border-radius: 999px; background: var(--color-accent-2-200); display: grid; place-items: center; color: var(--color-accent-2-800); flex: none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.8 2.8 2.8 15.2 0 18"/><path d="M12 3c-2.8 2.8-2.8 15.2 0 18"/></svg>
+            </span>
+            <span style="font-size: 15px; font-weight: 600">{{ L.navLinks }}</span>
+          </a>
+          <a href="#" onClick="{{ goDocs }}" style="display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 999px; text-decoration: none; color: inherit; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+            <span style="width: 32px; height: 32px; border-radius: 999px; background: var(--color-accent-200); display: grid; place-items: center; color: var(--color-accent-800); flex: none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2.3h7.3l4.2 4.2v14.2a1 1 0 0 1-1 1h-10.5a1 1 0 0 1-1-1V3.3a1 1 0 0 1 1-1z"/><path d="M13.8 2.3v4.2h4.2"/><path d="M8.7 13h6.6"/><path d="M8.7 16.8h6.6"/></svg>
+            </span>
+            <span style="font-size: 15px; font-weight: 600">{{ L.navDocs }}</span>
+          </a>
+          <a href="#" onClick="{{ goCourses }}" style="display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 999px; text-decoration: none; color: inherit; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+            <span style="width: 32px; height: 32px; border-radius: 999px; background: var(--color-accent-2-200); display: grid; place-items: center; color: var(--color-accent-2-800); flex: none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4.2" y="14.5" width="15.6" height="4" rx="1.3"/><rect x="5.2" y="9.3" width="13.6" height="4" rx="1.3" opacity="0.72"/><rect x="6.4" y="4.4" width="11.2" height="3.4" rx="1.2" opacity="0.48"/></svg>
+            </span>
+            <span style="font-size: 15px; font-weight: 600">{{ L.navCourses }}</span>
+          </a>
+          <a href="#" onClick="{{ goCurr }}" style="display: flex; align-items: center; gap: 10px; padding: 12px 18px 12px 12px; border-radius: 999px; text-decoration: none; color: inherit; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+            <span style="width: 32px; height: 32px; border-radius: 999px; background: var(--color-accent-200); display: grid; place-items: center; color: var(--color-accent-800); flex: none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3 2.5 8l9.5 4.7L21.5 8z"/><path d="M6.3 10.4v5.4c0 1.7 2.8 3.1 5.7 3.1s5.7-1.4 5.7-3.1v-5.4"/><path d="M21.5 8v6.3"/></svg>
+            </span>
+            <span style="font-size: 15px; font-weight: 600">{{ L.navCurr }}</span>
+          </a>
+        </div>
+      </section>
+
+      <section style="padding: 40px 0 40px">
+        <h2 style="font-size: 26px; margin-bottom: 18px">{{ L.news }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; align-items: stretch">
+          <article style="padding: 28px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px; background: var(--color-accent-2-800); color: var(--color-bg)">
+            <p style="font-size: 12px; opacity: 0.8">4 ส.ค. 2569</p>
+            <h3 style="font-size: 22px">ตารางสอบกลางภาคและปลายภาค 1/2569</h3>
+            <p style="font-size: 15.5px; opacity: 0.9">สอบกลางภาค 7–11 กันยายน 2569 และสอบปลายภาค 2–6 พฤศจิกายน 2569 ตรวจห้องสอบและผู้คุมสอบที่หน้าตารางสอบ</p>
+            <a href="#" onClick="{{ goExam }}" style="font-size: 14px; font-weight: 600; padding: 9px 18px; margin-top: 4px; align-self: start; border-radius: 999px; background: var(--color-bg); color: var(--color-accent-2-900); text-decoration: none">{{ L.navExam }}</a>
+          </article>
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 14px 4px; border-top: 1px solid var(--color-divider)">
+              <span style="font-size: 13px; color: var(--color-neutral-700); flex: none; width: 70px">4 ส.ค. 2569</span>
               <span style="min-width: 0">
-                <span style="display: block; font-size: 16px; font-weight: 600">{{ u.title }}</span>
-                <span style="display: block; font-size: 13.5px; color: var(--color-neutral-700)">{{ u.rangeLabel }} · {{ u.countdown }}</span>
+                <span style="display: block; font-size: 16px; font-weight: 600">สอบนอกตาราง 30520664 Deter Bac</span>
+                <span style="display: block; font-size: 13.5px; color: var(--color-neutral-700); margin-top: 2px">เสาร์ที่ 3 ตุลาคม 2569 เวลา 09.00–11.00 น. ห้อง BS4102 (01) และ BS4103 (02–03)</span>
               </span>
             </div>
-          </sc-for>
-          <sc-if value="{{ noUpcoming }}" hint-placeholder-val="{{ false }}">
-            <p style="font-size: 15px; color: var(--color-neutral-700); border-top: 1px solid var(--color-divider); padding-top: 14px">{{ L.noUpcoming }}</p>
-          </sc-if>
-        </div>
-      </section>
-
-      <section style="padding: 8px 0 40px">
-        <h2 style="font-size: 28px; margin-bottom: 18px">{{ L.news }}</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 18px">
-          <article class="card elev-sm" style="padding: 22px">
-            <p class="card-kicker" style="font-size: 12px">4 ส.ค. 2569</p>
-            <h3 class="card-title" style="font-size: 19px">ตารางสอบกลางภาคและปลายภาค 1/2569</h3>
-            <p class="card-body" style="font-size: 15px; opacity: 0.9">สอบกลางภาค 7–11 กันยายน 2569 และสอบปลายภาค 2–6 พฤศจิกายน 2569 ตรวจห้องสอบและผู้คุมสอบที่หน้าตารางสอบ</p>
-            <p class="card-meta" style="font-size: 13px">ภาควิชาจุลชีววิทยา</p>
-          </article>
-          <article class="card elev-sm" style="padding: 22px">
-            <p class="card-kicker" style="font-size: 12px">4 ส.ค. 2569</p>
-            <h3 class="card-title" style="font-size: 19px">สอบนอกตาราง 30520664 Deter Bac</h3>
-            <p class="card-body" style="font-size: 15px; opacity: 0.9">เสาร์ที่ 3 ตุลาคม 2569 เวลา 09.00–11.00 น. สอบหัวข้อบรรยายที่ 6–9 ห้อง BS4102 (01) และ BS4103 (02–03)</p>
-            <p class="card-meta" style="font-size: 13px">ภาควิชาจุลชีววิทยา</p>
-          </article>
-          <article class="card elev-sm" style="padding: 22px">
-            <p class="card-kicker" style="font-size: 12px">9 มิ.ย. 2569</p>
-            <h3 class="card-title" style="font-size: 19px">ประกาศตารางเรียน ภาคต้น ปีการศึกษา 2569</h3>
-            <p class="card-body" style="font-size: 15px; opacity: 0.9">ตารางเรียนรวมทุกชั้นปี ข้อมูล ณ วันที่ 9 มิถุนายน 2569 ดูรายวิชาแยกตามชั้นปีได้ที่หน้าตารางสอน</p>
-            <p class="card-meta" style="font-size: 13px">ภาควิชาจุลชีววิทยา</p>
-          </article>
-        </div>
-      </section>
-
-      <section style="padding: 8px 0 40px">
-        <h2 style="font-size: 28px; margin-bottom: 18px">{{ L.shortcuts }}</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px">
-          <sc-for list="{{ shortcuts }}" as="s" hint-placeholder-count="6">
-            <a href="#" onClick="{{ s.go }}" class="card elev-sm" style="padding: 22px; text-decoration: none; color: inherit; gap: 6px">
-              <span style="width: 34px; height: 34px; border-radius: 999px; background: var(--color-accent-2-200); display: block"></span>
-              <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px; margin-top: 6px">{{ s.label }}</span>
-              <span style="font-size: 14px; color: var(--color-neutral-700)">{{ s.hint }}</span>
-            </a>
-          </sc-for>
+            <div style="display: flex; gap: 14px; align-items: flex-start; padding: 14px 4px; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider)">
+              <span style="font-size: 13px; color: var(--color-neutral-700); flex: none; width: 70px">9 มิ.ย. 2569</span>
+              <span style="min-width: 0">
+                <span style="display: block; font-size: 16px; font-weight: 600">ประกาศตารางเรียน ภาคต้น ปีการศึกษา 2569</span>
+                <span style="display: block; font-size: 13.5px; color: var(--color-neutral-700); margin-top: 2px">ข้อมูล ณ วันที่ 9 มิถุนายน 2569 ดูรายวิชาแยกตามชั้นปีได้ที่หน้าตารางสอน</span>
+              </span>
+            </div>
+          </div>
         </div>
       </section>
     </sc-if>
@@ -123,10 +234,15 @@
     <!-- ── ตารางสอน ── -->
     <sc-if value="{{ isTeach }}" hint-placeholder-val="{{ false }}">
       <section style="padding: 44px 0 40px">
-        <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ termLabel }}</span>
+        <span class="tag tag-accent-2" style="font-size: 13px; padding: 5px 14px">{{ teachTermLabel }}</span>
         <h1 style="font-size: clamp(30px, 4vw, 44px); margin: 16px 0 0">{{ L.navTeach }}</h1>
         <p style="margin-top: 14px; font-size: 16.5px; max-width: 66ch; color: var(--color-neutral-800)">{{ L.teachIntro }}</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; align-items: center">
+        <div style="display: flex; gap: 8px; margin-top: 22px">
+          <sc-for list="{{ termTabs }}" as="tt" hint-placeholder-count="2">
+            <button onClick="{{ tt.go }}" class="{{ tt.cls }}" style="font-size: 14.5px; padding: 8px 18px; min-height: 40px; border-radius: 999px">{{ tt.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; align-items: center">
           <sc-for list="{{ yearChips }}" as="y" hint-placeholder-count="5">
             <button onClick="{{ y.go }}" class="{{ y.cls }}" style="font-size: 15px; padding: 9px 18px; min-height: 42px">{{ y.label }}</button>
           </sc-for>
@@ -185,7 +301,7 @@
                 <tbody>
                   <sc-for list="{{ ex.rows }}" as="r" hint-placeholder-count="4">
                     <tr>
-                      <td style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 17px; vertical-align: top">{{ r.year }}</td>
+                      <td style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 17px; vertical-align: top">{{ r.year }}</td>
                       <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="5">
                         <td style="vertical-align: top; padding: 12px 10px">
                           <span style="display: flex; flex-direction: column; gap: 12px">
@@ -225,7 +341,7 @@
           <sc-for list="{{ calendar }}" as="c" hint-placeholder-count="6">
             <article class="{{ c.cls }}" style="padding: 18px 22px; display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 20px; align-items: center">
               <span style="text-align: center; line-height: 1.15">
-                <span style="display: block; font-family: 'Caprasimo', 'Chonburi', serif; font-size: 26px">{{ c.dayNum }}</span>
+                <span style="display: block; font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 26px">{{ c.dayNum }}</span>
                 <span style="display: block; font-size: 13.5px; color: var(--color-neutral-700)">{{ c.monthShort }}</span>
               </span>
               <span style="min-width: 0">
@@ -297,35 +413,35 @@
         <h2 style="font-size: 25px; margin-top: 44px">{{ L.systems }}</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; margin-top: 16px">
           <a href="https://reg.buu.ac.th" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">REG BUU</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">REG BUU</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">reg.buu.ac.th</span>
           </a>
           <a href="https://www.facebook.com/Microbiologybuu" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Facebook MB-BUU</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">Facebook MB-BUU</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">facebook.com/Microbiologybuu</span>
           </a>
           <a href="https://www.instagram.com/microbiology.buu?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Instagram MB-BUU</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">Instagram MB-BUU</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">instagram.com/microbiology.buu</span>
           </a>
            <a href="https://science.buu.ac.th" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Faculty of Science Website</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">Faculty of Science Website</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">science.buu</span>
           </a>
           <a href="https://science.buu.ac.th/academiccwie" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">CWIE website (Faculty of Science)</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">CWIE website (Faculty of Science)</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">science.buu/academiccwie</span>
           </a>
           <a href="https://cwie.buu.ac.th/login" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">CWIE website (BUU University)</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">CWIE website (BUU University)</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">cwie.buu.ac.th</span>
           </a>
           <a href="https://script.google.com/macros/s/AKfycbxD65vRCgQRcNj3_MhiS5nYszMfajfluTG6AbPb1wHGUDemvFdTgD5n-Q3M7HSMme4J/exec" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Microbe Seminar Hub</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">Microbe Seminar Hub</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">ระบบวิชาสัมมนาภาควิชาจุลชีววิทยา</span>
           </a>
           <a href="https://script.google.com/macros/s/AKfycby9CEeOfJ8naxrblWCSXqJNrT8koIMCLErLxP3uLsdPvtvspXgsHOZsqLxNjaeAymg6-Q/exec" target="_blank" class="card elev-sm" style="padding: 20px; text-decoration: none; color: inherit; gap: 4px">
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 18px">Project Genesis & Projects in Microbiology</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 18px">Project Genesis & Projects in Microbiology</span>
             <span style="font-size: 14px; color: var(--color-neutral-700); word-break: break-all">ระบบวิชาเค้าโครงและโครงงานภาควิชาจุลชีววิทยา</span>
           </a>
         </div>
@@ -434,12 +550,12 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px; margin-top: 28px">
           <div class="card elev-sm" style="padding: 22px; gap: 2px">
             <span class="card-kicker" style="font-size: 12px">{{ L.overview }}</span>
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 22px">{{ programDegree }}</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 22px">{{ programDegree }}</span>
           </div>
           
           <div class="card elev-sm" style="padding: 22px; gap: 2px">
             <span class="card-kicker" style="font-size: 12px">{{ L.duration }}</span>
-            <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 22px">{{ programDuration }}</span>
+            <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 22px">{{ programDuration }}</span>
           </div>
         </div>
 
@@ -448,7 +564,7 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin-top: 16px">
           <sc-for list="{{ currLinks }}" as="l" hint-placeholder-count="9">
             <a href="{{ l.href }}" onClick="{{ l.open }}" target="_blank" class="card elev-sm" style="padding: 18px 20px; text-decoration: none; color: inherit; gap: 4px; min-height: 44px">
-              <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 17px">{{ l.name }}</span>
+              <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 17px">{{ l.name }}</span>
               <span style="font-size: 13.5px; color: var(--color-neutral-700); word-break: break-all">{{ l.sub }}</span>
             </a>
           </sc-for>
@@ -707,7 +823,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 20px">
               <span style="display: flex; flex-direction: column; gap: 2px">
                 <span style="font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent-700)">{{ L.uploadCodePreview }}</span>
-                <span style="font-family: 'Caprasimo', 'Chonburi', serif; font-size: 22px; font-variant-numeric: tabular-nums">{{ ndCode }}</span>
+                <span style="font-family: 'Space Grotesk', 'Prompt', sans-serif; font-size: 22px; font-variant-numeric: tabular-nums">{{ ndCode }}</span>
               </span>
               <button onClick="{{ addDoc }}" class="{{ ndAddCls }}" style="{{ ndAddStyle }}">{{ L.uploadAdd }}</button>
               <button onClick="{{ clearDoc }}" class="btn btn-ghost" style="font-size: 15px; padding: 11px 18px; min-height: 44px">{{ L.uploadClear }}</button>
@@ -887,9 +1003,11 @@ class Component extends DCLogic {
      ══════════════════════════════════════════════════════════════ */
   DATA = {
     term: { th: 'ภาคต้น ปีการศึกษา 2569', en: 'Semester 1 / 2026' },
+    term2: { th: 'ภาคปลาย ปีการศึกษา 2569', en: 'Semester 2 / 2026' },
     updated: { th: 'ข้อมูลตารางเรียน ณ 9 มิถุนายน 2569 · ตารางสอบ ณ 4 สิงหาคม 2569', en: 'Class schedule as of 9 Jun 2026 · Exams as of 4 Aug 2026' },
     reminderDays: 7,
     teachPdf: 'uploads/files-1788600157019-atmk.pdf',
+    teachPdf2: 'uploads/term2-schedule-v2.pdf',
     examPdf: 'uploads/files-1788600157031-p1a2.pdf',
     planPdf: 'uploads/28_6_1774499283.pdf',
     mappingPdf: 'uploads/plo69-1.pdf',
@@ -1451,6 +1569,67 @@ class Component extends DCLogic {
       { code: '30549364', name: { th: 'โครงงานทางจุลชีววิทยา', en: 'Microbiology Project' }, years: [4], kind: 'lecture', room: 'BS4102', day: 'ศุกร์', time: '' }
     ],
 
+    /* ตารางสอน ภาคปลาย 2569 — จากไฟล์ตารางเรียนที่อัปโหลดใหม่
+       รายวิชาที่ไม่ขึ้นต้นด้วย "ป X" ในเอกสารต้นฉบับคือวิชาบริการให้คณะ/หลักสูตรอื่น (service: true, years: []) */
+    coursesTerm2: [
+      { code: '30310169', name: { th: 'เคมี', en: 'Chemistry' }, years: [1], kind: 'lecture', room: '—', day: 'จันทร์', time: '' },
+      { code: '30310269', name: { th: 'ปฏิบัติการเคมี', en: 'Chemistry Laboratory' }, years: [1], kind: 'lab', room: '—', day: 'จันทร์', time: '' },
+      { code: '30510669', name: { th: 'การจัดจำแนกแบคทีเรีย (บรรยาย)', en: 'Determinative Bacteriology (lecture)' }, years: [1], kind: 'lecture', room: 'BS4101', day: 'จันทร์', time: '' },
+      { code: '30510669', name: { th: 'การจัดจำแนกแบคทีเรีย (ปฏิบัติการ) กลุ่ม 1–2', en: 'Determinative Bacteriology (lab) groups 1–2' }, years: [1], kind: 'lab', room: 'BS5105', day: 'พุธหรือพฤหัสบดี', time: '' },
+      { code: '30510769', name: { th: 'จริยธรรมนักวิทยาศาสตร์', en: 'Ethics for Scientists' }, years: [1], kind: 'lecture', room: 'BS4101', day: 'อังคาร', time: '' },
+      { code: '89520169', name: { th: 'การคิดแก้ปัญหาอย่างสร้างสรรค์', en: 'Creativity in Problem Solving' }, years: [1], kind: 'lecture', room: '—', day: 'อังคาร', time: '' },
+      { code: '89520269', name: { th: 'ทักษะดิจิทัลและใช้ปัญญาประดิษฐ์อย่างชาญฉลาด', en: 'Smart Digital and Artificial Intelligence Usage Skills' }, years: [1], kind: 'lecture', room: '—', day: 'พุธ', time: '' },
+      { code: '89520369', name: { th: 'การคิดเชิงระบบกับการแก้ปัญหา', en: 'System Thinking and Problem Solving' }, years: [1], kind: 'lecture', room: '—', day: 'พฤหัสบดี', time: '' },
+      { code: '89540169', name: { th: 'การบริหารการเงินและความเป็นผู้ประกอบการสำหรับชีวิตยุคใหม่', en: 'Financial Management and Entrepreneurship for Modern Life' }, years: [1], kind: 'lecture', room: '—', day: 'ศุกร์', time: '' },
+      { code: '89540269', name: { th: 'พื้นฐานการลงทุนและการบริหารความเสี่ยง', en: 'Fundamentals of Investment and Risk Management' }, years: [1], kind: 'lecture', room: '—', day: 'พฤหัสบดี', time: '' },
+      { code: '89540369', name: { th: 'ภาวะผู้นำและการจัดการทีมสำหรับผู้ประกอบการยุคใหม่', en: 'Leadership and Team Management for Modern Entrepreneurs' }, years: [1], kind: 'lecture', room: '—', day: 'ศุกร์', time: '' },
+
+      { code: '30520864', name: { th: 'ราวิทยา (บรรยาย)', en: 'Mycology (lecture)' }, years: [2], kind: 'lecture', room: 'BS4103', day: 'จันทร์', time: '' },
+      { code: '30520864', name: { th: 'ราวิทยา (ปฏิบัติการ) กลุ่ม 1–3', en: 'Mycology (lab) groups 1–3' }, years: [2], kind: 'lab', room: 'BS6104', day: 'จันทร์หรืออังคารหรือพฤหัสบดี', time: '' },
+      { code: '30523164', name: { th: 'จุลชีววิทยาทางอาหาร (บรรยาย)', en: 'Food Microbiology (lecture)' }, years: [2], kind: 'lecture', room: 'BS4103', day: 'จันทร์', time: '' },
+      { code: '30523164', name: { th: 'จุลชีววิทยาทางอาหาร (ปฏิบัติการ) กลุ่ม 1–4', en: 'Food Microbiology (lab) groups 1–4' }, years: [2], kind: 'lab', room: 'BS5105 / BS5106 / BS6104', day: 'จันทร์', time: '' },
+      { code: '30627064', name: { th: 'พันธุศาสตร์', en: 'Genetics' }, years: [2], kind: 'lecture', room: '—', day: 'อังคาร', time: '' },
+      { code: '30627164', name: { th: 'ปฏิบัติการพันธุศาสตร์', en: 'Genetics Laboratory' }, years: [2], kind: 'lab', room: '—', day: 'พฤหัสบดี', time: '' },
+      { code: '30521264', name: { th: 'เทคนิคพื้นฐานทางจุลชีววิทยา (บรรยาย)', en: 'Basic Techniques in Microbiology (lecture)' }, years: [2], kind: 'lecture', room: 'BS4103', day: 'อังคาร', time: '' },
+      { code: '30521264', name: { th: 'เทคนิคพื้นฐานทางจุลชีววิทยา (ปฏิบัติการ) กลุ่ม 1–4', en: 'Basic Techniques in Microbiology (lab) groups 1–4' }, years: [2], kind: 'lab', room: 'BS5105 / BS5106', day: 'อังคารหรือพุธ', time: '' },
+      { code: '31622164', name: { th: 'ปฏิบัติการชีวเคมีทั่วไป', en: 'General Biochemistry Laboratory' }, years: [2], kind: 'lab', room: '—', day: 'อังคารหรือพุธ', time: '' },
+      { code: '31620164', name: { th: 'ชีวเคมีทั่วไป', en: 'General Biochemistry' }, years: [2], kind: 'lecture', room: '—', day: 'พฤหัสบดี', time: '' },
+      { code: '89510564', name: { th: 'การบริหารสุขภาวะทางจิต', en: 'Mental Wellness Management' }, years: [2], kind: 'lecture', room: '—', day: 'พุธ', time: '' },
+      { code: '89530064', name: { th: 'โอกาสฯ (ชื่อเต็มในเอกสารต้นฉบับย่อไว้)', en: 'Elective course (title abbreviated in source document)' }, years: [2], kind: 'lecture', room: '—', day: 'ศุกร์', time: '' },
+
+      { code: '30530964', name: { th: 'สรีรวิทยา (บรรยาย)', en: 'Physiology (lecture)' }, years: [3], kind: 'lecture', room: 'BS4105', day: 'จันทร์', time: '' },
+      { code: '30530964', name: { th: 'สรีรวิทยา (ปฏิบัติการ) กลุ่ม 1–3', en: 'Physiology (lab) groups 1–3' }, years: [3], kind: 'lab', room: 'BS5105 / BS6104', day: 'อังคารหรือพุธหรือพฤหัสบดี', time: '' },
+      { code: '31137064', name: { th: 'การบริหารคุณภาพ', en: 'Quality Management' }, years: [3], kind: 'lecture', room: '—', day: 'จันทร์', time: '' },
+      { code: '66833264', name: { th: 'แผนธุรกิจเพื่อธุรกิจสตาร์ทอัพ กลุ่ม 1–2 (45 คน/กลุ่ม)', en: 'Business Plan for Startup Business, groups 1–2 (45 students/group)' }, years: [3], kind: 'lecture', room: '—', day: 'จันทร์หรืออังคาร', time: '' },
+      { code: '30532364', name: { th: 'ไวรัสวิทยา (บรรยาย)', en: 'Virology (lecture)' }, years: [3], kind: 'lecture', room: 'BS4203', day: 'อังคาร', time: '' },
+      { code: '30532364', name: { th: 'ไวรัสวิทยา (ปฏิบัติการ) กลุ่ม 1–3', en: 'Virology (lab) groups 1–3' }, years: [3], kind: 'lab', room: 'BS5105 / BS5106', day: 'พุธ', time: '' },
+      { code: '30534464', name: { th: 'จุลชีววิทยาแอลกอฮอล์ (บรรยาย)', en: 'Alcohol Microbiology (lecture)' }, years: [3], kind: 'lecture', room: 'BS4106', day: 'พุธ', time: '' },
+      { code: '30534464', name: { th: 'จุลชีววิทยาแอลกอฮอล์ (ปฏิบัติการ)', en: 'Alcohol Microbiology (lab)' }, years: [3], kind: 'lab', room: 'BS5106', day: 'พฤหัสบดี', time: '' },
+      { code: '30549264', name: { th: 'เค้าโครงงานวิจัยทางจุลชีววิทยา', en: 'Research Proposal in Microbiology' }, years: [3], kind: 'lecture', room: 'BS4103', day: 'ศุกร์', time: '' },
+      { code: '30539164', name: { th: 'สัมมนาทางจุลชีววิทยา', en: 'Seminar in Microbiology' }, years: [3], kind: 'lecture', room: 'CL202', day: 'ศุกร์', time: '' },
+
+      { code: '30544764', name: { th: 'จุลชีววิทยาเครื่องสำอาง (บรรยาย)', en: 'Cosmetic Microbiology (lecture)' }, years: [3, 4], kind: 'lecture', room: 'BS4101', day: 'จันทร์', time: '' },
+      { code: '30544764', name: { th: 'จุลชีววิทยาเครื่องสำอาง (ปฏิบัติการ)', en: 'Cosmetic Microbiology (lab)' }, years: [3, 4], kind: 'lab', room: 'BS6104', day: 'พฤหัสบดี', time: '' },
+      { code: '30535464', name: { th: 'ชีวภัณฑ์จากจุลินทรีย์ (บรรยาย)', en: 'Microbial Biopharmaceuticals (lecture)' }, years: [3, 4], kind: 'lecture', room: 'BS4101', day: 'จันทร์', time: '' },
+      { code: '30535464', name: { th: 'ชีวภัณฑ์จากจุลินทรีย์ (ปฏิบัติการ)', en: 'Microbial Biopharmaceuticals (lab)' }, years: [3, 4], kind: 'lab', room: 'BS6101', day: 'พฤหัสบดี', time: '' },
+      { code: '30532564', name: { th: 'แบคทีเรียวิทยาวินิจฉัย (บรรยาย)', en: 'Diagnostic Bacteriology (lecture)' }, years: [3, 4], kind: 'lecture', room: 'BS4203', day: 'อังคาร', time: '' },
+      { code: '30532564', name: { th: 'แบคทีเรียวิทยาวินิจฉัย (ปฏิบัติการ)', en: 'Diagnostic Bacteriology (lab)' }, years: [3, 4], kind: 'lab', room: 'BS5105', day: 'พฤหัสบดี', time: '' },
+      { code: '30546564', name: { th: 'จุลชีววิทยาน้ำเสีย (บรรยาย)', en: 'Wastewater Microbiology (lecture)' }, years: [3, 4], kind: 'lecture', room: 'BS4102', day: 'พุธ', time: '' },
+      { code: '30546564', name: { th: 'จุลชีววิทยาน้ำเสีย (ปฏิบัติการ)', en: 'Wastewater Microbiology (lab)' }, years: [3, 4], kind: 'lab', room: 'BS5106', day: 'พฤหัสบดี', time: '' },
+
+      { code: '30544864', name: { th: 'จุลชีววิทยาพลังงาน (บรรยาย)', en: 'Microbiology for Energy (lecture)' }, years: [4], kind: 'lecture', room: 'BS4102', day: 'จันทร์', time: '' },
+      { code: '30544864', name: { th: 'จุลชีววิทยาพลังงาน (ปฏิบัติการ)', en: 'Microbiology for Energy (lab)' }, years: [4], kind: 'lab', room: 'BS5106', day: 'ศุกร์', time: '' },
+      { code: '30549364', name: { th: 'โครงงานทางจุลชีววิทยา', en: 'Microbiology Project' }, years: [4], kind: 'lecture', room: 'BS4202', day: 'ศุกร์', time: '' },
+
+      { code: '30510166', name: { th: 'ปรสิตวิทยา (บรรยาย)', en: 'Parasitology (lecture)' }, years: [], service: true, kind: 'lecture', room: 'CL203', day: 'พฤหัสบดี', time: '' },
+      { code: '30510166', name: { th: 'ปรสิตวิทยา (ปฏิบัติการ)', en: 'Parasitology (lab)' }, years: [], service: true, kind: 'lab', room: 'CL403', day: 'พฤหัสบดี', time: '' },
+      { code: '30510264', name: { th: 'จุลชีววิทยาเบื้องต้น (สอบเก็บตก)', en: 'Introductory Microbiology (make-up session)' }, years: [], service: true, kind: 'lecture', room: 'KA500', day: 'ศุกร์', time: '' },
+      { code: '30510269', name: { th: 'จุลชีววิทยาทั่วไป (ชีวเคมี/อาหาร) — บรรยาย', en: 'General Microbiology for Biochemistry & Food Science (lecture)' }, years: [], service: true, kind: 'lecture', room: 'QS1-4002', day: 'อังคาร', time: '' },
+      { code: '30510369', name: { th: 'ปฏิบัติการจุลชีววิทยาทั่วไป (ชีวเคมี/อาหาร) กลุ่ม 1–6', en: 'General Microbiology Lab for Biochemistry & Food Science, groups 1–6' }, years: [], service: true, kind: 'lab', room: 'CL402A / CL402B / CL402C', day: 'อังคารหรือพุธ', time: '' },
+      { code: '30520464', name: { th: 'จุลชีววิทยาทั่วไป (สุขศาสตร์/อนามัย/เทคโน/อาหาร/วาริชศาสตร์/ชีววิทยา) — บรรยาย', en: 'General Microbiology for allied programs (lecture)' }, years: [], service: true, kind: 'lecture', room: 'KA500', day: 'ศุกร์', time: '' },
+      { code: '30520564', name: { th: 'ปฏิบัติการจุลชีววิทยาทั่วไป กลุ่ม 1–18 (ชีววิทยา/เทคโน/อาหาร/วาริชศาสตร์/สาธารณสุขศาสตร์/อนามัยสิ่งแวดล้อม)', en: 'General Microbiology Lab, groups 1–18 (allied programs)' }, years: [], service: true, kind: 'lab', room: 'CL402A–CL404', day: 'อังคารหรือพุธหรือพฤหัสบดี', time: '' }
+    ],
+
     /* ตารางสอบ
        dates: วันที่จริงของแต่ละคอลัมน์ 'YYYY-MM-DD' (จำนวนต้องเท่ากับ days)
               ใช้สำหรับระบบแจ้งเตือนวิชาของภาควิชา (รหัส 305xxxxx)
@@ -1589,9 +1768,10 @@ class Component extends DCLogic {
       back: 'ย้อนกลับ', openDetail: 'ดูรายละเอียด',
       heroKicker: 'แหล่งข้อมูลสำหรับอาจารย์และบุคลากร',
       heroTitle: 'ตาราง ประกาศ และลิงก์ของภาควิชา รวมไว้ที่เดียว',
+      heroSearchPlaceholder: 'ค้นหารายวิชา เช่น ชื่อวิชาหรือรหัสวิชา', heroSearchBtn: 'ค้นหา',
       heroBody: 'ตารางสอนและตารางสอบของภาคต้น ปีการศึกษา 2569 ปฏิทินกำหนดการที่ใกล้ถึง และลิงก์ระบบต่าง ๆ ที่ใช้งานประจำ',
       upcoming: 'กำหนดการที่ใกล้ถึง', noUpcoming: 'ยังไม่มีกำหนดการในสองสัปดาห์ข้างหน้า',
-      news: 'ประกาศและข่าวสาร', shortcuts: 'ทางลัด',
+      news: 'ประกาศและข่าวสาร', shortcuts: 'ทางลัด', serviceCourses: 'วิชาบริการหน่วยงานอื่น',
       teachIntro: 'รายวิชาทั้งหมดในตารางเรียนรวม แยกตามชั้นปี วันในตารางแสดงเฉพาะรายวิชาที่ระบุวันไว้ชัดเจนในไฟล์ต้นฉบับ',
       examIntro: 'ตารางสอบกลางภาค ปลายภาค และสอบนอกตาราง พร้อมห้องสอบและผู้คุมสอบ',
       calIntro: 'กำหนดการของภาคเรียน เรียงตามวันที่ ระบบจะแจ้งเตือนเมื่อเหลือไม่เกิน 7 วัน',
@@ -1662,9 +1842,10 @@ class Component extends DCLogic {
       back: 'Back', openDetail: 'Open detail',
       heroKicker: 'A resource for faculty and staff',
       heroTitle: 'Schedules, announcements and links in one place',
+      heroSearchPlaceholder: 'Search courses by name or code', heroSearchBtn: 'Search',
       heroBody: 'Teaching and examination schedules for Semester 1/2026, upcoming deadlines, and the systems used day to day.',
       upcoming: 'Coming up', noUpcoming: 'Nothing scheduled in the next two weeks.',
-      news: 'Announcements', shortcuts: 'Shortcuts',
+      news: 'Announcements', shortcuts: 'Shortcuts', serviceCourses: 'Service courses (other departments)',
       teachIntro: 'Every course in the combined class schedule, grouped by cohort. A weekday is shown only where the source file states one.',
       examIntro: 'Midterm, final and off-schedule examinations with rooms and proctors.',
       calIntro: 'Semester dates in order. A reminder appears when a date is 7 days away or less.',
@@ -1688,7 +1869,7 @@ class Component extends DCLogic {
     }
   };
 
-  state = { page: 'home', lang: 'th', year: 'all', q: '', dismissed: false, course: '', docQ: '', docAun: 'all', docAll: false,
+  state = { page: 'home', lang: 'th', year: 'all', term: 1, q: '', dismissed: false, course: '', docQ: '', docAun: 'all', docAll: false,
     ndName: '', ndType: '', ndYear: '', ndAuns: [], ndFile: null, pending: [], copied: false,
     sheetRows: null, sheetState: 'off' };
 
@@ -1861,13 +2042,14 @@ class Component extends DCLogic {
 
     const navDefs = [['home', L.navHome], ['teach', L.navTeach], ['exam', L.navExam], ['cal', L.navCal], ['links', L.navLinks], ['docs', L.navDocs], ['courses', L.navCourses], ['curr', L.navCurr], ['contact', L.navContact]];
 
-    const courses = D.courses.map(c => Object.assign({}, c, {
+    const scheduleSource = S.term === 2 ? (D.coursesTerm2 || []) : D.courses;
+    const courses = scheduleSource.map(c => Object.assign({}, c, {
       name: this.tx(c.name),
       kindLabel: c.kind === 'lab' ? L.lab : L.lecture,
       yearsLabel: c.years.map(y => (S.lang === 'th' ? 'ปี ' : 'Y') + y).join(', ')
     }));
 
-    const yearFilter = S.year === 'all' ? courses : courses.filter(c => c.years.indexOf(Number(S.year)) > -1);
+    const yearFilter = S.year === 'all' ? courses : S.year === 'service' ? courses.filter(c => c.service) : courses.filter(c => c.years.indexOf(Number(S.year)) > -1);
     const groups = ['1', '2', '3', '4'].map(y => {
       const items = yearFilter.filter(c => c.years.indexOf(Number(y)) > -1);
       return {
@@ -1881,6 +2063,20 @@ class Component extends DCLogic {
         }))
       };
     }).filter(g => g.items.length > 0);
+    const hasServiceCourses = courses.some(c => c.service);
+    const serviceItems = yearFilter.filter(c => c.service);
+    if (serviceItems.length) {
+      groups.push({
+        label: L.serviceCourses,
+        count: L.items.replace('{n}', String(serviceItems.length)),
+        items: serviceItems.map(c => ({
+          code: c.code, name: c.name, kind: c.kindLabel,
+          kindCls: c.kind === 'lab' ? 'tag tag-accent-2' : 'tag tag-accent',
+          hasDay: !!(c.day || c.time), day: [c.day, c.time].filter(Boolean).join(' '),
+          detail: c.room && c.room !== '—' ? L.room + ' ' + c.room : L.noRoom
+        }))
+      });
+    }
 
     const q = S.q.trim().toLowerCase();
     const nameOf = (code) => {
@@ -2026,9 +2222,9 @@ class Component extends DCLogic {
     return {
       L, isTh: S.lang === 'th',
       termLabel: this.tx(D.term),
-      teachPdf: D.teachPdf, examPdf: D.examPdf,
+      teachPdf: S.term === 2 ? D.teachPdf2 : D.teachPdf, examPdf: D.examPdf,
       planPdf: D.planPdf, mappingPdf: D.mappingPdf, descPdf: D.descPdf,
-      openTeachPdf: openUrl(D.teachPdf), openExamPdf: openUrl(D.examPdf),
+      openTeachPdf: openUrl(S.term === 2 ? D.teachPdf2 : D.teachPdf), openExamPdf: openUrl(D.examPdf),
       openPlanPdf: openUrl(D.planPdf), openMappingPdf: openUrl(D.mappingPdf), openDescPdf: openUrl(D.descPdf),
       currLinks: (D.currLinks || []).map(l => ({ name: this.tx(l.name), sub: l.sub || '', href: l.href || '#', open: openUrl(l.href) })),
       isHome: S.page === 'home', isTeach: S.page === 'teach', isExam: S.page === 'exam',
@@ -2127,7 +2323,9 @@ class Component extends DCLogic {
       goHome: this.go('home'), goTeach: this.go('teach'), goExam: this.go('exam'), goCal: this.go('cal'),
       nav: navDefs.map(([key, label]) => ({
         label, go: this.go(key), cur: S.page === key ? 'page' : undefined,
-        cls: S.page === key ? 'btn btn-primary' : 'btn btn-ghost'
+        style: S.page === key
+          ? 'color: var(--color-accent-800); font-weight: 700; border-bottom: 2.5px solid var(--color-accent)'
+          : 'color: var(--color-neutral-800); font-weight: 500; border-bottom: 2.5px solid transparent'
       })),
       toggleLang: () => {
         const next = S.lang === 'th' ? 'en' : 'th';
@@ -2136,18 +2334,23 @@ class Component extends DCLogic {
       },
 
       upcoming, upcomingCount: String(upcoming.length), noUpcoming: upcoming.length === 0,
-      shortcuts: [
-        { label: L.navTeach, hint: this.tx(D.term), go: this.go('teach') },
-        { label: L.navExam, hint: S.lang === 'th' ? 'กลางภาค · ปลายภาค · นอกตาราง' : 'Midterm · final · off-schedule', go: this.go('exam') },
-        { label: L.navCal, hint: L.items.replace('{n}', String(cal.length)).replace('รายวิชา', 'รายการ').replace('courses', 'entries'), go: this.go('cal') },
-        { label: L.navLinks, hint: S.lang === 'th' ? 'รหัส 66–69 และระบบที่เกี่ยวข้องกับภาควิชาจุลชีววิทยา' : 'Cohorts 66–69 and systems', go: this.go('links') },
-        { label: L.navDocs, hint: S.lang === 'th' ? 'แบบฟอร์มและไฟล์ตาราง' : 'Forms and schedule files', go: this.go('docs') },
-        { label: L.navCourses, hint: L.items.replace('{n}', String(courses.length)), go: this.go('courses') },
-        { label: L.navCurr, hint: S.lang === 'th' ? 'PLO · แผนการเรียน · มคอ.2' : 'PLOs · study plan · TQF2', go: this.go('curr') }
-      ],
+      goLinks: this.go('links'), goDocs: this.go('docs'), goCurr: this.go('curr'),
+      hintTeach: this.tx(D.term),
+      hintExam: S.lang === 'th' ? 'กลางภาค · ปลายภาค · นอกตาราง' : 'Midterm · final · off-schedule',
+      hintCal: L.items.replace('{n}', String(cal.length)).replace('รายวิชา', 'รายการ').replace('courses', 'entries'),
+      hintLinks: S.lang === 'th' ? 'รหัส 66–69 และระบบที่เกี่ยวข้องกับภาควิชาจุลชีววิทยา' : 'Cohorts 66–69 and systems',
+      hintDocs: S.lang === 'th' ? 'แบบฟอร์มและไฟล์ตาราง' : 'Forms and schedule files',
+      hintCourses: L.items.replace('{n}', String(courses.length)),
+      hintCurr: S.lang === 'th' ? 'PLO · แผนการเรียน · มคอ.2' : 'PLOs · study plan · TQF2',
 
-      yearChips: [['all', L.all], ['1', S.lang === 'th' ? 'ปี 1' : 'Y1'], ['2', S.lang === 'th' ? 'ปี 2' : 'Y2'], ['3', S.lang === 'th' ? 'ปี 3' : 'Y3'], ['4', S.lang === 'th' ? 'ปี 4' : 'Y4']]
+      yearChips: ([['all', L.all], ['1', S.lang === 'th' ? 'ปี 1' : 'Y1'], ['2', S.lang === 'th' ? 'ปี 2' : 'Y2'], ['3', S.lang === 'th' ? 'ปี 3' : 'Y3'], ['4', S.lang === 'th' ? 'ปี 4' : 'Y4']].concat(hasServiceCourses ? [['service', L.serviceCourses]] : []))
         .map(([v, label]) => ({ label, cls: S.year === v ? 'btn btn-primary' : 'btn btn-secondary', go: () => this.setState({ year: v }) })),
+      termTabs: [1, 2].map(t => ({
+        label: t === 1 ? L.term1 : L.term2,
+        cls: S.term === t ? 'btn btn-primary' : 'btn btn-secondary',
+        go: () => this.setState({ term: t, year: 'all' })
+      })),
+      teachTermLabel: this.tx(S.term === 2 ? D.term2 : D.term),
       teachGroups: groups,
 
       examTables,
